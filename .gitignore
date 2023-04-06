@@ -1,0 +1,7 @@
+# general
+.DS_Store
+__MACOSX/
+*.pyc
+.idea/
+__pycache__/
+tmp/
