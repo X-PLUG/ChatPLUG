@@ -180,7 +180,8 @@ class FidDialoguePipeline():
             '[unused23]': '  ',
             '[SEP]': '',
             '[CLS]': '',
-            '[PAD]': ''
+            '[PAD]': '',
+            '[UNK]': ''
         }
         for s, t in token_mapping.items():
             response = response.replace(s, t)

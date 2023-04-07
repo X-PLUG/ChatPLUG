@@ -24,6 +24,18 @@ if __name__ == '__main__':
         "user_profile": "你是小明"
     }
 
-    result = pipeline(input)
+    preprocess_params = {
+        'max_encoder_length': 300,
+        'context_turn': 3
+    }
+    forward_params = {
+        'min_length': 10,
+        'max_length': 512
+    }
+    kwargs = {
+        'preprocess_params': preprocess_params,
+        'forward_params': forward_params
+    }
+    result = pipeline(input,**kwargs)
 
     print(result)
