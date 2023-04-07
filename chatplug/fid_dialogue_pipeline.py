@@ -5,7 +5,7 @@ import torch
 from transformers import AutoTokenizer
 
 from chatplug.utils.chinese_utils import remove_space_between_chinese_chars
-from chatplug.models.fid_T5.text_generation import FIDT5Chat
+# from chatplug.models.fid_T5.text_generation import FIDT5Chat
 from chatplug.models.fid_plug.text_generation import PlugV2FidChat
 from chatplug.models import TokenGeneratorOutput
 
@@ -25,10 +25,12 @@ class FidDialoguePipeline():
 
         self.is_t5 = size in ('xl', 'xxl')
 
+        print("init model start...")
         if self.is_t5:
             self.model = FIDT5Chat(model_dir)
         else:
-            self.model = PlugV2FidChat
+            self.model = PlugV2FidChat(model_dir)
+        print("init model done...")
 
         self.device = device
         self.model = self.model.to(self.device)
@@ -48,12 +50,18 @@ class FidDialoguePipeline():
         preprocess_params = kwargs.get('preprocess_params', {})
         forward_params = kwargs.get('forward_params', {})
         postprocess_params = kwargs.get('postprocess_params', {})
+        print(f'preprocess_params: {preprocess_params}')
+        print(f'forward_params: {forward_params}')
+        print(f'postprocess_params: {postprocess_params}')
 
+        print('data preprocess...')
         out = self.preprocess(input, **preprocess_params)
 
+        print('model predict...')
         with torch.no_grad():
             out = self.forward(out, **forward_params)
 
+        print('result postprocess...')
         out = self.postprocess(out, **postprocess_params)
         return out
 
