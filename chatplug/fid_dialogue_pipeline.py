@@ -21,7 +21,7 @@ bot_profile_template = '假设我和你正在进行对话，请你给我得体�
 
 class FidDialoguePipeline():
 
-    def __init__(self, model_dir, size, device: str = 'gpu'):
+    def __init__(self, model_dir, size, device: str = 'cuda'):
 
         self.is_t5 = size in ('xl', 'xxl')
 
@@ -37,7 +37,7 @@ class FidDialoguePipeline():
         self.model.eval()
 
         self.SEP = '[SEP]'
-        self.preprocessor_tokenizer = AutoTokenizer(model_dir)
+        self.preprocessor_tokenizer = AutoTokenizer.from_pretrained(model_dir)
         if not self.is_t5:
             unused_list = []
             for i in range(1, 100):

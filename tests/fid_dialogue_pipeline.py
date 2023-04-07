@@ -10,7 +10,7 @@ from chatplug.fid_dialogue_pipeline import FidDialoguePipeline
 if __name__ == '__main__':
     ""
     model_dir = "model_hub/0.3b"
-    pipeline = FidDialoguePipeline(model_dir=model_dir,size='base')
+    pipeline = FidDialoguePipeline(model_dir=model_dir, size='base')
 
     know_list = [
         "李白（701年—762年），字太白，号青莲居士，又号“谪仙人”。是唐代伟大的浪漫主义诗人，被后人誉为“诗仙”。与杜甫并称为“李杜”，为了与另两位诗人李商隐与杜牧即“小李杜”区别，杜甫与",
