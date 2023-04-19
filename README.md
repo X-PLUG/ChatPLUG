@@ -56,7 +56,7 @@ With external knowledge from a search engine, the problem of knowledge hallucina
 > With knowledge augmentation, ChatPLUG achieves better performance in terms of knowledge hallucination.
 >
 
-<img src="./docs/knowledge_hallucination.jpg" alt="knowledge_hallucination" style="zoom: 67%;" />
+<img src="./docs/knowledge_hallucination.jpg" alt="knowledge_hallucination" style="zoom: 25%;" />
 
 
 <details><summary><b>Examples of real-time questions (Click to view👇)</b></summary>
@@ -86,9 +86,7 @@ ChatPLUG can not only generate coherent and engaging responses in an open and mu
 
 > We compare our model with open-source Chinese LLMs including <a href="https://github.com/LianjiaTech/BELLE">BELLE-7M-2B</a> and <a href="https://github.com/THUDM/ChatGLM-6B">ChatGLM-6B</a> following the four-level rating evaluation (A>B>C>D). First, all the models are able to follow the given instructions (very small quantity of RATING-D). Second, our model ChatPLUG-3.7B achieves better performance (more quantity of RATING-A and fewer quantity of RATING-C) than BELLE-7B-2M with fewer model parameters and is comparable to ChatGLM-6B. It demonstrates the strong multi-task generalization of ChatPLUG. Lastly, by scaling up the model size to 13B, our model ChatPLUG-13B obtains the best performance. 
 
-
-
-<img src="./docs/evaluation_of_multi_task.jpg" alt="evaluation_of_multi_task" style="zoom: 67%;" />
+<img src="./docs/evaluation_of_multi_task.jpg" alt="evaluation_of_multi_task" style="zoom: 25%;" />
 
 
 
