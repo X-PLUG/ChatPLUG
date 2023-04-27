@@ -17,6 +17,8 @@ Please read our paper for more detains about ChatPLUG.
 - ChatPLUG: Open-Domain Generative Dialogue System with Internet-Augmented Instruction Tuning for Digital Human. [https://arxiv.org/abs/2304.07849]( https://arxiv.org/abs/2304.07849)
 
 
+## Online Demo
+[Role-Play-Chat](https://www.modelscope.cn/studios/damo/role_play_chat/summary)
 
 ## News
 
