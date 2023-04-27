@@ -1,6 +1,6 @@
 # ChatPLUG
 
-This is the repo for the ChatPLUG project, which aims to build and share a Chinese open-domain dialogue system. 
+This is the repo for the ChatPLUG project, which aims to build and share a Chinese open-domain dialogue system. 👏👏👏You can try (Role-Play-Chat)[https://modelscope.cn/studios/damo/role_play_chat/summary] based on ChatPLUG in Mass-Innovation-Studio Now!
 
 ## Overview
 
