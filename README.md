@@ -6,9 +6,9 @@ This is the repo for the ChatPLUG project, which aims to build and share a Chine
 
 <hr>
 
-<img src="http://mm-chatgpt.oss-cn-zhangjiakou.aliyuncs.com/xplug/chatplug/xiaowan.gif"  width="60%">
-<img src="http://mm-chatgpt.oss-cn-zhangjiakou.aliyuncs.com/xplug/chatplug/gaoseng.gif"  width="60%">
-<img src="http://mm-chatgpt.oss-cn-zhangjiakou.aliyuncs.com/xplug/chatplug/guanyu.gif"  width="60%">
+<img src="http://mm-chatgpt.oss-cn-zhangjiakou.aliyuncs.com/xplug/chatplug/xiaowan.gif"  width="30%">
+<img src="http://mm-chatgpt.oss-cn-zhangjiakou.aliyuncs.com/xplug/chatplug/gaoseng.gif"  width="30%">
+<img src="http://mm-chatgpt.oss-cn-zhangjiakou.aliyuncs.com/xplug/chatplug/guanyu.gif"   width="30%">
 
 
 ## Overview
