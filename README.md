@@ -4,6 +4,13 @@ This is the repo for the ChatPLUG project, which aims to build and share a Chine
 
 👏👏👏You can try [Role-Play-Chat](https://modelscope.cn/studios/damo/role_play_chat/summary) based on ChatPLUG in Mass-Innovation-Studio Now!
 
+<hr>
+
+<img src="http://mm-chatgpt.oss-cn-zhangjiakou.aliyuncs.com/xplug/chatplug/xiaowan.gif"  width="60%">
+<img src="http://mm-chatgpt.oss-cn-zhangjiakou.aliyuncs.com/xplug/chatplug/gaoseng.gif"  width="60%">
+<img src="http://mm-chatgpt.oss-cn-zhangjiakou.aliyuncs.com/xplug/chatplug/guanyu.gif"  width="60%">
+
+
 ## Overview
 
 We present ChatPLUG, a Chinese open-domain dialogue system for digital human applications that instruction finetunes on a wide range of dialogue tasks in a unified internet-augmented format. Different from other open-domain dialogue models that focus on large-scale pre-training and scaling up model size or dialogue corpus, we aim to build a powerful and practical dialogue system for digital human with diverse skills and good multi-task generalization by internet-augmented instruction tuning. 
