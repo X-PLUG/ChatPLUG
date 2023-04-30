@@ -1,3 +1,5 @@
 sphinx
 livereload
 myst-parser
+sphinx-autodoc-typehints
+sphinx-book-theme
