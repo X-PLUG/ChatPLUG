@@ -1,6 +1,6 @@
 # ChatPLUG
 
-[![](assets/Demo-ModelScope-brightgreen.svg)](https://modelscope.cn/studios/damo/mPLUG-Owl/summary)
+[![](assets/Demo-ModelScope-brightgreen.svg)](https://www.modelscope.cn/studios/damo/role_play_chat/summary)
 [![](assets/Paper-Arxiv-orange.svg)](https://arxiv.org/abs/2304.07849)
 ![Hex.pm](https://img.shields.io/hexpm/l/plug)
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FX-PLUG%2FChatP&count_bg=%23E97EBA&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=visitors&edge_flat=false)](https://hits.seeyoufarm.com)
