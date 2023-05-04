@@ -5,4 +5,3 @@ wget http://xdp-expriment.oss-cn-zhangjiakou.aliyuncs.com/zhimiao.chh/MassModels
 wget http://xdp-expriment.oss-cn-zhangjiakou.aliyuncs.com/zhimiao.chh/MassModels/ChatPLUG-3.7B/v1.0.1/pytorch_model.bin -O model_hub/3.7b/pytorch_model.bin
 
 # download 13B
-wget http://xdp-expriment.oss-cn-zhangjiakou.aliyuncs.com/zhimiao.chh/MassModels/ChatPLUG-13B/v1.0.1/pytorch_model.bin -O model_hub/13b/pytorch_model.bin
