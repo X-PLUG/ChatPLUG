@@ -6,10 +6,9 @@ This is the repo for the ChatPLUG project, which aims to build and share a Chine
 
 <hr>
 
-<img src="http://mm-chatgpt.oss-cn-zhangjiakou.aliyuncs.com/xplug/chatplug/xiaowan.gif"  width="30%">
-<img src="http://mm-chatgpt.oss-cn-zhangjiakou.aliyuncs.com/xplug/chatplug/gaoseng.gif"  width="30%">
-<img src="http://mm-chatgpt.oss-cn-zhangjiakou.aliyuncs.com/xplug/chatplug/guanyu.gif"   width="30%">
-
+| 爱用emoji的萌妹子小婉  |  富有智慧的得道高僧 | 会说古文的的三国NPC关羽 |
+:-------------------------:|:-------------------------:|:-------------------------:
+<img src="assets/xiaowan.gif"  width="80%" /> | <img src="assets/gaoseng.gif"  width="90%" /> | <img src="assets/guanyu.gif"   width="80%" /> 
 
 ## Overview
 
