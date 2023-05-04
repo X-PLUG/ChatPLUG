@@ -1,14 +1,23 @@
 # ChatPLUG
 
-This is the repo for the ChatPLUG project, which aims to build and share a Chinese open-domain dialogue system.
+[![](assets/Demo-ModelScope-brightgreen.svg)](https://modelscope.cn/studios/damo/mPLUG-Owl/summary)
+[![](assets/Paper-Arxiv-orange.svg)](https://arxiv.org/abs/2304.07849)
+![Hex.pm](https://img.shields.io/hexpm/l/plug)
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FX-PLUG%2FChatP&count_bg=%23E97EBA&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=visitors&edge_flat=false)](https://hits.seeyoufarm.com)
 
-👏👏👏You can try [Role-Play-Chat](https://modelscope.cn/studios/damo/role_play_chat/summary) based on ChatPLUG in Mass-Innovation-Studio Now!
+
+This is the repo for the ChatPLUG project, which aims to build and share a Chinese open-domain dialogue system.
 
 <hr>
 
 | 爱用emoji的萌妹子小婉  |  富有智慧的得道高僧 | 会说古文的的三国NPC关羽 |
 :-------------------------:|:-------------------------:|:-------------------------:
 <img src="assets/xiaowan.gif"  width="80%" /> | <img src="assets/gaoseng.gif"  width="90%" /> | <img src="assets/guanyu.gif"   width="80%" /> 
+
+## News
+- [2023/04/26] 👏👏👏 Try our [Role-Play-Chat Online Demo](https://modelscope.cn/studios/damo/role_play_chat/summary) in ModelScope Now!
+- [2023/04/19] Add content including spotlights, results and limitations. Upload models to [modelscope](https://modelscope.cn/my/overview). 
+- [2023/04/16] Initialize project.
 
 ## Overview
 
@@ -27,13 +36,6 @@ Please read our paper for more detains about ChatPLUG.
 
 ## Online Demo
 [Role-Play-Chat](https://www.modelscope.cn/studios/damo/role_play_chat/summary)
-
-## News
-
-- [2023/04/26] 👏👏👏You can try [Role-Play-Chat](https://modelscope.cn/studios/damo/role_play_chat/summary) based on ChatPLUG in Mass-Innovation-Studio Now!
-- [2023/04/19] Add content including spotlights, results and limitations. Upload models to [modelscope](https://modelscope.cn/my/overview). 
-- [2023/04/16] Initialize project.
-
 
 
 ## Spotlights
