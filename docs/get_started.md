@@ -1,6 +1,6 @@
-# XDPX / 新地平线 / X-lab DeepQA Platform X
+# XDPX / X-PLUG Development Platform X
 
-项目地址：[http://gitlab.alibaba-inc.com/runqi.yrq/XDPX](http://gitlab.alibaba-inc.com/runqi.yrq/XDPX)
+项目地址：[https://github.com/X-PLUG/ChatPLUG](http://https://github.com/X-PLUG/ChatPLUG)
 该项目主要支持**用于NLU的PyTorch代码（包括PAI在内）的跨环境训练**。有以下特点：
 
 - 支持所有环境中，所有路径直接配置OSS路径，和本地路径一起无差别使用，大文件传输显示进度条；
@@ -13,7 +13,8 @@
 - 提交到PAI之前自动检查参数配置错误，包括路径是否存在、不同参数之间的冲突等，避免浪费提交和排队的时间；
 - 单元测试全覆盖，方便debug。
 
-常见的问题见下方“[FAQ](#NtOc7)”章节。单独使用oss/本地文件混合操作能力参考[IO能力](#D2vQN)章节。
+常见的问题见下方“[FAQ](#NtOc7)”章节。
+单独使用oss/本地文件混合操作能力参考[IO能力](#D2vQN)章节。
 
 
 

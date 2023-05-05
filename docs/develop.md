@@ -91,6 +91,7 @@ def collate(self, samples: List[dict]):
 - 新的数据采样方式：继承xdpx.datasets中的torch.utils.data.Dataset或者torch.utils.data.Sampler
 
 注意：基类中的register方法，如果是staticmethod，那么继承后也应该使用staticmethod；如果是classmethod，那么继承后也应该使用classmethod。请参考其他已经实现的子类，如果他们调用了基类的注册方法`super().register(options)`，那么你实现的子类也应该调用。
+
 ## 单元测试
 运行所有单元测试：`python -m unittest discover tests/unit_tests`
 运行单个单元测试：`python -m unittest tests.unit_tests.test_xxx`
