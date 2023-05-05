@@ -89,13 +89,13 @@ class CalendarSkill(object):
 class DSSkill(object):
     def __init__(self):
         config = open_api_models.Config(
-            access_key_id='9mDqyalidVkI6Nq0',
-            access_key_secret='8wBH4Ks2P7Lr589bpY3THBZBVibJl9'
+            access_key_id='AK',
+            access_key_secret='AKS'
         )
         # 访问的域名
-        config.endpoint = f'chatbot.cn-shanghai.aliyuncs.com'
+        config.endpoint = 'ENDPOINT'
         self.client = Chatbot20220408Client(config)
-        self.instance_id = 'chatbot-cn-FRIZvqMuMe'
+        self.instance_id = 'INSTANCE_ID'
         self.regex_patterns = [
             re.compile('查.*天气'),
             re.compile('(天气|气温|下雨).*(？|\?|吗|什么|怎么|怎样|咋|啥|如何|为什么|哪|几|谁|多少|多大|多高|是不是|有没有|是否|多久|可不可以|能不能|行不行)'),
