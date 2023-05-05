@@ -3,19 +3,28 @@
 # Quick Start (ChatPLUG)
 
 
-## Install
-
+## Requirement
 ```bash
-# install
+# in the dir of XDPX
 cd XDPX
 pip install -e .
+```
 
-# download checkpoints from modelscope
+## Download checkpoints
+```bash
+# in the same dir as the download.sh
+cd ..
 sh download.sh
+```
 
-# run cli
+
+## Run cli
+```bash
+# in the dir of XDPX
+cd XDPX
 CUDA_VISIBLE_DEVICES=0 x-script fidchat_new chat_pipeline/chatplug_xl_sftv2.6.0_instruction.hjson
 ```
+
 
 ### Cli Usage
 | command | action               |
