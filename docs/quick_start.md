@@ -1,43 +1,30 @@
 
 
 # Quick Start (ChatPLUG)
-<!-- 
-## Install
 
-
-## Training
-
-
-## Inference -->
 
 ## Install 
 
 ```bash
 # git clone
-git clone todo.git
+git clone .git
 
 # 安装
-# https://yuque.antfin-inc.com/books/share/007ad4ad-d634-4013-a945-fe6e80d5f297/dgqen0
+cd XDPX
 pip install -e .
 
+
+# [可选]申请OSS账号
 # 配置 user/modules/oss_credentials.py文件
-# xdpx 依赖 xdp-experiment oss账号，可以找檀梵申请，或者找俊峰
 
-```
-
-1. git clone该项目，进入项目根目录后使用pip install -e .
-2. 在项目根目录下建立user/modules/oss_credentials.py文件
-**id/key找俊峰获取**
 ```python
 from xdpx.utils import OSS,io,os
-
 
 # 授权ODPS
 os.environ['PROJNAME']='<project>'
 os.environ['ACCESS_ID']='<access_key_id>'
 os.environ['ACCESS_KEY']='<access_key_secret>'
 os.environ['ODPS_ENDPOINT']='http://service-corp.odps.aliyun-inc.com/api'
-
 
 # 授权 OSS
 access_key_id='<access_key_id>'
@@ -49,14 +36,23 @@ region_bucket=[
 oss=OSS(access_key_id,access_key_secret,region_bucket)
 io.set_io(oss)
 ```
+
 填上access_key_id、access_key_secret，并添加所有你需要访问的oss bucket的名字以及它们所在的地区名到region_bucket。比如链接为[http://pretrain-lm.oss-cn-hangzhou.aliyuncs.com/](http://pretrain-lm.oss-cn-hangzhou.aliyuncs.com/) 的话，bucket就是“pretrain-lm”，地区名就是“oss-”后面的那部分，即“cn-hangzhou”，传入的值为['cn-hangzhou','pretrain-lm']。之后程序运行便会自动加载这个配置并且支持访问oss路径。
 
 ## Inference
 
+### Download Checkpoints 
+
+```bash
+sh download.sh
+```
+
+
+### CLI Inference
+
 ```bash
 # 命令行运行测试
-
-CUDA_VISIBLE_DEVICES=0 PYTHONPATH='./' x-script fidchat_new oss://xdp-expriment/gaoxing.gx/chat/configs/new_test_chat/mt5_v1.1.3.0804_78000_qc_aliganyu621_newrewrite_ner_newskill.hjson
+CUDA_VISIBLE_DEVICES=0 x-script fidchat_new oss://xdp-expriment/gaoxing.gx/chat/configs/new_test_chat/mt5_v1.1.3.0804_78000_qc_aliganyu621_newrewrite_ner_newskill.hjson
 # 把local_search 改为 ''
 # "local_retrieval_host": "",
 
@@ -76,7 +72,9 @@ x-script eval_open_dialog <test_file_path>
 | --- | --- | --- |
 | 0.3B | oss://xdp-expriment/zhimiao.chh/dialogue_config/chat_pipline/server/mt5_ctr.hjson | #test_entity_knowledge |
 | 3.7B | oss://xdp-expriment/zhimiao.chh/dialogue_config/chat_pipline/server/mt5_xl_v1.2.1_v1.1.3_allspark_tmp.hjson |  |
-| 3.7B | oss://xdp-expriment/gaoxing.gx/chat/backup/mt5_xl_v1.2.1_v1.1.3.zhimiao.rolechat3.hjson | #test_file=test_guodegang.txt
+| 3.7B | oss://xdp-expriment/gaoxing.gx/chat/backup/mt5_xl_v1.2.1_v1.1.3.zhimiao.rolechat3.hjson | 
+
+#test_file=test_guodegang.txt
 #bot_profile=郭德纲@@@我是郭德纲 |
 
 版本更新到加速为止：[https://yuque.antfin.com/tjf141457/deqr3f/dhz6e9irwplsfc36](https://yuque.antfin.com/tjf141457/deqr3f/dhz6e9irwplsfc36)

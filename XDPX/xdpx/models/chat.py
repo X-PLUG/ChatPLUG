@@ -413,13 +413,10 @@ class PlugFidChat(PlugChat):
         return torch.utils.dlpack.from_dlpack(out["generated_ids"])
 
 
-'''
-兼容
-'''
-
 
 @register('palmchat')
 class PalmChat(PlugChat):
+    '''兼容'''
     pass
 
 

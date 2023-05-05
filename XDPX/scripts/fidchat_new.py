@@ -11,7 +11,6 @@ import json
 import numpy as np
 from icecream import ic
 from xdpx.utils import distributed_utils
-import onnxruntime as ort
 import time
 import dacite
 from dataclasses import asdict
@@ -25,13 +24,14 @@ SEARCH_CACHE_JSON_PATH = 'oss://xdp-expriment/gaoxing.gx/chat/benchmark/search_c
 DEFAULT_TEST_FILE_DIR = 'oss://xdp-expriment/gaoxing.gx/chat/benchmark/'
 DEFAULT_TEST_FILE = 'pangu.test.json'
 
-PERSONALITY_GROUP100_FILE = 'oss://xdp-expriment/gaoxing.gx/chat/personality/personality_100groups.json'
-PERSONALITY_GROUP100 = json.load(io.open(PERSONALITY_GROUP100_FILE))
-PERSONALITY_GROUP100 = PERSONALITY_GROUP100[
-    'positive']  # + PERSONALITY_GROUP100['neural'] + PERSONALITY_GROUP100['negative']
 
 
 def get_new_bot_profile(bot_profile):
+    PERSONALITY_GROUP100_FILE = 'oss://xdp-expriment/gaoxing.gx/chat/personality/personality_100groups.json'
+    PERSONALITY_GROUP100 = json.load(io.open(PERSONALITY_GROUP100_FILE))
+    PERSONALITY_GROUP100 = PERSONALITY_GROUP100[
+        'positive']  # + PERSONALITY_GROUP100['neural'] + PERSONALITY_GROUP100['negative']
+
     personality = ';'.join(['我是个{}人'.format(l) for l in random.choice(PERSONALITY_GROUP100)])
     new_bot_profile = '{};我是个{}人;'.format(bot_profile.strip(';'), personality)
     return new_bot_profile, personality
@@ -53,10 +53,7 @@ def get_test_data(file):
 def cli_main(argv=sys.argv):
     print(f'| PyTorch version: {torch.__version__}')
     distributed_utils.show_dist_info()
-    print(f'| onnxruntime version: {ort.__version__} ')
-    print(f'| onnxruntime device: {ort.get_device()} ')
-    print(f'| onnxruntime available providers: {ort.get_available_providers()} ')
-
+    
     config_file = argv[1]
     pipeline_config = None
     try:
@@ -67,12 +64,6 @@ def cli_main(argv=sys.argv):
         exit(1)
 
     model = ChatPipeline(pipeline_config)
-    model.openweb.cache = {}
-    search_results_cache = json.load(io.open(SEARCH_CACHE_JSON_PATH))
-    for query, results in search_results_cache.items():
-        model.openweb.cache[query] = [Snippet(snippet=t.get('snippet'), sc_name=t.get('sc_name'), url='unk', score=0)
-                                      for t
-                                      in results]
 
     verbose = False
     bot_profile = '我是小达;我是女生;我今年21岁;我生日是2001年11月11日;我是天蝎座;我现在在复旦大学上学;我现在在上海;我的专业是工商管理;我大三了;我还没有工作;我还没有毕业;我是浙江杭州人;我从小在杭州长大;我喜欢阅读，尤其是诗歌;我是个小吃货;我最爱巧克力了'

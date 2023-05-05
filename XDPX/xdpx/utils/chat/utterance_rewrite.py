@@ -39,6 +39,28 @@ class T5PegasusTokenizer(BertTokenizer):
                 split_tokens.extend(super()._tokenize(text))
         return split_tokens
 
+
+class BaseRewriteModel(object):
+    def __init__(self):
+        pass
+
+    def rewrite(self, query, history: List[HistoryItem]) -> tuple:
+        '''
+
+        Args:
+            query: before rewriing
+            history: dialog context
+
+        Returns:
+            query after rewriting
+        '''
+        if not history:
+            return query, []
+
+        utterances = [t.rewritten_utterance or t.utterance for t in history[-4:]] + [query]
+        return query, utterances
+
+
 class RewriteModel:
     def __init__(self, save_dir, is_onnx=False, quantized=False, provider='cuda'):
         # step 1. init argument and prepare model file

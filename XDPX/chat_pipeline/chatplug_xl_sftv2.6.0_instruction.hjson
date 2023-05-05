@@ -1,0 +1,94 @@
+{
+  rule_control_path: chat_pipeline/dummy_rule_control.json
+  use_instruction: true
+
+  # TODO: make args.py into modelscope
+  core_chat_save_dir: chat_pipeline/save_dir
+  core_chat_checkpoint: ../checkpoints/ChatPLUG-3.7B/pytorch_model.bin
+  
+  core_chat_pretrained_version : google/mt5-xl
+  core_chat_quantized : false
+  core_chat_is_onnx : false
+  core_chat_provider : cuda
+
+  core_chat_allspark_gpu_speed_up : false
+  core_chat_allspark_gen_cfg : {}
+  core_chat_max_encoder_length : 380
+  core_chat_min_data_frame_length : 1
+  core_chat_generate_config: {
+     # async : false,
+  	 num_beams: 3,
+     num_return_sequences: 1,
+     # num_beam_groups: 1,
+     # diversity_penalty: 1.2,
+     temperature: 0.8,
+     do_sample: false,
+     early_stopping: true,
+     top_k: 50,
+     top_p: 0.8,
+     repetition_penalty: 1.2,
+     length_penalty: 1.2,
+     min_length: 10,
+     max_length: 512,
+     no_repeat_ngram_size: 6
+  }
+  
+  # dialogue instruction
+  use_dialogue_instruction : false
+  dialogue_instruction_version : '2.6'
+  
+  core_chat_max_context_turns : 2
+  core_chat_max_history_turns : 10
+  core_chat_max_no_repeat_session : 20
+  core_chat_max_no_repeat_session_ngrams : 6
+  core_chat_max_knowledge_length : 300
+  core_chat_bad_words : 不知道|什么工作|你告诉我一下|你可以说一下|你呢|？|?|吗|你呢|什么|怎么|怎样|咋|啥|如何|为什么|哪|几|谁|多少|多大|多高|是不是|有没有|是否|多久|可不可以|能不能|行不行|干嘛|蠢蛋|傻逼
+
+  # rewrite
+  utterance_rewriter_save_dir: ""
+  utterance_rewriter_is_onnx: false
+  utterance_rewriter_quantized: false
+  utterance_rewriter_provider: cuda
+
+  # ner
+  unified_ner_url: ""
+  unified_ner_threshold : 0.85
+
+  # learn2search
+  learn2search_query_classifier_path: ""
+  learn2search_time_classifier_path: ""
+  max_search_length:60
+
+  # internet augument
+  openweb_use: false
+  openweb_is_test : false
+  openkg_use : false
+  local_retrieval_host: ""
+  local_retrieval_user: elastic
+  local_retrieval_password: TBD
+  local_retrieval_tenant: TBD
+  local_retrieval_faq_q_threshold: 0.95
+  local_retrieval_faq_q_threshold2: 0.9
+  local_retrieval_max_faq : 3
+
+  # post rerank
+  post_rerank_save_dir: ""
+  post_rerank_checkpoint: ""
+  
+  # persona
+  open_persona_faq: false
+  persona_faq_config: ""
+   
+  # safety
+  safety_filter_use : false
+  use_safety_rule: false
+  safety_rule_for_query_path: TBD
+  safety_rule_for_resp_path: TBD
+  safety_detect_use: false
+  safety_detect_model_path: TBD
+  safety_detect_mode: relax
+
+  pipeline_always_concat_history : true
+  persona_response_max_legnth : 512
+  
+}

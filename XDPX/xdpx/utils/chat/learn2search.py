@@ -66,6 +66,15 @@ class QueryClassifier:
         return label
 
 
+class BaseLearn2Search(object):
+    def __init__(self):
+        print(f'| skip query_classifier.')
+        self.query_classifier = None
+
+    def need_search(self, query: str) -> Tuple[bool, str]:
+        return False, CHITCHAT_QUERY
+
+
 class Learn2Search(object):
     def __init__(self, query_classifier_path):
         print(f'| init learn2search module..')
