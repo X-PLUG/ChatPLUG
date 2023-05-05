@@ -1,4 +1,4 @@
-# XDPX / X-PLUG Development Platform X
+# XDPX
 
 项目地址：[https://github.com/X-PLUG/ChatPLUG](http://https://github.com/X-PLUG/ChatPLUG)
 该项目主要支持**用于NLU的PyTorch代码（包括PAI在内）的跨环境训练**。有以下特点：
