@@ -18,11 +18,11 @@ import time
 import copy
 from xdpx.utils.chat.learn2call import Learn2Call
 from xdpx.utils.chat.chat_skills import ChatSkills
-from xdpx.utils.chat.learn2search import Learn2Search
+from xdpx.utils.chat.learn2search import BaseLearn2Search, Learn2Search
 from xdpx.utils.chat.unified_ner import NERTool
 from xdpx.utils.chat.post_rerank import PostReranker
 from xdpx.utils.chat.core_chat import CoreChat
-from xdpx.utils.chat.utterance_rewrite import RewriteModel
+from xdpx.utils.chat.utterance_rewrite import BaseRewriteModel, RewriteModel
 from xdpx.utils.chat.openkg_retrieval import OpenKG
 from xdpx.utils.chat.openweb_search import OpenWeb, Snippet
 from xdpx.utils.chat.local_retrieval import LocalRetrieval
@@ -93,10 +93,91 @@ class PipelineConfig:
 
 
 # for deploying on public cloud by aquila (can not read objects from different regions)
-path = os.path.join(default_cache_root, 'topic_trigger_responses.txt')
-if not io.exists(path):
-    path = 'oss://xdp-expriment/gaoxing.gx/chat/benchmark/topic_trigger_responses.txt'
-TOPIC_TRIGGER_RESPONSES = [l.strip() for l in io.open(path).readlines() if l.strip()]
+TOPIC_TRIGGER_RESPONSES = [
+    '你说我们为什么喜欢八卦',
+    '你说中国人的美国梦碎了吗',
+    '不想上班怎么破',
+    '特别怕死怎么破',
+    '最近余华很火啊，你知道他吗？',
+    '电影圈是个江湖啊',
+    '老男孩的“小苹果”怎么就火了',
+    '你知道相亲有多奇葩',
+    '为什么有人那么爱喝酒呢',
+    '人工智能时代还要过年回家吗',
+    '如何成为饭局达人',
+    '为什么感觉越来越穷',
+    '你的梦想是什么',
+    '人生的意义是什么呢',
+    '你怎么看父子母女之间的关系',
+    '你怎么看面子， 面子多少钱一斤',
+    '为啥会有作女，女人为何要作呢？',
+    '工作和生活真能平衡吗',
+    '我总觉得缺觉，你呢',
+    '点菜是门技术，你觉得呢',
+    '你喜欢吃宵夜吗',
+    '谁的人生不是匆匆租客啊，我们来聊聊租房？',
+    '想吃又想瘦，怎么办呢',
+    '什么时候想放飞自己哇',
+    '你喜欢哪位古人',
+    '要不要跨出舒适区，你怎么看',
+    '你还记得高考吗，高考压力怎么解',
+    '火锅江湖你属哪一派',
+    '你被猪队友坑过吗',
+    '你怎么看出身？ 家世的影响有多大？',
+    '失恋是不是一种病',
+    '跳槽季，越跳越迷茫啊',
+    '魔鬼藏在细节里，你觉得呢',
+    '小鲜肉是好词还是坏词',
+    '怎么才能幸福？',
+    '侵权这事怎么断',
+    '你怎么理解规则',
+    '如何面对逆境？你有逆商吗',
+    '怎样才算烂片？为啥出烂片？',
+    '你有成就吗？',
+    '青春时光真的美吗',
+    '你说过年需要亲戚吗',
+    '人真的能佛系无所谓吗',
+    '如何一眼识别渣男',
+    '粉丝时代人设属于谁',
+    '什么时候你变得爱哭',
+    '我们聊聊独居啊，你说一个人住真的好吗',
+    '你经历过分手吗？都有哪些分手理由哇',
+    '我们的父母都逐渐老去， 你有这样的感受吗',
+    '你说我们是要一专还是多能呢？',
+    '你常遇到会错意吗？',
+    '逃单还是抢单，饭桌见世情啊',
+    '流量时代几家欢乐几家愁哇',
+    '听音乐有鄙视链吗',
+    '你是真的睡不着吗',
+    '跟孩子沟通真是不简单啊',
+    '你怎么看明星结婚离婚啊，分手的幕前幕后好多戏',
+    '血拼的后遗症你经历过吗？',
+    '你怎么看原生家庭这个词？',
+    '你怎么看打工人996',
+    '挣钱就丢人吗？你怎么看',
+    '你是选择困难症吗',
+    '有句话不知该不该说，你有没有遇到过这样的情况',
+    '你怎么看凡学，我价格太高自己请不起',
+    '我跟父亲越老越像，你呢',
+    '现在社会经常出现PUA，啥是PUA呢',
+    '最近工作老是内卷，这是为啥呢',
+    '身在远乡为异客，从家乡出来是不是对的选择呢',
+    '你说分手后还能不能做朋友',
+    '人到30是选择稳定呢还是追求梦想',
+    '你说我们该不该支持早恋',
+    '没有爱了要不要离婚',
+    '不靠谱梦想要不要劝阻',
+    '新东方直播火了，你怎么看',
+    '我们聊聊三国演义怎样',
+    '来聊聊篮球',
+    '你知道姚明是干什么的吗',
+    '你知道红楼梦吗',
+    '你知道特斯拉吗',
+    '你喜欢哪个明星？',
+    '你喜欢听谁的歌啊',
+    '你喜欢看什么类型的电视剧啊',
+    '你知道余华吗'
+]
 TOPIC_TRIGGER_PREFIXS = [
     '我们换个话题聊聊怎样',
     '换个话题吧',
@@ -114,7 +195,7 @@ class ChatPipeline(object):
 
     def __init__(self, config: PipelineConfig):
         self.config = config
-        assert config.utterance_rewriter_save_dir is not None
+        # assert config.utterance_rewriter_save_dir is not None
         print(f'| initialize pipeline..')
         print(f'| creating core chat..')
         self.core_chat = CoreChat(
@@ -130,13 +211,22 @@ class ChatPipeline(object):
             config.core_chat_bad_words,
             config.core_chat_max_no_repeat_session_ngrams
         )
-        print(f'| creating utterance rewriter..')
-        self.utterance_rewriter = RewriteModel(config.utterance_rewriter_save_dir,
-                                               config.utterance_rewriter_is_onnx,
-                                               config.utterance_rewriter_quantized,
-                                               config.utterance_rewriter_provider)
-        print(f'| initialize learn2search module..')
-        self.learn2search = Learn2Search(config.learn2search_query_classifier_path)
+
+        if config.utterance_rewriter_save_dir:
+            print(f'| creating utterance rewriter..')
+            self.utterance_rewriter = RewriteModel(config.utterance_rewriter_save_dir,
+                                                config.utterance_rewriter_is_onnx,
+                                                config.utterance_rewriter_quantized,
+                                                config.utterance_rewriter_provider)
+        else:
+            self.utterance_rewriter = BaseRewriteModel()
+
+        if config.learn2search_query_classifier_path:
+            print(f'| initialize learn2search module..')
+            self.learn2search = Learn2Search(config.learn2search_query_classifier_path)
+        else:
+            self.learn2search = BaseLearn2Search()
+        
         print(f'| initialize chat skills..')
         self.chat_skills = ChatSkills()
         print(f'| initialize rule control..')
