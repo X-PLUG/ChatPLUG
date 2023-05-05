@@ -1,6 +1,0 @@
-{
-    loss: tinybert
-    model: tinybert_for_gd
-    ascending_metric: false
-    major_metric: loss
-}

@@ -1,8 +1,8 @@
-XDPX / 新地平线 / X-lab DeepQA Platform X
+# XDPX
 
-项目文档见：[语雀](https://yuque.antfin-inc.com/books/share/007ad4ad-d634-4013-a945-fe6e80d5f297?# 《XDPX训练框架》)
+项目文档见：[readthedocs](https://chatplug.readthedocs.io/en/latest/get_started.html)
 
-该项目主要支持**用于NLU的PyTorch代码（包括PAI在内）的跨环境训练**。有以下特点：
+该项目主要支持**用于PyTorch代码（包括PAI在内）的跨环境训练**。有以下特点：
 
 ## 跨环境通用
 - 支持所有环境中，所有路径直接配置OSS路径，和本地路径一起无差别使用，大文件传输显示进度条；
