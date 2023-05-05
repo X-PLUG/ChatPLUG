@@ -27,7 +27,7 @@ To this end, we first conduct large-scale pre-training on both common document c
 
 We show that ChatPLUG outperforms state-of-the-art Chinese dialogue systems on both automatic and human evaluation, and demenstrates strong multi-task generalization on a variety of text understanding and generation tasks. Our demo and model are made publicly available on [ModelScope](https://modelscope.cn/models/damo/ChatPLUG-3.7B/summary).  
 
-<img src="./docs/ChatPLUG.jpg" alt="ChatPLUG"  />
+<img src="assets/ChatPLUG.jpg" alt="ChatPLUG"  />
 
 Please read our paper for more detains about ChatPLUG.
 
@@ -40,7 +40,7 @@ Please read our paper for more detains about ChatPLUG.
 
 ## Spotlights
 
-<img src="./docs/spotlights.jpg" alt="spotlights" style="zoom: 50%;" />
+<img src="assets/spotlights.jpg" alt="spotlights" style="zoom: 50%;" />
 
 Compared with existed open-source models, we highlight three feaures of ChatPLUG as follows:
 
@@ -68,11 +68,11 @@ With external knowledge from a search engine, the problem of knowledge hallucina
 
 > With knowledge augmentation, ChatPLUG achieves better performance in terms of knowledge hallucination.
 
-<img src="./docs/knowledge_hallucination.jpg" width = "400" height = "300" alt="knowledge_hallucination" align=center />
+<img src="assets/knowledge_hallucination.jpg" width = "400" height = "300" alt="knowledge_hallucination" align=center />
 
 
 <details><summary><b>Examples of real-time questions (Click to view👇)</b></summary>
-<img src="./docs/knowledge_example.jpg" alt="knowledge_example" style="zoom: 67%;" />
+<img src="assets/knowledge_example.jpg" alt="knowledge_example" style="zoom: 67%;" />
 <summary>Access up-to-date information from Internet enables ChatPLUG to provide accurate real-time answers to questions.  </summary>
 </details> 
 
@@ -82,11 +82,11 @@ With external knowledge from a search engine, the problem of knowledge hallucina
 It's flexible to customize dialogue style and characters by setting bot profiles through our FiD architecture or simply using the appropriate prompt. 
 
 <details><summary><b>Examples of dialogue-style customization (Click to view👇)</b></summary>
-<img src="./docs/dialogue_style.jpg" alt="dialogue-style" style="zoom: 67%;" />
+<img src="assets/dialogue_style.jpg" alt="dialogue-style" style="zoom: 67%;" />
 </details>  
 
 <details><summary><b>Examples of character customization (Click to view👇)</b></summary>
-<img src="./docs/character_customization.jpg" alt="character_customization" style="zoom: 67%;" />
+<img src="assets/character_customization.jpg" alt="character_customization" style="zoom: 67%;" />
 </details>  
 
 
@@ -98,12 +98,12 @@ ChatPLUG can not only generate coherent and engaging responses in an open and mu
 
 > We compare our model with open-source Chinese LLMs including <a href="https://github.com/LianjiaTech/BELLE">BELLE-7M-2B</a> and <a href="https://github.com/THUDM/ChatGLM-6B">ChatGLM-6B</a> following the four-level rating evaluation (A>B>C>D). First, all the models are able to follow the given instructions (very small quantity of RATING-D). Second, our model ChatPLUG-3.7B achieves better performance (more quantity of RATING-A and fewer quantity of RATING-C) than BELLE-7B-2M with fewer model parameters and is comparable to ChatGLM-6B. It demonstrates the strong multi-task generalization of ChatPLUG. Lastly, by scaling up the model size to 13B, our model ChatPLUG-13B obtains the best performance. 
 
-<img src="./docs/evaluation_of_multi_task.jpg" width = "400" height = "400" alt="evaluation_of_multi_task" align=center />
+<img src="assets/evaluation_of_multi_task.jpg" width = "400" height = "400" alt="evaluation_of_multi_task" align=center />
 
 
 <details><summary><b>Examples of multi-task generalization (Click to view👇)</b></summary>
-<img src="./docs/multitask_case_1.jpg" alt="multitask_case_1" style="zoom: 67%;" />
-<img src="./docs/multitask_case_2.jpg" alt="multitask_case_2" style="zoom: 67%;" />
+<img src="assets/multitask_case_1.jpg" alt="multitask_case_1" style="zoom: 67%;" />
+<img src="assets/multitask_case_2.jpg" alt="multitask_case_2" style="zoom: 67%;" />
 </details>  
 
 
