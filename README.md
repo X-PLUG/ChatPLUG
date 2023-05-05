@@ -126,12 +126,17 @@ ChatPLUG can not only generate coherent and engaging responses in an open and mu
 
 ### XDPX
 
-
+XDPX is an easy-to-use library, that allows researchers and developers to train custom models and build own chatbots in a streamlined manner. Its all-in-one functionality allows for a one-stop solution that simplifies complex processes.
 
 [quick start](https://chatplug.readthedocs.io/en/latest/chatplug/get_started.html)
 
-XDPX 
+```bash
+# run cli inference
+x-script fidchat_new <CONFIG>.hjson
 
+# run training (Coming soon)
+x-train <CONFIG>.hjson
+```
 
 
 ### HuggingFace

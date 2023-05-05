@@ -5,8 +5,6 @@
 
 ## Quick Start
 
-
-
 ```bash
 # install
 cd XDPX
