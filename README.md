@@ -108,6 +108,7 @@ ChatPLUG can not only generate coherent and engaging responses in an open and mu
 
 
 ## How to run
+We offer three methods to use or continue developing ChatPLUG as follows:
 
 |             | Inference                        | Training                      |
 |-------------|----------------------------------|-------------------------------|
@@ -116,7 +117,7 @@ ChatPLUG can not only generate coherent and engaging responses in an open and mu
 | HuggingFace | :heavy_check_mark:Cli  (Coming soon)          | :x: Not Ready                 |
 
 ### ModelScope
-👏👏👏You can download and use ChatPLUG models from ModelScope.
+You can download and use ChatPLUG models from ModelScope.
 
 | Model Name    | URL                                                          |
 | ------------- | ------------------------------------------------------------ |
