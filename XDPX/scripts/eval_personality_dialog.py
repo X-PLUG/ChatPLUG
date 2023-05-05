@@ -78,7 +78,7 @@ class Model:
 def cli_main(argv):
     """for interactive testing of model behaviour"""
     assert len(argv) == 3, 'usage: x-script eval_personality_dialog <style_classifier_save_dir>  <test_file> '
-    save_dir = argv[1]  # oss://xdp-expriment/gaoxing.gx/chat/personality/model/zh/0.0001/
+    save_dir = argv[1] 
     checkpoint = None
     if io.isfile(save_dir):
         checkpoint = save_dir

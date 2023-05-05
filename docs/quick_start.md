@@ -3,7 +3,7 @@
 # Quick Start (ChatPLUG)
 
 
-## Quick Start
+## Install
 
 ```bash
 # install
@@ -24,20 +24,6 @@ CUDA_VISIBLE_DEVICES=0 x-script fidchat_new chat_pipeline/chatplug_xl_sftv2.6.0_
 | `#exit` | terminate            |
 | `#show` | show reponse details |
 | `#new`  | create a new session |
-
-
-## Training
-```bash
-# preprocess
-PYTHONPATH=./ x-prepro oss://xdp-expriment/gaoxing.gx/chat/configs/finetune_chat/mt5_prepro_0917.hjson
-# 产出prepro后的数据
-->oss://xdp-expriment/gaoxing.gx/chat/prepro/mt5/0917/v1.1.3.2.ctr/
-
-# training
-PYTHONPATH=./ x-train oss://xdp-expriment/gaoxing.gx/chat/configs/finetune_chat/mt5_train_0917.hjson
-# 产出预训练后的模型
--> oss://xdp-expriment/gaoxing.gx/chat/training/mt5_finetune/0917
-```
 
 
 
@@ -69,7 +55,3 @@ io.set_io(oss)
 
 填上access_key_id、access_key_secret，并添加所有你需要访问的oss bucket的名字以及它们所在的地区名到region_bucket。比如链接为[http://pretrain-lm.oss-cn-hangzhou.aliyuncs.com/](http://pretrain-lm.oss-cn-hangzhou.aliyuncs.com/) 的话，bucket就是“pretrain-lm”，地区名就是“oss-”后面的那部分，即“cn-hangzhou”，传入的值为['cn-hangzhou','pretrain-lm']。之后程序运行便会自动加载这个配置并且支持访问oss路径。
 
-
-## 代码结构
-
-## F.A.Q

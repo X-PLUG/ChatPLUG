@@ -77,7 +77,7 @@ def is_persona_question(q):
 
 
 TOPIC_TRIGGER_RESPONSES = [l.strip() for l in io.open(
-    'oss://xdp-expriment/gaoxing.gx/chat/benchmark/topic_trigger_responses.txt').readlines() if l.strip()]
+    'topic_trigger_responses.txt').readlines() if l.strip()]
 TOPIC_TRIGGER_PREFIXS = [
     '我们换个话题聊聊怎样',
     '换个话题吧',
@@ -554,8 +554,8 @@ class QARankModel:
 
 class EnsembleModel(object):
     def __init__(self):
-        self.rerank_model = QARankModel('oss://xdp-expriment/gaoxing.gx/chat/training/rerank/v0.9.1.rerank/1024_0.0001')
-        self.metric_model = QARankModel('oss://xdp-expriment/gaoxing.gx/chat/training/metric/1001/64_2e-05_5_True_sbert-base')
+        self.rerank_model = QARankModel('RERANK_MODEL')
+        self.metric_model = QARankModel('METRIC_MODEL')
 
     def rerank(self, query, search_results: List):
         rerank_results = self.rerank_model.rerank(query, search_results, return_sorted=False)
@@ -598,18 +598,7 @@ class MrcModel:
 
 class ConsistencyModel:
     def __init__(self, save_dir, checkpoint=None):
-
-        # from fasttext import FastText
-        # model_dir = 'oss://xdp-expriment/wenshen.xws/opendialogue/LTMP/resource/FastText/model.bin'
-        # if model_dir.startswith("oss://"):
-        #     model_path = cache_file(os.path.join(model_dir, 'model.bin'), dry=True)
-        #     if not io.isfile(model_path):
-        #         io.copy(os.path.join(model_dir, 'model.bin'), model_path)
-        #     self.model = FastText.load_model(model_path)
-        # else:
-        #     self.model = FastText.load_model(os.path.join(model_dir, "model.bin"))
-
-
+        
         self.cuda = torch.cuda.is_available()
         with io.open(os.path.join(save_dir, 'args.py')) as f:
             args = Options.parse_tree(eval(f.read()))

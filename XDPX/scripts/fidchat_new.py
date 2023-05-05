@@ -20,17 +20,17 @@ from xdpx.utils.chat.local_retrieval import FAQ
 from xdpx.utils.chat.openweb_search import Snippet
 from xdpx.utils.chat.pipeline import PipelineConfig, ChatPipeline
 
-SEARCH_CACHE_JSON_PATH = 'oss://xdp-expriment/gaoxing.gx/chat/benchmark/search_cache.json'
-DEFAULT_TEST_FILE_DIR = 'oss://xdp-expriment/gaoxing.gx/chat/benchmark/'
+SEARCH_CACHE_JSON_PATH = 'search_cache.json'
+DEFAULT_TEST_FILE_DIR = 'benchmark/'
 DEFAULT_TEST_FILE = 'pangu.test.json'
-
+PERSONALITY_GROUP100_FILE = 'personality_100groups.json'
+PERSONALITY_GROUP100 = json.load(io.open(PERSONALITY_GROUP100_FILE))
+PERSONALITY_GROUP100 = PERSONALITY_GROUP100[
+    'positive']  # + PERSONALITY_GROUP100['neural'] + PERSONALITY_GROUP100['negative']
 
 
 def get_new_bot_profile(bot_profile):
-    PERSONALITY_GROUP100_FILE = 'oss://xdp-expriment/gaoxing.gx/chat/personality/personality_100groups.json'
-    PERSONALITY_GROUP100 = json.load(io.open(PERSONALITY_GROUP100_FILE))
-    PERSONALITY_GROUP100 = PERSONALITY_GROUP100[
-        'positive']  # + PERSONALITY_GROUP100['neural'] + PERSONALITY_GROUP100['negative']
+    
 
     personality = ';'.join(['我是个{}人'.format(l) for l in random.choice(PERSONALITY_GROUP100)])
     new_bot_profile = '{};我是个{}人;'.format(bot_profile.strip(';'), personality)
@@ -202,7 +202,7 @@ def cli_main(argv=sys.argv):
             if utterance.lower().startswith('#test_entity_knowledge'):
                 bak_safty_filter = model.safty_filter
                 model.safty_filter = None
-                benchmark_file = 'oss://xdp-expriment/gaoxing.gx/chat/benchmark/entity_knowledge_test.json'
+                benchmark_file = 'benchmark/entity_knowledge_test.json'
                 entity_qa_items = json.loads(io.open(benchmark_file).read())
                 with_history = utterance.lower() == '#test_entity_knowledge_with_history'
                 history = []
@@ -287,7 +287,6 @@ def cli_main(argv=sys.argv):
                 output_file = input_file.replace('.json', '') + '.test_safety.' + str(time.time()) + '.jsonl'
                 print(f'input_file = {input_file}, output_file = {output_file}')
 
-                # benchmark_file = 'oss://xdp-expriment/gaoxing.gx/chat/benchmark/entity_knowledge_test.json'
                 benchmark_file = input_file
                 entity_qa_items = json.loads(io.open(benchmark_file).read())
                 
@@ -338,7 +337,7 @@ def cli_main(argv=sys.argv):
             if utterance.lower().startswith('#test_persona'):
                 bak_safty_filter = model.safty_filter
                 model.safty_filter = None
-                benchmark_file = 'oss://xdp-expriment/gaoxing.gx/chat/benchmark/persona_benchmark.json'
+                benchmark_file = 'persona_benchmark.json'
                 persona_qa_items = [json.loads(l) for l in io.open(benchmark_file).readlines() if l.strip()]
                 with_history = utterance.lower() == '#test_persona_with_history'
                 only_bot_profile = utterance.lower() == '#test_persona_only_bot_profile'
@@ -392,7 +391,7 @@ def cli_main(argv=sys.argv):
                 model.safty_filter = bak_safty_filter
                 continue
             if utterance.lower().startswith('#test_multiturn'):
-                benchmark_file = 'oss://xdp-expriment/jiayi.qm/0_digital_human/benchmark/test_multiturn.json'
+                benchmark_file = 'test_multiturn.json'
                 test_data_items = json.loads(io.open(benchmark_file).read())
                 bak_safty_filter = model.safty_filter
                 model.safty_filter = None
@@ -464,7 +463,7 @@ def cli_main(argv=sys.argv):
             if utterance.lower() == '#create_local_faqs_index':
                 model.local_retrieval.create_faq_indexs(remove_if_exists=True)
                 import pandas as pd
-                geely_faq_path = 'oss://xdp-expriment/gaoxing.gx/chat/localir/geely_faqs_weather_astroid_persona.json'
+                geely_faq_path = 'geely_faqs_weather_astroid_persona.json'
                 geely_local_faqs = json.load(io.open(geely_faq_path))
                 geely_local_faqs = [dacite.from_dict(FAQ, d) for d in geely_local_faqs]
                 model.local_retrieval.add_faq_to_index(geely_local_faqs)

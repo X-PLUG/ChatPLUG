@@ -79,7 +79,7 @@ class Model:
         return response
 
 
-DEFAULT_TEST_FILE_DIR = 'oss://xdp-expriment/gaoxing.gx/chat/benchmark/'
+DEFAULT_TEST_FILE_DIR = 'benchmark/'
 DEFAULT_TEST_FILE = 'pangu.test.json'
 
 
@@ -138,7 +138,7 @@ def cli_main(argv):
                 break
             elif utterance.lower().startswith('#test_file='):
                 test_file = utterance.lower().strip().split('=')[1]
-                DEFAULT_TEST_FILE_DIR = 'oss://xdp-expriment/zhimiao.chh/tmp/test_file'
+                DEFAULT_TEST_FILE_DIR = 'test_file'
                 out_file = f'{DEFAULT_TEST_FILE_DIR}/results/test_file.{time.time()}.jsonl'
                 with io.open(test_file) as f,io.open(out_file, 'w') as outf:
                     config_json = {
@@ -170,9 +170,9 @@ def cli_main(argv):
                 print(f'out file is {out_file}')
                 continue
             elif utterance.lower() == '#test_entity_knowledge':
-                test_file = 'oss://xdp-expriment/gaoxing.gx/chat/benchmark/entity_knowledge_test.json'
+                test_file = 'entity_knowledge_test.json'
                 entity_qa_items = json.loads(io.open(test_file).read())
-                DEFAULT_TEST_FILE_DIR = 'oss://xdp-expriment/zhimiao.chh/tmp/entity_knowledge_test'
+                DEFAULT_TEST_FILE_DIR = 'entity_knowledge_test'
                 out_file = f'{DEFAULT_TEST_FILE_DIR}/results/test_entity_knowledge.{time.time()}.jsonl'
                 debug_infos = []
                 with io.open(out_file, 'w') as outf:
