@@ -6,7 +6,7 @@
 
 # example:
 # python3 -m xdpx.utils.thirdparty.tensorrt_transformers.T5.convert_to_trt -m t5-small
-# python3 -m xdpx.utils.thirdparty.tensorrt_transformers.T5.convert_to_trt -m oss://xdp-expriment/gaoxing.gx/chat/training/mt5/v0.9/0.0001/checkpoint-44220.pt
+# python3 -m xdpx.utils.thirdparty.tensorrt_transformers.T5.convert_to_trt -m checkpoint-44220.pt
 
 import argparse
 import copy

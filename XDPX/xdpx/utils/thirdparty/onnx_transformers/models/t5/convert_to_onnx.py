@@ -6,7 +6,7 @@
 
 # example:
 # python3 -m xdpx.utils.thirdparty.onnx_transformers.models.t5.convert_to_onnx -m t5-small -w
-# python3 -m xdpx.utils.thirdparty.onnx_transformers.models.t5.convert_to_onnx  -w -m oss://xdp-expriment/gaoxing.gx/chat/training/mt5/v0.9/0.0001/checkpoint-44220.pt --use_gpu
+# python3 -m xdpx.utils.thirdparty.onnx_transformers.models.t5.convert_to_onnx  -w -m checkpoint-44220.pt --use_gpu
 
 import argparse
 import copy

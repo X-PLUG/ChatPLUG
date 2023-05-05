@@ -42,13 +42,13 @@ def cli_main(argv=sys.argv):
 
 
 RERANK_MODEL = FewShotModel(
-    'oss://xdp-expriment/gaoxing.gx/ydpoc/fewshot/training/v0.1/N64-K4_20000_40_6e-05_protonet_rdropout_True_kl1_proj768_cl0_infonce/')
+    'FewShotModel')
 
 QA_RERANK_MODEL = QARankModel(
-    'oss://xdp-expriment/gaoxing.gx/ydpoc/dpr/training/v0.1/'
+    'QARankModel'
 )
 test_data = []
-test_file = 'oss://xdp-expriment/gaoxing.gx/ydpoc/fewshot/dataset/for_test/tmp_065612_single_turn_test'
+test_file = 'tmp_065612_single_turn_test'
 for l in io.open(test_file):
     ts = l.strip().split(',,,')
     if len(ts) == 7:

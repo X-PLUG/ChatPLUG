@@ -26,10 +26,10 @@ def cli_main(argv=sys.argv):
     options = Options()
     options.register(
         Argument('knowledge_path',
-                 default=None),  # oss://xdp-expriment/wenshen.xws/opendialogue/LTMP/resource/SearchRewrite/regex.txt
+                 default=None), 
         Argument('ner_url', default=None),  # 默认关闭，当填写正确NER http请求地址时打开
         Argument('query_classify_model_dir', default=None),  # 默认关闭，当填写正确oss分类模型地址时打开
-        Argument('qa_rerank_model_dir', default=None),  # 'oss://xdp-expriment/gaoxing.gx/ydpoc/dpr/training/v0.1/')
+        Argument('qa_rerank_model_dir', default=None),
         Argument('rewrite_model_dir', required=True),
 
         Argument('rewrite_is_onnx', default=False),
@@ -45,15 +45,15 @@ def cli_main(argv=sys.argv):
         Argument('allspark_gpu_speed_up', default=False),
         Argument('command', default=None),
         Argument('use_mrc_model', default=False),
-        Argument('search_cahce_json_path', default='oss://xdp-expriment/gaoxing.gx/chat/benchmark/search_cache.json')
+        Argument('search_cahce_json_path', default='search_cache.json')
     )
     bootstrap(options, main, __file__, argv)
 
 
-DEFAULT_TEST_FILE_DIR = 'oss://xdp-expriment/gaoxing.gx/chat/benchmark/'
+DEFAULT_TEST_FILE_DIR = 'benchmark/'
 DEFAULT_TEST_FILE = 'pangu.test.json'
 
-personality_group100_file = 'oss://xdp-expriment/gaoxing.gx/chat/personality/personality_100groups.json'
+personality_group100_file = 'personality_100groups.json'
 personality_group100 = json.load(io.open(personality_group100_file))
 PERSONALITY_GROUP100 = personality_group100['positive'] + personality_group100['neural'] + personality_group100[
     'negative']
@@ -285,7 +285,7 @@ def main(cli_args: Arg):
                         print(f'>>> END SELF CHAT {self_chat_turns} TURNS <<<')
                 continue
             if utterance.lower().startswith('#test_entity_knowledge'):
-                benchmark_file = 'oss://xdp-expriment/gaoxing.gx/chat/benchmark/entity_knowledge_test.json'
+                benchmark_file = 'entity_knowledge_test.json'
                 entity_qa_items = json.loads(io.open(benchmark_file).read())
                 with_history = utterance.lower() == '#test_entity_knowledge_with_history'
 
@@ -340,7 +340,7 @@ def main(cli_args: Arg):
                     print(f'| {right_count} / {total_count} = {acc}')
                 continue
             if utterance.lower().startswith('#test_persona'):
-                benchmark_file = 'oss://xdp-expriment/gaoxing.gx/chat/benchmark/persona_benchmark.json'
+                benchmark_file = 'persona_benchmark.json'
                 persona_qa_items = [json.loads(l) for l in io.open(benchmark_file).readlines() if l.strip()]
                 with_history = utterance.lower() == '#test_persona_with_history'
                 only_bot_profile = utterance.lower() == '#test_persona_only_bot_profile'
@@ -393,7 +393,7 @@ def main(cli_args: Arg):
                     print(f'| {right_count} / {total_count} = {acc}')
                 continue
             if utterance.lower().startswith('#test_multiturn'):
-                benchmark_file = 'oss://xdp-expriment/jiayi.qm/0_digital_human/benchmark/test_multiturn.json'
+                benchmark_file = 'test_multiturn.json'
                 test_data_items = json.loads(io.open(benchmark_file).read())
                 history = []
                 debug_infos = []

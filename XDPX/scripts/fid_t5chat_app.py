@@ -177,7 +177,7 @@ def cli_main(argv=sys.argv):
     options = Options()
     options.register(
         Argument('knowledge_path',
-                 default=None), #oss://xdp-expriment/wenshen.xws/opendialogue/LTMP/resource/SearchRewrite/regex.txt
+                 default=None), 
         Argument('ner_url', default=None),  # 默认关闭，当填写正确NER http请求地址时打开
         Argument('query_classify_model_dir', default=None),  # 默认关闭，当填写正确oss分类模型地址时打开
         Argument('rewrite_is_onnx', default=False),
@@ -196,7 +196,7 @@ def cli_main(argv=sys.argv):
         Argument('allspark_gpu_speed_up', default=False),
         Argument('command', default=None),
         Argument('use_mrc_model', default=False),
-        Argument('search_cahce_json_path', default='oss://xdp-expriment/gaoxing.gx/chat/benchmark/search_cache.json')
+        Argument('search_cache_json_path', default='search_cache.json')
     )
     bootstrap(options, main, __file__, argv)
 

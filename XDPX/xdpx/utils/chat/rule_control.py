@@ -62,8 +62,7 @@ class RuleControl(object):
 
 
 if __name__ == '__main__':
-    # control = RuleControl("oss://xdp-expriment/jiayi.qm/0_digital_human/configs/rules/rule_control_weather.json")
-    control = RuleControl("oss://xdp-expriment/gaoxing.gx/chat/rules/safety_rule.json")
+    control = RuleControl("safety_rule.json")
     a = control.call("阿里股价多少")
     b = control.call("今天天气如何")
     print("ok")

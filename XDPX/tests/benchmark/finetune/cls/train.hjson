@@ -10,7 +10,8 @@
 
     data_dir: ${save_root}/finetune/cls/data/
     save_dir: ${save_root}/finetune/cls/model/
-    pretrained_model: oss://xdp-expriment/runqi.yrq/ckpt/custom_run19/<last>
+    pretrained_model: TODO
+    custom_run19/<last>
     major_metric: f1
     learning_rate: 7e-5
     batch_size: 32

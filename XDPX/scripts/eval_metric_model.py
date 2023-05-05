@@ -41,9 +41,9 @@ def pearson_and_spearman(preds, labels):
     }
 
 
-DEFAULT_SINGLE_TURN_QA_FILE = 'oss://xdp-expriment/gaoxing.gx/chat/metric/junfeng_single_turn_qa.json'
-DEFAULT_SELFCHAT_FILE = 'oss://xdp-expriment/gaoxing.gx/chat/metric/junfeng_selfchat.json'
-DEFAULT_CCONV_FILE = 'oss://xdp-expriment/gaoxing.gx/chat/metric/human_score.0706.json'
+DEFAULT_SINGLE_TURN_QA_FILE = 'junfeng_single_turn_qa.json'
+DEFAULT_SELFCHAT_FILE = 'junfeng_selfchat.json'
+DEFAULT_CCONV_FILE = 'human_score.0706.json'
 
 
 def load_single_turn_qa_data(file=None):
@@ -105,7 +105,7 @@ def load_cconv_data(file=None):
 def cli_main(argv):
     assert len(argv) <= 3, 'x-script eval_open_dialog <metric_model_dir> <rerank_model_type>'
     metric_model_dir = argv[1] if len(
-        argv) > 1 else 'oss://xdp-expriment/gaoxing.gx/chat/training/rerank/v0.9.1.rerank/1024_0.0001'
+        argv) > 1 else 'TODO'
     rerank_model_type = argv[2] if len(
         argv) > 2 else 'rank_qa'
 

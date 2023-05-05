@@ -10,7 +10,8 @@
 
     data_dir: ${save_root}/adv/data/
     save_dir: ${save_root}/adv/model/
-    pretrained_model: oss://xdp-expriment/runqi.yrq/ckpt/custom_run19/<last>
+    pretrained_model: TODO
+    custom_run19/<last>
     major_metric: f1
     task: freelb
     learning_rate: 7e-5

@@ -24,7 +24,7 @@ def cli_main(argv):
     assert len(argv) == 2 or len(argv) == 3, 'x-script eval_open_dialog <test_file_path> <metric_model_dir>'
     test_file_path = argv[1]
     metric_model_dir = argv[2] if len(
-        argv) > 2 else 'oss://xdp-expriment/gaoxing.gx/chat/training/rerank/v0.9.1.rerank/1024_0.0001'
+        argv) > 2 else 'TODO'
 
     if not metric_model_dir == 'ensemble':
         metric_model = QARankModel(metric_model_dir)
