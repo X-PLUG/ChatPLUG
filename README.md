@@ -68,7 +68,7 @@ With external knowledge from a search engine, the problem of knowledge hallucina
 
 > With knowledge augmentation, ChatPLUG achieves better performance in terms of knowledge hallucination.
 
-<img src="assets/knowledge_hallucination.jpg" width = "400" height = "300" alt="knowledge_hallucination" align=center />
+<img src="assets/knowledge_hallucination.jpg" style="zoom: 15%;" alt="knowledge_hallucination"/>
 
 
 <details><summary><b>Examples of real-time questions (Click to view👇)</b></summary>
@@ -98,7 +98,7 @@ ChatPLUG can not only generate coherent and engaging responses in an open and mu
 
 > We compare our model with open-source Chinese LLMs including <a href="https://github.com/LianjiaTech/BELLE">BELLE-7M-2B</a> and <a href="https://github.com/THUDM/ChatGLM-6B">ChatGLM-6B</a> following the four-level rating evaluation (A>B>C>D). First, all the models are able to follow the given instructions (very small quantity of RATING-D). Second, our model ChatPLUG-3.7B achieves better performance (more quantity of RATING-A and fewer quantity of RATING-C) than BELLE-7B-2M with fewer model parameters and is comparable to ChatGLM-6B. It demonstrates the strong multi-task generalization of ChatPLUG. Lastly, by scaling up the model size to 13B, our model ChatPLUG-13B obtains the best performance. 
 
-<img src="assets/evaluation_of_multi_task.jpg" width = "400" height = "400" alt="evaluation_of_multi_task" align=center />
+<img src="assets/evaluation_of_multi_task.jpg" style="zoom: 20%;" alt="evaluation_of_multi_task"/>
 
 
 <details><summary><b>Examples of multi-task generalization (Click to view👇)</b></summary>
@@ -133,12 +133,9 @@ At the launch of the ChatPLUG project, we don't intentionally bulid a all-powerf
 We leave above shortcomings for future work.
 
 
-
 ## Citations
 
 If you find our project useful in your work, please cite:
-
-- ChatPLUG: Open-Domain Generative Dialogue System with Internet-Augmented Instruction Tuning for Digital Human. [Link](https://arxiv.org/abs/2304.07849)
 
 ```
   @misc{tian2023chatplug,
