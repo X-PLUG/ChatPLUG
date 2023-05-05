@@ -109,7 +109,14 @@ ChatPLUG can not only generate coherent and engaging responses in an open and mu
 
 ## How to run
 
-👏👏👏You can download and use ChatPLUG models from modelscope.
+|             | Inference                        | Training                      |
+|-------------|----------------------------------|-------------------------------|
+| ModelScope  | :heavy_check_mark: Cli           | :x:  Not Ready                |
+| XDPX        | :heavy_check_mark: Cli & Serving | :heavy_check_mark:    Support |
+| HuggingFace | :heavy_check_mark:Cli            | :x: Not Ready                 |
+
+### ModelScope
+👏👏👏You can download and use ChatPLUG models from ModelScope.
 
 | Model Name    | URL                                                          |
 | ------------- | ------------------------------------------------------------ |
@@ -117,6 +124,34 @@ ChatPLUG can not only generate coherent and engaging responses in an open and mu
 | ChatPLUG-3.7B | [ChatPLUG-开放域对话模型-3.7B](https://modelscope.cn/models/damo/ChatPLUG-3.7B/summary) |
 
 
+### XDPX
+
+
+
+## Install 
+
+```bash
+# install
+cd XDPX
+pip install -e .
+
+# download checkpoints from modelscope
+sh download.sh
+
+# run cli
+CUDA_VISIBLE_DEVICES=0 x-script fidchat_new chat_pipeline/chatplug_xl_sftv2.6.0_instruction.hjson
+```
+
+### Cli Usage
+| command | action               |
+|---------|----------------------|
+| query   | response             |
+| `#exit` | terminate            |
+| `#show` | show reponse details |
+| `#new`  | create a new session |
+
+### HuggingFace
+Coming soon.
 
 ## Limitations
 
