@@ -40,7 +40,7 @@ Please read our paper for more detains about ChatPLUG.
 
 ## Spotlights
 
-<img src="assets/spotlights.jpg" alt="spotlights" style="zoom: 50%;" />
+<img src="assets/spotlights.jpg" alt="spotlights" style="zoom: 40%;" />
 
 Compared with existed open-source models, we highlight three feaures of ChatPLUG as follows:
 
@@ -68,7 +68,7 @@ With external knowledge from a search engine, the problem of knowledge hallucina
 
 > With knowledge augmentation, ChatPLUG achieves better performance in terms of knowledge hallucination.
 
-<img src="assets/knowledge_hallucination.jpg" style="zoom: 15%;" alt="knowledge_hallucination"/>
+<img src="assets/knowledge_hallucination.jpg" style="zoom: 67%;" alt="knowledge_hallucination"/>
 
 
 <details><summary><b>Examples of real-time questions (Click to view👇)</b></summary>
@@ -98,7 +98,7 @@ ChatPLUG can not only generate coherent and engaging responses in an open and mu
 
 > We compare our model with open-source Chinese LLMs including <a href="https://github.com/LianjiaTech/BELLE">BELLE-7M-2B</a> and <a href="https://github.com/THUDM/ChatGLM-6B">ChatGLM-6B</a> following the four-level rating evaluation (A>B>C>D). First, all the models are able to follow the given instructions (very small quantity of RATING-D). Second, our model ChatPLUG-3.7B achieves better performance (more quantity of RATING-A and fewer quantity of RATING-C) than BELLE-7B-2M with fewer model parameters and is comparable to ChatGLM-6B. It demonstrates the strong multi-task generalization of ChatPLUG. Lastly, by scaling up the model size to 13B, our model ChatPLUG-13B obtains the best performance. 
 
-<img src="assets/evaluation_of_multi_task.jpg" style="zoom: 20%;" alt="evaluation_of_multi_task"/>
+<img src="assets/evaluation_of_multi_task.jpg" style="zoom: 67%;" alt="evaluation_of_multi_task"/>
 
 
 <details><summary><b>Examples of multi-task generalization (Click to view👇)</b></summary>
@@ -112,8 +112,8 @@ ChatPLUG can not only generate coherent and engaging responses in an open and mu
 |             | Inference                        | Training                      |
 |-------------|----------------------------------|-------------------------------|
 | ModelScope  | :heavy_check_mark: Cli           | :x:  Not Ready                |
-| XDPX        | :heavy_check_mark: Cli & Serving | :heavy_check_mark:    Support |
-| HuggingFace | :heavy_check_mark:Cli            | :x: Not Ready                 |
+| XDPX        | :heavy_check_mark: Cli & Serving | :heavy_check_mark:    Support (Coming soon) |
+| HuggingFace | :heavy_check_mark:Cli  (Coming soon)          | :x: Not Ready                 |
 
 ### ModelScope
 👏👏👏You can download and use ChatPLUG models from ModelScope.
@@ -128,27 +128,11 @@ ChatPLUG can not only generate coherent and engaging responses in an open and mu
 
 
 
-## Install 
+[quick start](https://chatplug.readthedocs.io/en/latest/chatplug/get_started.html)
 
-```bash
-# install
-cd XDPX
-pip install -e .
+XDPX 
 
-# download checkpoints from modelscope
-sh download.sh
 
-# run cli
-CUDA_VISIBLE_DEVICES=0 x-script fidchat_new chat_pipeline/chatplug_xl_sftv2.6.0_instruction.hjson
-```
-
-### Cli Usage
-| command | action               |
-|---------|----------------------|
-| query   | response             |
-| `#exit` | terminate            |
-| `#show` | show reponse details |
-| `#new`  | create a new session |
 
 ### HuggingFace
 Coming soon.
