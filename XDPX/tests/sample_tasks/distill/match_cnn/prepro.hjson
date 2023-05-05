@@ -1,0 +1,17 @@
+{
+    __parent__: [
+        tests/sample_tasks/embedding
+        examples/distill/match_cnn
+        [
+            {workers: 1}
+            {workers: 4}
+        ]
+
+    ]
+
+    data_source: ${test_root}/fushi_distill/
+    data_dir: ${test_root}/fushi_distill_data/
+    data_files: ['train.txt', 'dev.txt', 'unlabeled.txt']
+    max_len: 40
+    check_max_len: true
+}

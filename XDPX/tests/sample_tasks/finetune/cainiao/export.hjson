@@ -1,0 +1,5 @@
+{
+  save_dir: ${test_root}/cainiao/
+  out_dir: ${test_root}/cainiao/export/
+  check_outputs: true
+}

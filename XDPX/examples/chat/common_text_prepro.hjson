@@ -1,0 +1,39 @@
+{
+    __pytorch__: 180
+    __v100__: n
+    __worker__: 1
+    __gpu__: 1
+    __cpu__: 40
+    __memory__: 40
+    __parent__: [
+        [
+            {__def__: {task_name: 'v0.9.1.nobye'} } #
+        ]
+    ]
+    __def__: {
+        source_root: /mnt/workspace/workgroup/hehong.chh/data/50G_data/process/train/
+        data_root: oss://xdp-expriment/zhimiao.chh/data/dialogue/pretrain/common_text/3300w/
+    }
+
+    data_files: ['*.jsonl']
+    data_source: ${source_root}
+    data_dir:  ${data_root}
+    workers: 64
+    save_format: torch
+
+    parser: jsonl
+    fields: ['text']
+    loader: common_text
+    processor: common_text
+    tokenizer: palm_tokenizer
+    vocab_file: tests/sample_data/palm_vocab.txt
+    pad_word: '[PAD]'
+    unk_word: '[UNK]'
+
+    target_map_file: tests/sample_data/noop_target_map.txt
+
+    skip_bad_lines:true
+
+    max_len: 512
+    max_encoder_length: 512
+}

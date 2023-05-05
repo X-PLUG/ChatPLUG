@@ -1,0 +1,10 @@
+{
+    __parent__: [
+        examples/pretrain/prepro/pair
+    ]
+    data_source: tests/sample_data/click/
+    data_dir: ${test_root}/data/click/
+    max_len: 40
+    workers: 4
+    check_max_len: true
+}

@@ -1,0 +1,5 @@
+{
+    save_dir: ${test_root}/cainiao_cls_cnn/
+    valid_subset: dev
+    compare_origin: true
+}

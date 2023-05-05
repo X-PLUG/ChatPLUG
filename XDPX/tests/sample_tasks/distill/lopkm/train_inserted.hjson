@@ -1,0 +1,21 @@
+{
+    __parent__: [
+        ${data_dir}/meta
+        examples/pretrain/tasks/corpus
+        examples/pretrain/params/default
+        examples/model/pkm/optimizer
+        examples/debug
+        tests/sample_tasks/checkpoint
+        ${test_root}/distill_lopkm/mem_config.json
+    ]
+
+    data_dir: ${test_root}/data/wiki/
+    save_dir: ${test_root}/wiki_lopkm/
+    model: bert_lm_lopkm
+    inspect_gradient: true
+    pretrained_model: ${bert_base}
+    pretrained_memories: ${test_root}/distill_lopkm/<last>
+    fp16: ${__apex__}
+    save: true
+    save_best_only: true
+}

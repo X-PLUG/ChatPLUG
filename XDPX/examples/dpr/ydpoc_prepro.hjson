@@ -1,0 +1,33 @@
+{
+     __parent__: [
+        [
+            {__def__: {task_name: 'v0.1'}}
+        ]
+    ]
+    __def__: {
+        source_root: oss://xdp-expriment/gaoxing.gx/ydpoc/dpr/dataset/
+        data_root: oss://xdp-expriment/gaoxing.gx/ydpoc/dpr/prepro/
+    }
+
+    vocab_file: tests/sample_data/bert_vocab.txt
+
+    data_files: *.jsonl
+    data_source: ${source_root}/${task_name}
+    data_dir:  ${data_root}/${task_name}
+    workers: 4
+    special_targets:[]
+
+    parser: jsonl
+    fields: ['question','passage']
+    processor: bert_dpr
+    max_question_length: 30
+    max_passage_length: 300
+    max_len: 330
+    mask_whole_words: false
+    loader: dpr
+
+    tokenizer: bert
+    pad_word: '[PAD]'
+    unk_word: '[UNK]'
+    lower: false
+}

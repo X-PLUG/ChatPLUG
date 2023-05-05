@@ -1,0 +1,33 @@
+[run]
+branch = False
+concurrency = multiprocessing
+include = */xdpx/*, */scripts/*
+omit = *profiling*, *thirdparty*
+
+[report]
+# Regexes for lines to exclude from consideration
+exclude_lines =
+    # Have to re-enable the standard pragma
+    pragma: no cover
+
+    # Don't complain about missing debug-only code:
+    def __repr__
+
+    # Don't complain if tests don't hit defensive assertion code:
+    raise AssertionError
+    raise NotImplementedError
+    raise DeprecationWarning
+
+    # ignore other hard errors since pipeline tests will never raise them
+    raise RuntimeError
+    raise ValueError
+    raise LookupError
+
+    # Don't complain if non-runnable code isn't run:
+    if 0:
+    if __name__ == .__main__.:
+
+ignore_errors = True
+
+[html]
+directory = ./user/htmlcov

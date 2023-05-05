@@ -1,0 +1,11 @@
+{
+    __parent__: [
+        examples/finetune/prepro/match
+    ]
+    data_source: tests/sample_data/fushi/
+    data_dir: ${test_root}/data/fushi_siamese/
+    processor: bert_pair_siamese
+    workers: 4
+    max_len: 40
+    check_max_len: true
+}

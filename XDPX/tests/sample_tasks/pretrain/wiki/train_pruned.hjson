@@ -1,0 +1,8 @@
+{
+  __parent__: [
+    ./train
+    ${test_root}/bert_pruned/bert_config.json
+  ]
+  save_dir: ${test_root}/wiki_pruned/
+  pretrained_model: ${test_root}/bert_pruned/model.pt
+}

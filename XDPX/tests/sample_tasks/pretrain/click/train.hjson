@@ -1,0 +1,25 @@
+{
+    __parent__: [
+        ${data_dir}/meta
+        examples/pretrain/tasks/pair
+        examples/pretrain/params/default
+        examples/debug
+        tests/sample_tasks/checkpoint
+    ]
+
+    data_dir: ${test_root}/data/click/
+    save_dir: ${test_root}/click/
+    major_metric: cls_auc
+    train_subset: train*
+    lazy_load: true
+    max_epoch: 3
+    max_update: null
+
+    freq_weighted_replacement: tests/sample_data/token_count.txt
+    token_default_count: 10
+    vocab_sample_alpha: 0.5
+    save: true
+    save_best_only: true
+    pretrained_model: ${bert_base}
+    fp16: ${__apex__}
+}

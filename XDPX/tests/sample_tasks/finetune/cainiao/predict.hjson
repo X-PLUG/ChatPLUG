@@ -1,0 +1,16 @@
+[
+    {
+        save_dir: ${test_root}/cainiao/
+        checkpoint: ${save_dir}/<best>
+        concat_origin: false
+        predict_file_map: {
+            'tests/sample_data/cainiao/unlabeled.txt': ${test_root}/cainiao/predict.txt
+        }
+    }
+    {
+        save_dir: ${test_root}/cainiao/
+        predict_file_map: {
+            'tests/sample_data/cainiao/unlabeled2.txt': ${test_root}/cainiao/predict2.txt
+        }
+    }
+]

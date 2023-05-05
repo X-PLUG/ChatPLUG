@@ -1,0 +1,16 @@
+{   
+    loss: cross_entropy
+    model: bert_classification
+    
+    optimizer: adam
+        adam_eps: 1e-6
+        clip_norm: 5.0
+        weight_decay: 0.01
+        lr_scheduler: one_cycle
+        warmup_steps: 0.1
+    
+    output_dropout_prob: 0.1
+    
+    eval_interval: @{batch_size:64}/50
+    log_interval: @{batch_size:64}/10
+}

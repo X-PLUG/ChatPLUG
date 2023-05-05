@@ -1,0 +1,40 @@
+{
+    __pytorch__: 180
+    __v100__: n
+    __worker__: 1
+    __gpu__: 1
+    __cpu__: 40
+    __memory__: 40
+    __parent__: [
+        [
+            {__def__: {task_name: 'v0.10.4'} } #
+        ]
+    ]
+    __def__: {
+        source_root: /nas-alinlp/tjf141457/datahub/chat_data/data
+        data_root: ../datahub/chat_data/data_processed
+    }
+
+    data_files: ['*.json']
+    data_source: ${source_root}/${task_name}
+    data_dir:  ${data_root}/${task_name}
+    workers: 10
+    save_format: torch
+
+    parser: jsonl
+    fields: ['context','response','passages']
+    loader: palmchat
+    processor: palmchat
+    tokenizer: palm_tokenizer
+    vocab_file: tests/sample_data/palm_vocab.txt
+    pad_word: '[PAD]'
+    unk_word: '[UNK]'
+
+    target_map_file: tests/sample_data/noop_target_map.txt
+
+    skip_bad_lines:true
+
+    max_len: 300
+    max_encoder_length: 300
+    max_decoder_length: 80
+}

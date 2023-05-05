@@ -1,0 +1,17 @@
+{
+    __pytorch__: 180
+    __v100__: n
+    __worker__: 1
+    __gpu__: 1
+    __cpu__: 16
+    __memory__: 80
+
+    __parent__: [
+        [
+            { __def__: {source_root: "oss://xdp-expriment/gaoxing.gx/dialoglue/BANKING77_yue/"}}
+        ]
+    ]
+    save_dir: oss://xdp-expriment/gaoxing.gx/dialoglue/training/BANKING77_yue/yue-trans-audio/clean_audiomm_flex_classification_0.0001_audio,text_onlyfe_False_freezefe_False/
+    valid_subset: ["oss://xdp-expriment/gaoxing.gx/dialoglue/BANKING77_yue/yue-asr-audio-noises/test.pt","oss://xdp-expriment/gaoxing.gx/dialoglue/BANKING77_yue/yue-trans-audio/test.pt"]
+
+}

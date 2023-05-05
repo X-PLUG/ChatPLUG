@@ -1,0 +1,5 @@
+{
+    task: slm
+    loss: bert
+    model: bert_pretrain
+}

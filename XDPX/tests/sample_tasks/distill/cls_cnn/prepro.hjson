@@ -1,0 +1,13 @@
+{
+    __parent__: [
+        tests/sample_tasks/embedding
+        examples/distill/cls_cnn
+    ]
+
+    data_source: ${test_root}/cainiao_distill/
+    data_dir: ${test_root}/cainiao_distill_data/
+    special_targets: ['unknown']
+    workers: 4
+    max_len: 40
+    check_max_len: true
+}

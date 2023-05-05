@@ -1,0 +1,6 @@
+{
+    save_dir: ${test_root}/click/
+    predict_file_map: {
+        tests/sample_data/click/dev.txt: ${test_root}/click/predict.tsv
+    }
+}

@@ -1,0 +1,10 @@
+{
+    __parent__: [
+        examples/finetune/prepro/match
+        tests/benchmark/path
+    ]
+    data_source: oss://pretrain-lm/benchmark-open/qqmatch/youku-qq
+    data_dir: ${save_root}/finetune/match/data/
+    workers: 4
+    max_len: 40
+}

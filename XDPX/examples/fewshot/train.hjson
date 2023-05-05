@@ -1,0 +1,76 @@
+{
+    __pytorch__: 180
+    __v100__: n
+    __worker__: 1
+    __gpu__: 1
+    __cpu__: 40
+    __memory__: 150
+    __parent__: [
+        ${data_dir}/meta
+        tests/sample_tasks/checkpoint
+        tests/sample_data/roberta_config_large.json
+
+        [
+           {__def__: {task_name: 'banking'}}
+           {__def__: {task_name: 'hwu'}}
+           {__def__: {task_name: 'clinc'}}
+        ]
+    ]
+    __def__: {
+        # data_root: oss://use/your/own/directory
+        # save_root: oss://use/your/own/directory
+        lm_name: "sup-simcse-roberta-large-66260"
+    }
+
+    learning_rate: 6e-5
+    n_way: 64
+    k_shot: 4
+    train_episodes: 500
+    dev_episodes: 40
+    max_update: 500
+
+    model: "protonet"
+    loss: fewshot
+    auto_model: "princeton-nlp/sup-simcse-roberta-large"
+    proj_hidden_size: 1024
+    pretrained_model: "oss://use/your/own/path"
+
+    cl_alpha: 0.0
+    cl_loss_type:"infonce"
+    kl_alpha: 1.0
+    use_r_dropout:true
+
+    # auto_sample_query_cnt:8
+    # update_freq:16
+
+
+    top_lr_ratio: 10
+    max_loss: 1e10
+    gradient_checkpointing: true
+
+    data_dir: ${data_root}/${task_name}
+    save_dir: ${save_root}/${task_name}/${lm_name}/N${n_way}-K${k_shot}_${train_episodes}_${dev_episodes}_${learning_rate}_${model}_rdropout_${use_r_dropout}_kl${kl_alpha}_proj${proj_hidden_size}_cl${cl_alpha}_${cl_loss_type}
+
+    save: true
+    save_best_only: true
+    overwrite: true
+
+    sampler: episode
+    batch_size: 1
+    major_metric: acc
+    log_interval: 10
+    eval_interval: 10
+
+    fix_lm: false
+    lm_weight: 0.0
+
+    fp16: true
+
+    optimizer: adam
+        adam_eps: 1e-6
+        clip_norm: 5.0
+        weight_decay: 0.01
+        lr_scheduler: one_cycle
+        warmup_steps: 0.1
+
+}

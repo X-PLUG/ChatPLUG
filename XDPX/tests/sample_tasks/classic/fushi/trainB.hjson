@@ -1,0 +1,8 @@
+{
+    __parent__: ./trainA
+    learning_rate: 1.5e-3
+        lr_scheduler: one_cycle
+        warmup_steps: 0
+    resume: true
+    overwrite: false
+}

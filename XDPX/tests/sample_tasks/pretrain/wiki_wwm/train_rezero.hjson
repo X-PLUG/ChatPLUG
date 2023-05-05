@@ -1,0 +1,15 @@
+{
+    __parent__: [
+        ${data_dir}/meta
+        examples/pretrain/tasks/corpus
+        examples/pretrain/params/default
+        examples/debug
+        tests/sample_tasks/checkpoint
+    ]
+
+    data_dir: ${test_root}/data/wiki_wwm/
+    save_dir: ${test_root}/wiki_rezero/
+    model: bert_lm_rezero
+    strict_size: false
+    pretrained_model: ${bert_base}
+}

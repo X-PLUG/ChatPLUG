@@ -1,0 +1,10 @@
+{
+    space_config: ./space
+    base_config: ./train
+    save_dir: ${test_root}/automl/random/
+    tuner: random
+    min_ref: 2
+    assess_interval: 0.3
+    parallel_runs: 8
+    max_trials: 7
+}

@@ -1,0 +1,12 @@
+{
+    __parent__: [
+        examples/pretrain/prepro/corpus
+    ]
+    data_source: 'tests/sample_data/wiki/'
+    data_dir: '${test_root}/data/wiki_tinybert/'
+    max_len: 256
+    workers: 2
+    break_mode: complete
+    mask_whole_words: false
+    check_max_len: true
+}

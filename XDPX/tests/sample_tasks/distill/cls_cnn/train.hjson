@@ -1,0 +1,22 @@
+{
+    __parent__: [
+        ${data_dir}/meta
+        ${test_root}/cainiao_mix/threshold
+        examples/debug
+    ]
+
+    data_dir: ${test_root}/cainiao_distill_data/
+    save_dir: ${test_root}/cainiao_cls_cnn/
+    valid_subset: dev
+    major_metric: f1
+    learning_rate: 1e-3
+
+    loss: bce_distill
+        gold_loss_lambda: 0.5
+    model: cls_cnn
+        hidden_size: 200
+        encoder_layers: 3
+        kernel_sizes: [1,3]
+    save: true
+    max_update: 24
+}

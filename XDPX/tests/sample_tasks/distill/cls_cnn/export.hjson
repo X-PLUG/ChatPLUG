@@ -1,0 +1,40 @@
+[
+  {
+    export_format: savedmodel
+    extra_config: {
+      model: cls_cnn_bce
+    }
+    out_dir: ${test_root}/cainiao_cls_cnn/export
+    save_dir: ${test_root}/cainiao_cls_cnn/
+    check_outputs: true
+  }
+  {
+    export_format: savedmodel
+    extra_config: {
+        model: xdp_cls_cnn_bce
+    }
+    out_dir: ${test_root}/cainiao_cls_cnn/export_xdp
+    save_dir: ${test_root}/cainiao_cls_cnn/
+    check_outputs: true
+  }
+  {
+    export_format: savedmodel
+    extra_config: {
+      model: cls_cnn
+      loss: cross_entropy
+    }
+    out_dir: ${test_root}/cainiao_cls_cnn/export_ce
+    save_dir: ${test_root}/cainiao_cls_cnn/
+    check_outputs: true
+  }
+  {
+    export_format: savedmodel
+    extra_config: {
+        model: xdp_cls_cnn
+        loss: cross_entropy
+    }
+    out_dir: ${test_root}/cainiao_cls_cnn/export_xdp_ce
+    save_dir: ${test_root}/cainiao_cls_cnn/
+    check_outputs: true
+  }
+]

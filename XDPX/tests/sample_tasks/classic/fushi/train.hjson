@@ -1,0 +1,25 @@
+{
+    __parent__: [
+        ${data_dir}/meta
+        examples/debug
+    ]
+
+    data_dir: ${test_root}/data/fushi_re2/
+    save_dir: ${test_root}/fushi_re2/
+    valid_subset: dev
+    major_metric: auc
+    learning_rate: 1e-3
+        lr_scheduler: warmup_constant
+        warmup_steps: 2
+
+    loss: cross_entropy
+    model: re2
+        hidden_size: 200
+        blocks: 2
+        encoder_layers: 3
+        alignment: identity
+    max_eval_steps: null
+    save: true
+    inspect_gradient: true
+    predict_threshold: 0.4
+}

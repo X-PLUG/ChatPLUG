@@ -1,0 +1,17 @@
+{
+    __parent__: [
+        ${data_dir}/meta
+        examples/pretrain/tasks/corpus
+        examples/pretrain/params/default
+        examples/debug
+        tests/sample_tasks/checkpoint
+    ]
+    data_dir: ${test_root}/data/wiki_wwm/
+    save_dir: ${test_root}/wiki_wwm/
+    optimizer: lamb
+    pretrained_model: ${bert_base}
+    inspect_gradient: true
+    fp16: ${__apex__}
+    overwrite: false
+    auto_suffix: true
+}

@@ -1,0 +1,17 @@
+ {
+    alignment: {
+        type: categorical
+        values: ['identity', 'linear']
+    }
+    batch_size: {
+        type: int
+        values: [1, 4]
+        step: 2
+        log: true
+    }
+    learning_rate: {
+        type: float
+        values: [1e-3, 1e-5]
+        log: true
+    }
+}

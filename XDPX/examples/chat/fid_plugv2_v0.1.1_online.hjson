@@ -1,0 +1,11 @@
+{
+  save_dir: oss://xdp-expriment/zhimiao.chh/experiment/dialogue/v1.1.3/pretrain-18kw-plugv2-typeid-new/
+  checkpoint: oss://xdp-expriment/zhimiao.chh/experiment/dialogue/v1.1.3/pretrain-18kw-plugv2-typeid-new/checkpoint-12180.pt
+  rewrite_model_dir: oss://xdp-expriment/gaoxing.gx/chat/export/rewrite_onnx/
+  knowledge_path: oss://xdp-expriment/wenshen.xws/opendialogue/LTMP/resource/SearchRewrite/regex.txt
+  ner_url:  http://1040603911771223.cn-zhangjiakou.pai-eas.aliyuncs.com/api/predict/dialogue_test_v9089/dialogue-test/v8226/hb
+  rewrite_is_onnx: true
+  chat_is_onnx: false
+  provider: cuda
+  quantized: false
+}

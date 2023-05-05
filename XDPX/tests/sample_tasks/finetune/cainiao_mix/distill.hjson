@@ -1,0 +1,10 @@
+{
+    save_dir: ${test_root}/cainiao_mix/
+    checkpoint: ${save_dir}/<best>
+    predict_file_map: {
+        tests/sample_data/cainiao/train.txt: ${test_root}/cainiao_distill/train.txt
+        tests/sample_data/cainiao/dev.txt: ${test_root}/cainiao_distill/dev.txt
+    }
+    distill: true
+    concat_origin: true
+}

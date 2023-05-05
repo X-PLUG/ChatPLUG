@@ -1,0 +1,22 @@
+{
+    __parent__: tests/sample_tasks/embedding
+    min_word_count: 2
+    max_word_vocab: -1
+
+    lower: true
+    target_type: text
+    special_targets: ['unknown']
+    data_files: ['train.txt', 'dev.txt']
+    processor: bert_single_mix
+    loader: single_mix
+    with_words: true
+    tokenizer: bert
+    max_len: 40
+    data_source: tests/sample_data/cainiao/
+    skip_bad_lines: false
+    data_dir: ${test_root}/data/cainiao_mix/
+    vocab_file: tests/sample_data/bert_vocab.txt
+    workers: 2
+    check_max_len: true
+    remove_duplicate: true
+}

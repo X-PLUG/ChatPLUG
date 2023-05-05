@@ -1,0 +1,8 @@
+{
+    save_dir: ${test_root}/cainiao_mix/
+    checkpoint: ${save_dir}/<best>
+    predict_file_map: {
+        tests/sample_data/cainiao/dev.txt: ${test_root}/cainiao_mix/pred_dev.tsv
+    }
+    batch_size: 4
+}

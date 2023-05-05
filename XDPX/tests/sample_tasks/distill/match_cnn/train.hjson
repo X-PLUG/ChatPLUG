@@ -1,0 +1,22 @@
+{
+    __parent__: [
+        ${data_dir}/meta
+        examples/debug
+    ]
+
+    data_dir: ${test_root}/fushi_distill_data/
+    save_dir: ${test_root}/fushi_match_cnn/
+    train_subset: ['train', 'unlabeled']
+    valid_subset: dev
+    major_metric: auc
+    learning_rate: 1e-3
+
+    loss: static_distill
+        gold_loss_lambda: 0.0
+    model: match_cnn
+        hidden_size: 200
+        fix_embeddings: false
+        encoder_layers: 3
+    save: false
+    eval_interval_warmup: 8
+}

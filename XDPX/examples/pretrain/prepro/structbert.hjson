@@ -1,0 +1,5 @@
+{
+    __parent__: ./corpus
+    processor: structbert
+    target_map_file: tests/sample_data/ternary_target_map.txt
+}

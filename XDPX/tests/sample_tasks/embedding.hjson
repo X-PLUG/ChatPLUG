@@ -1,0 +1,3 @@
+{
+    pretrained_embeddings: http://xdp-expriment.oss-cn-zhangjiakou.aliyuncs.com/runqi.yrq/ckpt/cw2vec_embedding_timi_wdj_1kw_100d.txt
+}

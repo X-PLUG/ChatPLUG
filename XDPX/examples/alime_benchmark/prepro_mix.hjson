@@ -1,0 +1,29 @@
+{
+    __parent__: [
+        { max_len: 40 }
+        [
+            {
+                __parent__: [
+                    examples/finetune/prepro/cls
+                    [
+                        {__def__: { data_name: 'classification/cainiao-cls'}}
+                        {__def__: { data_name: 'classification/hotline-cls'}, max_len: 60}
+                        {__def__: { data_name: 'classification/supermi-cls'}}
+                        {__def__: { data_name: 'classification/timi-cls'}}
+                    ]
+                ]
+                processor: bert_single_mix
+                loader: single_mix
+                with_words: true
+            }
+        ]
+    ]
+    data_source: oss://pretrain-lm/benchmark-open/${data_name}
+    data_dir: oss://pretrain-lm/downstream/benchmark/data_mix_fix/${data_name}
+
+    pretrained_embeddings: oss://xdp-repository/resources/timi_emb_300d.txt
+    min_word_count: 10
+    max_word_vocab: 20000
+
+    workers: 4
+}

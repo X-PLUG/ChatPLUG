@@ -1,0 +1,6 @@
+{
+    __def__: {
+        data_root: oss://pretrain-lm/benchmark-open
+        save_root: oss://pretrain-lm/xdpx/${__date__}_${__commit_hash__}/W${__workers__}G${__gpus__}
+    }
+}
