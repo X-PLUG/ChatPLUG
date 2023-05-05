@@ -1,4 +1,0 @@
-{
-  save_dir: oss://xdp-expriment/gaoxing.gx/chat/training/mt5/v0.9/0.0001/
-  rewrite_model_dir: oss://xdp-expriment/jiayi.qm/11_multiturn_rewrite/saved_model_whole/
-}

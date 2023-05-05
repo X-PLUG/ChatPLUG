@@ -1,8 +1,0 @@
-{
-  data_files: ['train.txt', 'dev.txt']
-  tokenizer: space
-  lower: true
-  processor: pair_with_logits
-  loader: pair_with_logits
-  target_map_file: tests/sample_data/binary_target_map.txt
-}
