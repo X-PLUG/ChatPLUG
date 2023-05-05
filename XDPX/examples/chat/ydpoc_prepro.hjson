@@ -1,0 +1,40 @@
+{
+    __pytorch__: 180
+    __v100__: n
+    __worker__: 1
+    __gpu__: 1
+    __cpu__: 40
+    __memory__: 40
+     __parent__: [
+        [
+            {__def__: {task_name: 'v10.0'} }
+        ]
+    ]
+    __def__: {
+        source_root: oss://xdp-expriment/gaoxing.gx/ydpoc/dataset
+        data_root: oss://xdp-expriment/gaoxing.gx/ydpoc/prepro
+    }
+
+    data_files: ['*.json']
+    data_source: ${source_root}/${task_name}
+    data_dir:  ${data_root}/${task_name}
+    workers: 10
+
+    parser: jsonl
+    fields: ['context','response','passages']
+    loader: fidchat
+    processor: fidchat
+    tokenizer: auto
+    vocab_file: 'google/mt5-base'
+    pad_word:'<pad>'
+    unk_word:'<unk>'
+
+    target_map_file: tests/sample_data/noop_target_map.txt
+
+
+    skip_bad_lines:true
+
+    max_len: 512
+    max_encoder_length: 310
+    max_decoder_length: 200
+}

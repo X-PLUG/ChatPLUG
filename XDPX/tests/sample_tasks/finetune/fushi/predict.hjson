@@ -1,0 +1,13 @@
+{
+    save_dir: ${test_root}/fushi/
+    predict_file_map: {
+        tests/sample_data/fushi/train.txt: ${test_root}/fushi_distill/train.txt
+        tests/sample_data/fushi/dev.txt: ${test_root}/fushi_distill/dev.txt
+        tests/sample_data/fushi/unlabeled.txt: ${test_root}/fushi_distill/unlabeled.txt
+    }
+    distill: true
+    concat_origin: true
+    extra_config: {
+        start_line: 1
+    }
+}

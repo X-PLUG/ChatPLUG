@@ -1,0 +1,12 @@
+{
+    __parent__: [
+        ./default
+        ./${config_dir}/batch
+        ./${config_dir}/data
+    ]
+    __def__: {
+        config_dir: config_group
+    }
+    amsgrad: true
+    save_dir: output_${batch_size}
+}

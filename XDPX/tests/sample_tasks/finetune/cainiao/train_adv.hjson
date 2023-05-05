@@ -1,0 +1,14 @@
+{
+    __parent__: [
+        ./train
+    ]
+
+    task: freelb
+    orig_loss_proportion: 0.5
+    save_dir: ${test_root}/cainiao/
+    overwrite: false
+    auto_suffix: true
+    anneal_strategy: polynomial
+    anneal_p: 0.5
+    eval_interval: -1
+}

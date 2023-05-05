@@ -1,0 +1,10 @@
+{
+    __parent__: ./train
+
+    save_dir: ${test_root}/fushi_re2_multi_phase/
+    save: true
+    save_full_checkpoint: true
+    save_last_only: true
+    save_above_score: null
+    train_steps: 6
+}

@@ -1,0 +1,22 @@
+{
+    __parent__: [
+        ${data_dir}/meta
+        examples/pretrain/params/default
+        examples/pretrain/tasks/minilm
+        examples/model/pkm/optimizer
+        ${test_root}/distill_lopkm/mem_config.json
+        examples/debug
+        tests/sample_tasks/checkpoint
+        tests/sample_data/bert_config.json >> teacher_
+        tests/sample_data/bert_config.json
+    ]
+    __ignore__: teacher_vocab_size
+
+    data_dir: ${test_root}/data/wiki/
+    save_dir: ${test_root}/lopkm_minilm_distill
+    teacher_pretrained_model: ${bert_base}
+    pretrained_model: ${bert_base}
+    pretrained_memories: ${test_root}/distill_lopkm/<last>
+    model: bert_lm_lopkm
+    fp16: ${__apex__}
+}

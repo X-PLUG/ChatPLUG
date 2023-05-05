@@ -1,0 +1,8 @@
+{
+    processor: bert_supervised
+    loader: pair_mix
+    tokenizer: bert
+    data_files: '*.txt'
+    vocab_file: tests/sample_data/bert_vocab.txt
+    target_map_file: tests/sample_data/binary_target_map.txt
+}

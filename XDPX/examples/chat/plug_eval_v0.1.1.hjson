@@ -1,0 +1,18 @@
+{
+    __pytorch__: 180
+    __v100__: n
+    __worker__: 2
+    __gpu__: 1
+    __cpu__: 16
+    __memory__: 80
+
+    __parent__: [
+        [
+            { __def__: {source_root: ""}}
+        ]
+    ]
+    checkpoint: oss://xdp-expriment/zhimiao.chh/pretrain_models/plug_base/90000/mp_rank_00_model_states.pt
+    save_dir: oss://xdp-expriment/zhimiao.chh/experiment/dialogue/only-pretrain-18kw_v3/
+    valid_subset: oss://xdp-expriment/zhimiao.chh/data/dialogue/pretrain/wiki_test_chat_format/dev.pt
+    batch_size: 1
+}

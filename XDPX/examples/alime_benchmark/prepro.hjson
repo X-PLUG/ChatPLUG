@@ -1,0 +1,32 @@
+{
+    __parent__: [
+        { max_len: 40 }
+        [
+            {
+                __parent__: [
+                    examples/finetune/prepro/match
+                    [
+                        {__def__: { data_name: 'qqmatch/gov-qq'}}
+                        {__def__: { data_name: 'qqmatch/timi-qq'}}
+                        {__def__: { data_name: 'qqmatch/youku-qq'}}
+                    ]
+                ]
+            }
+            {
+                __parent__: [
+                    examples/finetune/prepro/cls
+                    [
+                        {__def__: { data_name: 'classification/cainiao-cls'}}
+                        {__def__: { data_name: 'classification/hotline-cls'}, max_len: 60}
+                        {__def__: { data_name: 'classification/supermi-cls'}}
+                        {__def__: { data_name: 'classification/timi-cls'}}
+                    ]
+                ]
+            }
+        ]
+    ]
+    data_source: oss://pretrain-lm/benchmark-open/${data_name}
+    data_dir: oss://pretrain-lm/downstream/data/${data_name}
+    data_files: ['train.txt', 'dev.txt']
+    workers: 4
+}

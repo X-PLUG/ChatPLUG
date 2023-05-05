@@ -1,0 +1,17 @@
+// tinybert general distill
+{
+    __parent__: [
+        ${data_dir}/meta
+        examples/pretrain/params/default
+        examples/pretrain/tasks/tinybert
+        examples/debug
+        tests/sample_tasks/checkpoint
+    ]
+
+    data_dir: '${test_root}/data/wiki_tinybert/'
+    save_dir: '${test_root}/tinybert_gd/'
+    teacher_pretrained_model: ${bert_base}
+    teacher_config_file: 'tests/sample_data/teacher_config.json'
+    student_config_file: 'tests/sample_data/student_config.json'
+    learning_rate: 1e-4
+}

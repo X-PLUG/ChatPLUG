@@ -1,0 +1,24 @@
+{
+    learning_rate: {
+        type: float
+        values: [5e-4, 1.5e-3]
+        log: true
+    }
+    hidden_size: {
+        type: int
+        values: [100, 300]
+        step: 50
+    }
+    lr_scheduler: {
+        type: categorical
+        values: ['exponential_decay', 'warmup_constant']
+    }
+    alignment: {
+        type: categorical
+        values: ['identity', 'linear']
+    }
+    seed: {
+        type: int
+        values: [1, 1000000]
+    }
+}

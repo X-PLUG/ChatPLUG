@@ -1,0 +1,62 @@
+{
+    __pytorch__: 180
+    __v100__: n
+    __worker__: 2
+    __gpu__: 8
+    __cpu__: 20
+    __memory__: 40
+    __parent__: [
+        ${data_dir}/meta
+        tests/sample_tasks/checkpoint
+        [
+            {__def__: {task_name: 'v0.1.1'}}
+        ]
+
+        [
+            {learning_rate: 1e-4}
+        ]
+    ]
+
+    __def__: {
+        data_root: data_processed
+        save_root: data_saved_odps
+    }
+    auto_model: google/mt5-base
+    pretrained_model: oss://xdp-expriment/zhimiao.chh/pretrain_models/plug_base/90000/mp_rank_00_model_states.pt
+    data_dir: oss://xdp-expriment/zhimiao.chh/data/dialogue/pretrain/dureader_robust_chat_format/
+    save_dir: oss://xdp-expriment/zhimiao.chh/experiment/dialogue/dureader_robust/
+    dataset_format: torch
+
+    save: true
+    auto_suffix: true
+    save_full_checkpoint: true
+    save_best_only: false
+    overwrite: false
+    resume: false
+
+    major_metric: loss
+    ascending_metric: false
+    batch_size: 64
+    train_subset: train*
+    valid_subset: dev
+    lazy_load: true
+    update_freq: 1
+    max_epoch: 5
+    batch_by_len: true
+
+    fp16: true
+    gradient_checkpointing: false
+    loss: chat
+    model: plug_chat
+
+    optimizer: adam
+        adam_eps: 1e-6
+        clip_norm: 5.0
+        weight_decay: 0.01
+        lr_scheduler: one_cycle
+        warmup_steps: 100
+
+    eval_interval_warmup: 50
+    eval_interval: 50
+    log_interval: 20
+}

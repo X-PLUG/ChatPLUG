@@ -1,0 +1,3 @@
+{
+    data_dir: ${data_root}/data
+}

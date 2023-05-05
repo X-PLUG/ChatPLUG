@@ -1,0 +1,35 @@
+{
+    # x-script eval_fewshot xxx.hjson
+    __pytorch__: 180
+    __v100__: n
+    __worker__: 1
+    __gpu__: 1
+    __cpu__: 40
+    __memory__: 80
+
+    __parent__: [
+
+         [
+           {
+             __def__: {
+                 task_name: clinc
+                 best_run: clinc_hwu/sup-simcse-roberta-large-66260/N16-K4_4800_300_6e-05_mlman_rdropout_True_kl1_proj1024_cl0_infonce/
+             }
+           }
+           {
+             __def__: {
+                 task_name: hwu
+                 best_run: clinc_hwu/sup-simcse-roberta-large-66260/N16-K4_4800_300_6e-05_mlman_rdropout_True_kl1_proj1024_cl0_infonce/
+             }
+           }
+        ]
+    ]
+     __def__: {
+        source_root: oss://xdp-expriment/gaoxing.gx/dialoglue/Datasets/amazon_dialoglue/xdpx_fs10
+        save_root: oss://xdp-expriment/gaoxing.gx/dialoglue/xdpx_fs10_training
+    }
+
+    save_dir: ${save_root}/${best_run}
+    support_file: ${source_root}/${task_name}/train.json
+    test_file: ${source_root}/${task_name}/test.json
+}

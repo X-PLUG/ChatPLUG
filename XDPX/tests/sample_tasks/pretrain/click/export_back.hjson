@@ -1,0 +1,16 @@
+[
+  {
+    tf_path: ${test_root}/click/tf_checkpoint/bert_model.ckpt
+    bert_config: ${test_root}/click/export/bert_config.json
+    out_dir: ${test_root}/click/export_back_from_ckpt/
+    num_classes: 2
+  }
+  {
+    tf_path: ${test_root}/click/export/
+    bert_config: ${test_root}/click/export/bert_config.json
+    out_dir: ${test_root}/click/export_back_from_savedmodel/
+    num_classes: 2
+    tf_format: savedmodel
+    signature_def_key: predict
+  }
+]

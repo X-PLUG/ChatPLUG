@@ -1,0 +1,12 @@
+{
+    space_config: ./space
+    base_config: ./train
+    save_dir: ${test_root}/automl/grid/
+    tuner: grid
+        float_samples: 3
+    parallel_runs: 4
+    max_trials: 100
+    min_ref: 1
+    assess_start_step: 0.3
+    assess_interval: 0.2
+}

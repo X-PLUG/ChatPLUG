@@ -1,0 +1,30 @@
+{   
+    __parent__: [
+        ${data_dir}/meta.hjson
+        examples/finetune/default
+        examples/debug
+        tests/sample_tasks/checkpoint
+    ]
+    data_dir: ${test_root}/data/cainiao_mix/
+    save_dir: ${test_root}/cainiao_mix_adv/
+    valid_subset: dev
+
+    learning_rate: 5e-5
+    layer_lr_decay: 0.95
+    top_lr_ratio: 10
+
+    major_metric: f1
+    task: freelb_cnn
+    word_emb: false
+    orig_loss_proportion: 0.5
+
+    model: bert_mix
+    task_type: classification
+    char_hidden_size: 251
+    kernel_sizes: [2,3]
+    fusion_layers: 1
+    bert_wd: 0.0
+    fusion_activation: true
+    save: false
+    pretrained_model: ${bert_base}
+}

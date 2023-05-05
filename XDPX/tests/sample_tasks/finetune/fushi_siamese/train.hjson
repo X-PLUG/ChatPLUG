@@ -1,0 +1,21 @@
+{
+    __parent__: [
+        ${data_dir}/meta
+        examples/finetune/default
+        examples/debug
+        tests/sample_tasks/checkpoint
+    ]
+
+    data_dir: ${test_root}/data/fushi_siamese/
+    save_dir: ${test_root}/fushi_siamese/
+    loss: circle_siamese
+    major_metric: auc
+    batch_by_len: true
+    load_cls_weights: true
+    pretrained_model: ${bert_base}
+    cycle_momentum: true
+    adam_betas: [0.95, 0.999]
+    save: true
+    save_best_only: true
+    max_eval_steps: null
+}

@@ -1,0 +1,11 @@
+{
+  save_dir: oss://xdp-expriment/gaoxing.gx/chat/training/mt5-a100-91/v0.9.1/6e-05/
+  checkpoint: oss://xdp-expriment/gaoxing.gx/chat/training/mt5-a100-91/v0.9.1/6e-05/checkpoint-500.pt
+
+  rewrite_model_dir: ./onnx_models/rewrite
+  rewrite_is_onnx: true
+  chat_is_onnx: false
+  provider: cuda
+  quantized: false
+  pretrained_version: google/mt5-base
+}

@@ -1,0 +1,32 @@
+{
+    __parent__: [
+        ${data_dir}/meta
+        examples/distill/pkm
+        examples/debug
+        tests/sample_tasks/checkpoint
+        tests/sample_data/bert_config.json>>teacher_
+    ]
+    __ignore__: teacher_vocab_size
+    data_dir: ${test_root}/data/wiki/
+    save_dir: ${test_root}/distill_lopkm
+    teacher_pretrained_model: ${bert_base}
+    teacher_target_layers: [6, 8]
+    teacher_batch_size: 4
+    student_model: lopkm_student
+    student_pretrained_model: ${test_root}/memory_init.pt
+    student_mem_heads: 8
+    student_mem_knn: 32
+    student_mem_keys: 32
+    student_mem_k_dim: 32
+    student_share_memory: true
+
+    save: true
+    save_last_only: true
+
+    learning_rate: 1e-2
+    second_learning_rate: @{learning_rate: 1}/2
+    follow_lr_schedule: false
+    max_eval_steps: 20
+    major_weight_decay: 0.01
+    inspect_gradient: true
+}

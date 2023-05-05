@@ -1,0 +1,31 @@
+{
+     __parent__: [
+        [
+            {__def__: {task_name: 'v0.1'}, max_len: 50}
+        ]
+    ]
+    __def__: {
+        source_root: oss://xdp-expriment/gaoxing.gx/ydpoc/fewshot/dataset/
+        data_root: oss://xdp-expriment/gaoxing.gx/ydpoc/fewshot/prepro/
+    }
+
+    vocab_file: tests/sample_data/bert_vocab.txt
+
+    data_files: *.json
+    data_source: ${source_root}/${task_name}
+    data_dir:  ${data_root}/${task_name}
+    workers: 4
+    special_targets:[]
+
+    parser: jsonl
+    fields: ['mode','text','label','domain']
+    processor: fewshot
+    auxiliary_mlm: true
+    mask_whole_words: false
+    loader: fewshot
+
+    tokenizer: bert
+    pad_word: '[PAD]'
+    unk_word: '[UNK]'
+    lower: false
+}

@@ -1,0 +1,21 @@
+{
+    /*
+    0.852806985211713 @step 150
+    */
+    __parent__: [
+        ${data_dir}/meta
+        examples/finetune/default
+        tests/benchmark/path
+    ]
+
+    data_dir: ${save_root}/finetune/match/data/
+    save_dir: ${save_root}/finetune/match/model/
+    pretrained_model: oss://xdp-expriment/runqi.yrq/ckpt/custom_run19/<last>
+    major_metric: auc
+    learning_rate: 2e-5
+    batch_size: 32
+    max_epoch: 5
+    save: true
+    save_best_only: true
+    seed: 2360263
+}

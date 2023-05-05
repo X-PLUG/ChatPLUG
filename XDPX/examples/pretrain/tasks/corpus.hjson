@@ -1,0 +1,4 @@
+{
+    loss: masked_lm
+    model: bert_lm
+}

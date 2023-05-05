@@ -1,0 +1,17 @@
+{
+    __parent__: [
+        ${data_dir}/meta
+        examples/pretrain/tasks/corpus
+        examples/pretrain/params/default
+        examples/debug
+        tests/sample_tasks/checkpoint
+        tests/sample_data/albert_config_base.json
+    ]
+
+    data_dir: ${test_root}/data/wiki/
+    save_dir: ${test_root}/wiki_albert/
+    model: albert_lm
+
+    pretrained_model: ${albert_base}
+    strict_size: true
+}

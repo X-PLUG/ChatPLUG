@@ -1,0 +1,10 @@
+{
+    __parent__: [
+        examples/finetune/prepro/match
+    ]
+    data_source: tests/sample_data/fushi/
+    data_dir: ${test_root}/data/fushi/
+    workers: 4
+    max_len: 40
+    check_max_len: true
+}

@@ -1,0 +1,17 @@
+{
+  __parent__: [[
+    {
+      export_format: checkpoint
+      out_dir: ${out_root}/tf_checkpoint
+    }
+    {
+      export_format: savedmodel
+      out_dir: ${out_root}/savedmodel
+      check_outputs: true
+    }
+  ]]
+  __def__: {
+     out_root: ${test_root}/fushi_re2/export/
+  }
+  save_dir: ${test_root}/fushi_re2/
+}

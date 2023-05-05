@@ -1,0 +1,23 @@
+{
+    __parent__: [
+        ${data_dir}/meta
+        examples/finetune/default
+        examples/debug
+        tests/sample_tasks/checkpoint
+    ]
+
+    data_dir: ${test_root}/data/cainiao/
+    save_dir: ${test_root}/cainiao/
+    major_metric: f1
+    learning_rate: 1e-5
+    layer_lr_decay: 0.95
+    max_update: null
+    max_epoch: 2
+    pretrained_model: ${bert_base}
+    save: true
+    save_best_only: true
+    max_eval_steps: null
+    clip_norm: 0
+    anneal_strategy: cosine
+    overwrite: true
+}

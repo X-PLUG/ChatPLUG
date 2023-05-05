@@ -1,0 +1,11 @@
+{
+    loss: minilm
+    ascending_metric: false
+    major_metric: loss
+    teacher_model: bert_lm
+    model: bert_lm
+    extra_config: {
+        output_attentions: true
+        output_value_attentions: true
+    }
+}

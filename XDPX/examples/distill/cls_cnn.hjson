@@ -1,0 +1,8 @@
+{
+  data_files: ['train.txt', 'dev.txt']
+  tokenizer: space
+  lower: true
+  target_type: text
+  processor: single_with_logits
+  loader: single_with_logits
+}

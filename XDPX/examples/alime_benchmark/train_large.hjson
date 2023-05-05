@@ -1,0 +1,91 @@
+// align with XDP finetuning
+{
+    __parent__: [
+        ${data_dir}/meta
+        examples/finetune/default
+        [
+            { batch_size: 64 }
+            { batch_size: 32 }
+        ]
+        [
+            {
+                __def__: {
+                    task_name: qqmatch/gov-qq
+                }
+                __parent__: [[{learning_rate: 1e-5}, {learning_rate: 2e-5}]]
+                major_metric: auc
+                max_epoch: 2
+                warmup_steps: 50
+            }
+            {
+                __def__: {
+                    task_name: qqmatch/youku-qq
+                }
+                __parent__: [[{learning_rate: 1e-5}, {learning_rate: 2e-5}]]
+                major_metric: auc
+                max_epoch: 2
+                warmup_steps: 50
+            }
+            {
+                __def__: {
+                    task_name: qqmatch/timi-qq
+                }
+                __parent__: [[{learning_rate: 1e-5}, {learning_rate: 2e-5}]]
+                major_metric: auc
+                max_epoch: 2
+                warmup_steps: 50
+                tolerance: 1000
+            }
+            {
+                __def__: {
+                    task_name: classification/cainiao-cls
+                }
+                __parent__: [[{learning_rate: 5e-5}]]
+                major_metric: f1
+                max_epoch: 5
+                warmup_steps: 50
+            }
+            {
+                __def__: {
+                    task_name: classification/hotline-cls
+                }
+                __parent__: [[{learning_rate: 5e-5}]]
+                major_metric: f1
+                max_epoch: 5
+                warmup_steps: 250
+            }
+            {
+                __def__: {
+                    task_name: classification/supermi-cls
+                }
+                __parent__: [[{learning_rate: 5e-5}]]
+                major_metric: f1
+                max_epoch: 5
+                warmup_steps: 250
+            }
+            {
+                __def__: {
+                    task_name: classification/timi-cls
+                }
+                __parent__: [[{learning_rate: 2e-5}]]
+                major_metric: f1
+                max_epoch: 5
+                batch_by_len: true
+                eval_interval_warmup: @{batch_size:64}/30000
+                eval_interval_warmup_mutiplier: 100
+                warmup_steps: @{batch_size:64}/250
+                tolerance: @{batch_size:64}/10000
+            }
+        ]
+    ]
+    __def__: {
+        // model_name: 
+        // save_name: 
+    }
+    // config_file: 
+    // pretrained_model: 
+    
+    data_dir: oss://pretrain-lm/downstream/data/${task_name}
+    save_dir: oss://pretrain-lm/downstream/${model_name}/${task_name}-bsz${batch_size}-lr${learning_rate}.${save_name}
+    save: false
+}

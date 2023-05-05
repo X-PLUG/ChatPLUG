@@ -1,0 +1,9 @@
+{
+    __ignore__: ['weight_decay', 'adam_eps', 'adam_betas']
+    optimizer: pair
+    major_optimizer: adam
+    second_optimizer: adam
+    second_learning_rate: @{learning_rate: 1}/2
+    follow_lr_schedule: false
+    major_weight_decay: 0.01
+}

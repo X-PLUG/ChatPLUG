@@ -1,0 +1,8 @@
+{
+  save_dir: ./onnx_models/chat
+  rewrite_model_dir: ./onnx_models/rewrite
+  is_onnx: true
+  provider: cuda
+  quantized: false
+  pretrained_version: google/mt5-base
+}

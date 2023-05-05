@@ -1,0 +1,38 @@
+{
+    __pytorch__: 180
+    __v100__: n
+    __worker__: 1
+    __gpu__: 1
+    __cpu__: 40
+    __memory__: 40
+    __parent__: [
+        [
+            {__def__: {task_name: 'v0.1'} } #
+        ]
+    ]
+    __def__: {
+        source_root: ../datahub/data
+        data_root: ../datahub/process_data
+    }
+
+    data_files: ['*.jsonl']
+    data_source: ${source_root}/${task_name}
+    data_dir:  ${data_root}/${task_name}
+    workers: 20
+    save_format: torch
+
+    parser: jsonl
+    fields: ['session','source']
+    loader: session_chat
+    processor: session_chat
+    tokenizer: bert
+    vocab_file: tests/sample_data/palm_vocab.txt
+    cls_index: 101
+    sep_index: 102
+
+    target_map_file: tests/sample_data/noop_target_map.txt
+
+    skip_bad_lines:true
+
+    max_len: 300
+}

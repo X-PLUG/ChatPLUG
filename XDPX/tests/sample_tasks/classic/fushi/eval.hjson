@@ -1,0 +1,14 @@
+[
+    {
+        save_dir: ${test_root}/fushi_re2/
+        valid_subset: ['dev', 'test']
+        save_mode: a
+        save_to_file: ${test_root}/fushi_re2/eval.tsv
+        batch_size: 2
+        compare_origin: true
+    }
+    {
+        save_dir: ${test_root}/fushi_re2/
+        valid_subset: tests/sample_data/fushi/test.txt
+    }
+]

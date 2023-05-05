@@ -1,0 +1,10 @@
+{
+    __parent__: [
+        tests/sample_tasks/classic/fushi/train
+    ]
+    save_dir: ${test_root}/automl/train/
+    max_update: null
+    max_epoch: 2
+    save: false
+    batch_size: 4
+}

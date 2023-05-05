@@ -1,0 +1,13 @@
+{
+    __parent__: [
+        examples/pretrain/prepro/corpus
+    ]
+    data_source: tests/sample_data/wiki_tokenized/
+    mask_whole_words: true
+    break_mode: complete_doc
+    loader: corpus_mix
+    data_dir: ${test_root}/data/wiki_wwm/
+    max_len: 128
+    workers: 4
+    check_max_len: true
+}

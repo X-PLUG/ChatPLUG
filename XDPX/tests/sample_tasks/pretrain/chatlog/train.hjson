@@ -1,0 +1,18 @@
+{
+    __parent__: [
+        ${data_dir}/meta
+        examples/pretrain/params/default
+        examples/debug
+        tests/sample_tasks/checkpoint
+    ]
+    data_dir: ${test_root}/data/chatlog/
+    save_dir: ${test_root}/chatlog/
+
+    model: rmr_bert
+    loss: rmr
+    pretrained_model: ${bert_base}
+    update_freq: 1
+    max_messages: 6
+    save: true
+    save_last_only: true
+}

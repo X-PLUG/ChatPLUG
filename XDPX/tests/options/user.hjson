@@ -1,0 +1,11 @@
+{
+    '__parent__': [
+        ./default
+        ./config_group/base
+    ],
+
+    // training
+    amsgrad: true
+    learning_rate: 4e-4
+    warmup_steps: 1e3 
+}

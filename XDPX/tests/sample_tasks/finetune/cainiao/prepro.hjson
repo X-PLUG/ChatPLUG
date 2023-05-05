@@ -1,0 +1,14 @@
+{
+    __parent__: [
+        examples/finetune/prepro/cls
+    ]
+    data_source: tests/sample_data/cainiao/
+    data_dir: ${test_root}/data/cainiao/
+    data_files: {
+        train.txt: train.pt
+        dev.txt: dev.pt
+    }
+    workers: 2
+    max_len: 40
+    check_max_len: true
+}

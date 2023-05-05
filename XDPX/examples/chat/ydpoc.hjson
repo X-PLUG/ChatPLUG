@@ -1,0 +1,14 @@
+{
+    #save_dir: oss://xdp-expriment/tanfan.zjh/open-dialogue/models/alime/v0.5_12/
+    #checkpoint: oss://xdp-expriment/tanfan.zjh/open-dialogue/models/alime/v0.5_12/checkpoint-6500.pt
+
+    #save_dir: oss://xdp-expriment/gaoxing.gx/chat/training/mt5-a100-91/v0.9.1/6e-05/
+    #checkpoint: oss://xdp-expriment/gaoxing.gx/chat/training/mt5-a100-91/v0.9.1/6e-05/checkpoint-500.pt
+
+    save_dir: oss://xdp-expriment/gaoxing.gx/ydpoc/training/v10.0/6e-05/
+    checkpoint: oss://xdp-expriment/gaoxing.gx/ydpoc/training/v10.0/6e-05/checkpoint-8400.pt
+    rewrite_model_dir: oss://xdp-expriment/jiayi.qm/11_multiturn_rewrite/saved_model_whole/
+    rewrite_is_onnx: false
+    chat_is_onnx: false
+    provider: cuda
+}
