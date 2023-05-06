@@ -129,7 +129,7 @@ You can download and use ChatPLUG models from ModelScope.
 
 XDPX is an easy-to-use library, that allows researchers and developers to train custom models and build own chatbots in a streamlined manner. Its all-in-one functionality allows for a one-stop solution that simplifies complex processes.
 
-[quick start](https://chatplug.readthedocs.io/en/latest/chatplug/get_started.html)
+[quick start](https://chatplug.readthedocs.io/zh_CN/latest/quick_start.html)
 
 ```bash
 # run cli inference
