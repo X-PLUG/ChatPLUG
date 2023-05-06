@@ -1,0 +1,22 @@
+{
+    /*
+    0.8279952550415184 @step 550
+    */
+    __parent__: [
+        ${data_dir}/meta
+        examples/finetune/default
+        tests/benchmark/path
+    ]
+
+    data_dir: ${save_root}/finetune/cls/data/
+    save_dir: ${save_root}/finetune/cls/model/
+    pretrained_model: TODO
+    custom_run19/<last>
+    major_metric: f1
+    learning_rate: 7e-5
+    batch_size: 32
+    max_epoch: 8
+    save: true
+    save_best_only: true
+    seed: 176511
+}

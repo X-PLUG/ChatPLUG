@@ -1,0 +1,14 @@
+{
+    __parent__: [
+        ${data_dir}/meta
+        examples/pretrain/tasks/corpus
+        examples/pretrain/params/default
+        examples/debug
+        tests/sample_tasks/checkpoint
+    ]
+
+    data_dir: ${test_root}/data/wiki/
+    save_dir: ${test_root}/wiki/
+    pretrained_model: ${bert_base}
+    fp16: ${__apex__}
+}

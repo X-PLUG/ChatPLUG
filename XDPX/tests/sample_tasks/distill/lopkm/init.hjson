@@ -1,0 +1,22 @@
+{
+  config: ./train
+  extra_config: {
+    student_pretrained_model: null
+  }
+  save_path: ${test_root}/memory_init.pt
+  input_size: 768
+  output_size: 768
+
+  k_dim: 32
+  nkeys: 32
+  nheads: 8
+  knn: 32
+
+  coarse_kmeans_seed: 111
+  fine_kmeans_seed: 111
+  fine_kmeans_iter: 500
+  fine_kmeans_n_init: 20
+  value_init_iter: 100
+  value_finetune_iter: 100
+  batch_size: 16
+}

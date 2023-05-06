@@ -1,0 +1,11 @@
+{
+    save_dir: ${test_root}/chatlog/
+    checkpoint: ${save_dir}/<last>
+    concat_origin: false
+    extra_config: {
+        task: rmr
+    }
+    predict_file_map: {
+        tests/sample_data/chatlog/dev.txt: ${save_dir}/pred_dev.tsv
+    }
+}

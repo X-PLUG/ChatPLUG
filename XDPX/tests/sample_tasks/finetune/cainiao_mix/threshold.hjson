@@ -1,0 +1,5 @@
+{
+    predict_file: ${test_root}/cainiao_mix/pred_dev.tsv
+    target_map_file: ${test_root}/data/cainiao_mix/target_map.txt
+    out_file: ${test_root}/cainiao_mix/threshold.hjson
+}

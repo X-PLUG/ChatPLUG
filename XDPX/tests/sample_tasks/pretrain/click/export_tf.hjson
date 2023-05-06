@@ -1,0 +1,13 @@
+[
+  {
+    save_dir: ${test_root}/click/
+    out_dir: ${test_root}/click/tf_checkpoint/
+    export_format: checkpoint
+  }
+  {
+    save_dir: ${test_root}/click/
+    out_dir: ${test_root}/click/export/
+    export_format: savedmodel
+    signature_def_key: predict
+  }
+]

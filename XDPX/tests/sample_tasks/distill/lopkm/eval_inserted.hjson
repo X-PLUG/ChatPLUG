@@ -1,0 +1,7 @@
+{
+    save_dir: ${test_root}/wiki_lopkm/
+    valid_subset: dev
+    batch_size: 4
+    # FP16/FP32 are expected a difference
+    compare_origin: false
+}

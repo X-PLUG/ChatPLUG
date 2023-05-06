@@ -1,0 +1,8 @@
+{
+    data_dir: data
+    max_epochs: 10
+
+    optimizer: adam
+    learning_rate: 5e-4
+    betas: [0.9, 0.99]
+}

@@ -1,0 +1,5 @@
+{
+    save_dir: ${test_root}/fushi/
+    valid_subset: dev
+    compare_origin: true
+}

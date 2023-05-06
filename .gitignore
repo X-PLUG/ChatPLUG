@@ -1,1 +1,4 @@
 docs/_build/
+checkpoints/
+XDPX/*_DEL/
+bak/

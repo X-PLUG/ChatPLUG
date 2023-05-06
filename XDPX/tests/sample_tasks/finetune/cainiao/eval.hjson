@@ -1,0 +1,14 @@
+[
+    {
+        save_dir: ${test_root}/cainiao/
+        valid_subset: dev
+        batch_size: 2
+        compare_origin: true
+    }
+    {
+        save_dir: ${test_root}/cainiao/
+        valid_subset: tests/sample_data/cainiao/test.txt
+        batch_size: 4
+        ignore_novel_target: true
+    }
+]

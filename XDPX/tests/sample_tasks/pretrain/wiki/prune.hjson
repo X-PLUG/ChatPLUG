@@ -1,0 +1,10 @@
+{
+  config: ./train
+  train_subset: train
+  train_steps: 10
+  prune_config: {
+    -1: 2
+    0: 2
+  }
+  save_path: ${test_root}/bert_pruned/model.pt
+}

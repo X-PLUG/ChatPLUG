@@ -1,0 +1,10 @@
+{
+    __parent__: [
+        examples/finetune/prepro/cls
+        tests/benchmark/path
+    ]
+    data_source: ${data_root}/classification/cainiao-cls/
+    data_dir: ${save_root}/adv/data/
+    workers: 4
+    max_len: 40
+}

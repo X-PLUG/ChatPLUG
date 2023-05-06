@@ -1,0 +1,18 @@
+{
+    __parent__: [
+        ${data_dir}/meta
+        examples/pretrain/params/default
+        examples/pretrain/tasks/minilm
+        examples/debug
+        tests/sample_tasks/checkpoint
+        tests/sample_data/teacher_config.json >> teacher_
+        tests/sample_data/student_config.json
+    ]
+    __ignore__: teacher_vocab_size
+
+    data_dir: '${test_root}/data/wiki_minilm/'
+    save_dir: '${test_root}/minilm/'
+    teacher_pretrained_model: ${bert_base}
+    pretrained_model: null
+    learning_rate: 1e-4
+}

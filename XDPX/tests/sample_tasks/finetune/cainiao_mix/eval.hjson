@@ -1,0 +1,8 @@
+{
+    save_dir: ${test_root}/cainiao_mix/
+    valid_subset: dev
+    save_mode: a
+    save_to_file: ${save_dir}/eval.tsv
+    batch_size: 2
+    compare_origin: true
+}

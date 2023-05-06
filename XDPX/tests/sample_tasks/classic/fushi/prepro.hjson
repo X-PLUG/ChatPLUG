@@ -1,0 +1,15 @@
+{
+    __parent__: tests/sample_tasks/embedding
+    tokenizer: space
+    lower: true
+    target_type: index
+    processor: pair
+    loader: pair
+    max_len: 40
+    data_source: tests/sample_data/fushi/
+    data_dir: ${test_root}/data/fushi_re2/
+    data_files: ['train.txt', 'dev.txt', 'test.txt']
+    check_max_len: true
+    threshold: 10
+    workers: 4
+}

@@ -1,0 +1,7 @@
+{
+    save_dir: ${test_root}/fushi_re2/
+    checkpoint: ${save_dir}/<best>
+    predict_file_map: {
+        tests/sample_data/fushi/unlabeled.txt: ${test_root}/fushi_re2/predict.txt
+    }
+}

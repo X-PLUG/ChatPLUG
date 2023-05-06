@@ -1,0 +1,7 @@
+{
+    save_dir: ${test_root}/distill_lopkm
+    checkpoint: ${save_dir}/<last>
+    valid_subset: dev
+    batch_size: 4
+    compare_origin: true
+}

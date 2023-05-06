@@ -1,14 +1,23 @@
 # ChatPLUG
 
-This is the repo for the ChatPLUG project, which aims to build and share a Chinese open-domain dialogue system.
+[![](assets/Demo-ModelScope-brightgreen.svg)](https://www.modelscope.cn/studios/damo/role_play_chat/summary)
+[![](assets/Paper-Arxiv-orange.svg)](https://arxiv.org/abs/2304.07849)
+![Hex.pm](https://img.shields.io/hexpm/l/plug)
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FX-PLUG%2FChatP&count_bg=%23E97EBA&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=visitors&edge_flat=false)](https://hits.seeyoufarm.com)
 
-👏👏👏You can try [Role-Play-Chat](https://modelscope.cn/studios/damo/role_play_chat/summary) based on ChatPLUG in Mass-Innovation-Studio Now!
+
+This is the repo for the ChatPLUG project, which aims to build and share a Chinese open-domain dialogue system.
 
 <hr>
 
 | 爱用emoji的萌妹子小婉  |  富有智慧的得道高僧 | 会说古文的的三国NPC关羽 |
 :-------------------------:|:-------------------------:|:-------------------------:
 <img src="assets/xiaowan.gif"  width="80%" /> | <img src="assets/gaoseng.gif"  width="90%" /> | <img src="assets/guanyu.gif"   width="80%" /> 
+
+## News
+- [2023/04/26] 👏👏👏 Try our [Role-Play-Chat Online Demo](https://modelscope.cn/studios/damo/role_play_chat/summary) in ModelScope Now!
+- [2023/04/19] Add content including spotlights, results and limitations. Upload models to [modelscope](https://modelscope.cn/my/overview). 
+- [2023/04/16] Initialize project.
 
 ## Overview
 
@@ -18,7 +27,7 @@ To this end, we first conduct large-scale pre-training on both common document c
 
 We show that ChatPLUG outperforms state-of-the-art Chinese dialogue systems on both automatic and human evaluation, and demenstrates strong multi-task generalization on a variety of text understanding and generation tasks. Our demo and model are made publicly available on [ModelScope](https://modelscope.cn/models/damo/ChatPLUG-3.7B/summary).  
 
-<img src="./docs/ChatPLUG.jpg" alt="ChatPLUG"  />
+<img src="assets/ChatPLUG.jpg" alt="ChatPLUG"  />
 
 Please read our paper for more detains about ChatPLUG.
 
@@ -28,17 +37,10 @@ Please read our paper for more detains about ChatPLUG.
 ## Online Demo
 [Role-Play-Chat](https://www.modelscope.cn/studios/damo/role_play_chat/summary)
 
-## News
-
-- [2023/04/26] 👏👏👏You can try [Role-Play-Chat](https://modelscope.cn/studios/damo/role_play_chat/summary) based on ChatPLUG in Mass-Innovation-Studio Now!
-- [2023/04/19] Add content including spotlights, results and limitations. Upload models to [modelscope](https://modelscope.cn/my/overview). 
-- [2023/04/16] Initialize project.
-
-
 
 ## Spotlights
 
-<img src="./docs/spotlights.jpg" alt="spotlights" style="zoom: 50%;" />
+<img src="assets/spotlights.jpg" alt="spotlights" style="zoom: 40%;" />
 
 Compared with existed open-source models, we highlight three feaures of ChatPLUG as follows:
 
@@ -66,11 +68,11 @@ With external knowledge from a search engine, the problem of knowledge hallucina
 
 > With knowledge augmentation, ChatPLUG achieves better performance in terms of knowledge hallucination.
 
-<img src="./docs/knowledge_hallucination.jpg" width = "400" height = "300" alt="knowledge_hallucination" align=center />
+<img src="assets/knowledge_hallucination.jpg" style="zoom: 67%;" alt="knowledge_hallucination"/>
 
 
 <details><summary><b>Examples of real-time questions (Click to view👇)</b></summary>
-<img src="./docs/knowledge_example.jpg" alt="knowledge_example" style="zoom: 67%;" />
+<img src="assets/knowledge_example.jpg" alt="knowledge_example" style="zoom: 67%;" />
 <summary>Access up-to-date information from Internet enables ChatPLUG to provide accurate real-time answers to questions.  </summary>
 </details> 
 
@@ -80,11 +82,11 @@ With external knowledge from a search engine, the problem of knowledge hallucina
 It's flexible to customize dialogue style and characters by setting bot profiles through our FiD architecture or simply using the appropriate prompt. 
 
 <details><summary><b>Examples of dialogue-style customization (Click to view👇)</b></summary>
-<img src="./docs/dialogue_style.jpg" alt="dialogue-style" style="zoom: 67%;" />
+<img src="assets/dialogue_style.jpg" alt="dialogue-style" style="zoom: 67%;" />
 </details>  
 
 <details><summary><b>Examples of character customization (Click to view👇)</b></summary>
-<img src="./docs/character_customization.jpg" alt="character_customization" style="zoom: 67%;" />
+<img src="assets/character_customization.jpg" alt="character_customization" style="zoom: 67%;" />
 </details>  
 
 
@@ -96,18 +98,26 @@ ChatPLUG can not only generate coherent and engaging responses in an open and mu
 
 > We compare our model with open-source Chinese LLMs including <a href="https://github.com/LianjiaTech/BELLE">BELLE-7M-2B</a> and <a href="https://github.com/THUDM/ChatGLM-6B">ChatGLM-6B</a> following the four-level rating evaluation (A>B>C>D). First, all the models are able to follow the given instructions (very small quantity of RATING-D). Second, our model ChatPLUG-3.7B achieves better performance (more quantity of RATING-A and fewer quantity of RATING-C) than BELLE-7B-2M with fewer model parameters and is comparable to ChatGLM-6B. It demonstrates the strong multi-task generalization of ChatPLUG. Lastly, by scaling up the model size to 13B, our model ChatPLUG-13B obtains the best performance. 
 
-<img src="./docs/evaluation_of_multi_task.jpg" width = "400" height = "400" alt="evaluation_of_multi_task" align=center />
+<img src="assets/evaluation_of_multi_task.jpg" style="zoom: 67%;" alt="evaluation_of_multi_task"/>
 
 
 <details><summary><b>Examples of multi-task generalization (Click to view👇)</b></summary>
-<img src="./docs/multitask_case_1.jpg" alt="multitask_case_1" style="zoom: 67%;" />
-<img src="./docs/multitask_case_2.jpg" alt="multitask_case_2" style="zoom: 67%;" />
+<img src="assets/multitask_case_1.jpg" alt="multitask_case_1" style="zoom: 67%;" />
+<img src="assets/multitask_case_2.jpg" alt="multitask_case_2" style="zoom: 67%;" />
 </details>  
 
 
 ## How to run
+We offer three methods to use or continue developing ChatPLUG as follows:
 
-👏👏👏You can download and use ChatPLUG models from modelscope.
+|             | Inference                        | Training                      |
+|-------------|----------------------------------|-------------------------------|
+| ModelScope  | :heavy_check_mark: Cli           | :x:  Not Ready                |
+| XDPX        | :heavy_check_mark: Cli & Serving | :heavy_check_mark:    Support (Coming soon) |
+| HuggingFace | :heavy_check_mark:Cli  (Coming soon)          | :x: Not Ready                 |
+
+### ModelScope
+You can download and use ChatPLUG models from ModelScope.
 
 | Model Name    | URL                                                          |
 | ------------- | ------------------------------------------------------------ |
@@ -115,6 +125,23 @@ ChatPLUG can not only generate coherent and engaging responses in an open and mu
 | ChatPLUG-3.7B | [ChatPLUG-开放域对话模型-3.7B](https://modelscope.cn/models/damo/ChatPLUG-3.7B/summary) |
 
 
+### XDPX
+
+XDPX is an easy-to-use library, that allows researchers and developers to train custom models and build own chatbots in a streamlined manner. Its all-in-one functionality allows for a one-stop solution that simplifies complex processes.
+
+[quick start](https://chatplug.readthedocs.io/en/latest/chatplug/get_started.html)
+
+```bash
+# run cli inference
+x-script fidchat_new <CONFIG>.hjson
+
+# run training (Coming soon)
+x-train <CONFIG>.hjson
+```
+
+
+### HuggingFace
+Coming soon.
 
 ## Limitations
 
@@ -131,12 +158,9 @@ At the launch of the ChatPLUG project, we don't intentionally bulid a all-powerf
 We leave above shortcomings for future work.
 
 
-
 ## Citations
 
 If you find our project useful in your work, please cite:
-
-- ChatPLUG: Open-Domain Generative Dialogue System with Internet-Augmented Instruction Tuning for Digital Human. [Link](https://arxiv.org/abs/2304.07849)
 
 ```
   @misc{tian2023chatplug,

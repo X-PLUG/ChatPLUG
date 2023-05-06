@@ -1,0 +1,12 @@
+{
+    data_source: tests/sample_data/chatlog/
+    data_dir: ${test_root}/data/chatlog/
+    vocab_file: tests/sample_data/bert_vocab.txt
+    target_map_file: tests/sample_data/noop_target_map.txt
+    loader: session_corpus
+    processor: session_corpus
+    max_len: 40
+    min_len: 3
+    tokenizer: bert
+    check_max_len: true
+}
