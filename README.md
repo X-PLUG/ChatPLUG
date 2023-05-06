@@ -27,7 +27,7 @@ To this end, we first conduct large-scale pre-training on both common document c
 
 We show that ChatPLUG outperforms state-of-the-art Chinese dialogue systems on both automatic and human evaluation, and demenstrates strong multi-task generalization on a variety of text understanding and generation tasks. Our demo and model are made publicly available on [ModelScope](https://modelscope.cn/models/damo/ChatPLUG-3.7B/summary).  
 
-<img src="assets/ChatPLUG.jpg" alt="ChatPLUG"  />
+<img src="assets/ChatPLUG.jpg" alt="ChatPLUG" width="80%" />
 
 Please read our paper for more detains about ChatPLUG.
 
@@ -40,7 +40,7 @@ Please read our paper for more detains about ChatPLUG.
 
 ## Spotlights
 
-<img src="assets/spotlights.jpg" alt="spotlights" style="zoom: 40%;" />
+<img src="assets/spotlights.jpg" alt="spotlights" width="80%" />
 
 Compared with existed open-source models, we highlight three feaures of ChatPLUG as follows:
 
@@ -68,7 +68,7 @@ With external knowledge from a search engine, the problem of knowledge hallucina
 
 > With knowledge augmentation, ChatPLUG achieves better performance in terms of knowledge hallucination.
 
-<img src="assets/knowledge_hallucination.jpg" style="zoom: 67%;" alt="knowledge_hallucination"/>
+<img src="assets/knowledge_hallucination.jpg" width="50%" alt="knowledge_hallucination"/>
 
 
 <details><summary><b>Examples of real-time questions (Click to view👇)</b></summary>
@@ -98,7 +98,7 @@ ChatPLUG can not only generate coherent and engaging responses in an open and mu
 
 > We compare our model with open-source Chinese LLMs including <a href="https://github.com/LianjiaTech/BELLE">BELLE-7M-2B</a> and <a href="https://github.com/THUDM/ChatGLM-6B">ChatGLM-6B</a> following the four-level rating evaluation (A>B>C>D). First, all the models are able to follow the given instructions (very small quantity of RATING-D). Second, our model ChatPLUG-3.7B achieves better performance (more quantity of RATING-A and fewer quantity of RATING-C) than BELLE-7B-2M with fewer model parameters and is comparable to ChatGLM-6B. It demonstrates the strong multi-task generalization of ChatPLUG. Lastly, by scaling up the model size to 13B, our model ChatPLUG-13B obtains the best performance. 
 
-<img src="assets/evaluation_of_multi_task.jpg" style="zoom: 67%;" alt="evaluation_of_multi_task"/>
+<img src="assets/evaluation_of_multi_task.jpg" width="40%" alt="evaluation_of_multi_task"/>
 
 
 <details><summary><b>Examples of multi-task generalization (Click to view👇)</b></summary>
@@ -172,8 +172,6 @@ If you find our project useful in your work, please cite:
         primaryClass={cs.CL}
   }
 ```
-
-- PLUG: Pre-training for Language Understanding and Generation [Link](https://modelscope.cn/models/damo/nlp_plug_text-generation_27B/summary) 
 
 ```
 @misc{plug2021,
