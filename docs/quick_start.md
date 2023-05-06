@@ -22,7 +22,7 @@ sh download.sh
 ```bash
 # in the dir of XDPX
 cd XDPX
-CUDA_VISIBLE_DEVICES=0 x-script fidchat_new chat_pipeline/chatplug_xl_sftv2.6.0_instruction.hjson
+CUDA_VISIBLE_DEVICES=0 x-script fidchat_new chat_pipeline/chatplug_3.7B_sftv2.6.0_instruction.hjson
 ```
 
 
