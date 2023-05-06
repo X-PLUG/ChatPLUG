@@ -23,14 +23,14 @@ from xdpx.utils.chat.pipeline import PipelineConfig, ChatPipeline
 SEARCH_CACHE_JSON_PATH = 'search_cache.json'
 DEFAULT_TEST_FILE_DIR = 'benchmark/'
 DEFAULT_TEST_FILE = 'pangu.test.json'
-PERSONALITY_GROUP100_FILE = 'personality_100groups.json'
-PERSONALITY_GROUP100 = json.load(io.open(PERSONALITY_GROUP100_FILE))
-PERSONALITY_GROUP100 = PERSONALITY_GROUP100[
-    'positive']  # + PERSONALITY_GROUP100['neural'] + PERSONALITY_GROUP100['negative']
 
 
 def get_new_bot_profile(bot_profile):
     
+    PERSONALITY_GROUP100_FILE = 'personality_100groups.json'
+    PERSONALITY_GROUP100 = json.load(io.open(PERSONALITY_GROUP100_FILE))
+    PERSONALITY_GROUP100 = PERSONALITY_GROUP100[
+        'positive']  # + PERSONALITY_GROUP100['neural'] + PERSONALITY_GROUP100['negative']
 
     personality = ';'.join(['我是个{}人'.format(l) for l in random.choice(PERSONALITY_GROUP100)])
     new_bot_profile = '{};我是个{}人;'.format(bot_profile.strip(';'), personality)
