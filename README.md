@@ -173,8 +173,6 @@ If you find our project useful in your work, please cite:
   }
 ```
 
-- PLUG: Pre-training for Language Understanding and Generation [Link](https://modelscope.cn/models/damo/nlp_plug_text-generation_27B/summary) 
-
 ```
 @misc{plug2021,
   title = {{PLUG: Pre-training for Language Understanding and Generation}},
