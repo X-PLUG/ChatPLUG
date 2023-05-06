@@ -6,19 +6,19 @@ Welcome to ChatPLUG's documentation!
 
 .. toctree::
    :maxdepth: 1
-   :caption: Get Started
+   :caption: ChatPLUG
 
-   chatplug/get_started
+   quick_start
+
 
 .. toctree::
    :maxdepth: 1
-   :caption: Contents
+   :caption: XDPX
 
    get_started
    nlu_training
    develop
    faq
-   chatplug/get_started
    about_us
 
 ```

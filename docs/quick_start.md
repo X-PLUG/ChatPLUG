@@ -1,7 +1,4 @@
-
-
-# Quick Start (ChatPLUG)
-
+# Quick Start
 
 ## Requirement
 ```bash
