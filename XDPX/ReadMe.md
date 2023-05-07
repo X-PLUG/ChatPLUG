@@ -1,6 +1,6 @@
 # XDPX
 
-项目文档见：[readthedocs](https://chatplug.readthedocs.io/en/latest/get_started.html)
+项目文档见：[readthedocs](https://chatplug.readthedocs.io/zh_CN/latest/)
 
 该项目主要支持**用于PyTorch代码（包括PAI在内）的跨环境训练**。有以下特点：
 
