@@ -107,6 +107,7 @@ x-prepro chat_pipeline/chatplug_prepro_sft_instruction.hjson
 
 3. Training
 
+3.1 Runing training script.
 
 ```
 x-train chat_pipeline/chatplug_3.7B_train_sftv2.6.0_instruction.hjson
@@ -115,13 +116,12 @@ x-train chat_pipeline/chatplug_3.7B_train_sftv2.6.0_instruction.hjson
 Here: `global_batch_size = batch_size * update_freq`, and `batch_size = GPUs * batch_per_GPU`. 
 
 
-4. Eval
+3.2 Visualize the training curve
 
-- [x] learning_curve
+plots in `{save_dir}/plots`.
 
+3.3 Eval with Cli inference
 
-- [x] automatic eval
-
-- [x] human eval
-
+Copy config from `chatplug_3.7B_sftv2.6.0_instruction.hjson` to `chatplug_3.7B_sftvbelle.hjson`.
+Then edit `core_chat_save_dir` and `core_chat_checkpoint` to the corresponding path.
 
