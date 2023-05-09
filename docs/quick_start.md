@@ -62,9 +62,10 @@ io.set_io(oss)
 填上access_key_id、access_key_secret，并添加所有你需要访问的oss bucket的名字以及它们所在的地区名到region_bucket。比如链接为[http://pretrain-lm.oss-cn-hangzhou.aliyuncs.com/](http://pretrain-lm.oss-cn-hangzhou.aliyuncs.com/) 的话，bucket就是“pretrain-lm”，地区名就是“oss-”后面的那部分，即“cn-hangzhou”，传入的值为['cn-hangzhou','pretrain-lm']。之后程序运行便会自动加载这个配置并且支持访问oss路径。
 
 
-## Run Training
+## Training
 
-1. Download dataset from belle
+### 1. Downloading Dataset from Belle
+
 ```
 # in the root dir
 cd data/belle
@@ -77,11 +78,14 @@ python process_belle_0.5M.py
 # train_0.jsonl dev.jsonl ...
 ```
 
-2. Preprocess Data 
+### 2. Preprocessing Data
 
-make data from `str` to `ids`.
+Convert data from str to ids.
 
-- input_data format
+
+
+Input data format
+
 ```json
 {
     "context": "我有点烦怎么办", 
@@ -97,7 +101,8 @@ make data from `str` to `ids`.
 ```
 
 
-- process tokens into ids
+Process tokens into ids
+
 ```
 x-prepro chat_pipeline/chatplug_prepro_sft_instruction.hjson
 # $ls data/dialogue/sft/chatplug/belle_instruction 
@@ -105,7 +110,7 @@ x-prepro chat_pipeline/chatplug_prepro_sft_instruction.hjson
 ```
 
 
-3. Training
+### 3. Training
 
 3.1 Runing training script.
 
@@ -118,10 +123,10 @@ Here: `global_batch_size = batch_size * update_freq`, and `batch_size = GPUs * b
 
 3.2 Visualize the training curve
 
-plots in `{save_dir}/plots`.
+The training curve plots are in `{save_dir}/plots`.
 
 3.3 Eval with Cli inference
 
 Copy config from `chatplug_3.7B_sftv2.6.0_instruction.hjson` to `chatplug_3.7B_sftvbelle.hjson`.
-Then edit `core_chat_save_dir` and `core_chat_checkpoint` to the corresponding path.
+Then, edit `core_chat_save_dir` and `core_chat_checkpoint` to the corresponding path.
 
