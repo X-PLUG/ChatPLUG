@@ -1,0 +1,42 @@
+{
+    __pytorch__: 180
+    __v100__: n
+    __worker__: 1
+    __gpu__: 1
+    __cpu__: 40
+    __memory__: 40
+     __parent__: [
+        [
+            {__def__: {task_name: 'v1.1.3'} } #
+        ]
+    ]
+    __def__: {
+        source_root: ../data/belle/
+        data_root: ../data/dialogue/sft/chatplug/belle_instruction
+    }
+    
+    data_files: ['*.jsonl']
+    data_source: ${source_root}
+    data_dir:  ${data_root}
+    workers: 64
+
+    parser: jsonl
+    fields: ['context','response','passages']
+    loader: t5_fidchat_instruction
+    processor: t5_fidchat_instruction
+    tokenizer: auto
+    # vocab_file: 'google/mt5-base'
+    vocab_file: 'tests/sample_data/mt5-base'
+    pad_word:'<pad>'
+    unk_word:'<unk>'
+
+    target_map_file: tests/sample_data/noop_target_map.txt
+
+
+    skip_bad_lines:true
+
+    max_len: 380
+    max_encoder_length: 380
+    max_decoder_length: 512
+    max_n_passage: 20	
+}

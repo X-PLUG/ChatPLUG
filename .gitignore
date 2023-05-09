@@ -2,3 +2,5 @@ docs/_build/
 checkpoints/
 XDPX/*_DEL/
 bak/
+data/belle
+data/dialogue

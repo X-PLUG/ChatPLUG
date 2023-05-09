@@ -434,7 +434,8 @@ class Trainer:
                 self._oom_buf = torch.cuda.LongTensor(args.distributed_world_size)
 
         ds_config = {
-            "train_micro_batch_size_per_gpu": self.args.batch_size,
+            "train_batch_size": self.args.batch_size * self.args.update_freq,
+            "gradient_accumulation_steps": self.args.update_freq,
             "bfloat16": {
                 "enabled": self.args.deepspeed_bf16
             },
