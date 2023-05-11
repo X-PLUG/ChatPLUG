@@ -89,7 +89,8 @@ class PipelineConfig:
     # for benchmark eval
     use_hit_rule: bool = True
     use_faq: bool = True
-    remove_context_history: bool = True
+
+    use_instruction: bool = False
 
 
 # for deploying on public cloud by aquila (can not read objects from different regions)
@@ -516,8 +517,6 @@ class ChatPipeline(object):
                                           self.learn2search.query_classifier is None
                                           or
                                           query_label == CHITCHAT_QUERY
-                                          or
-                                          not self.config.remove_context_history
                                   )
             if need_concat_context:
                 utterance = chat_input.query

@@ -32,6 +32,35 @@ def convert_to_local_cfg_vocab(args):
     return args
 
 
+def process_context(context_list):
+    subject = "我"
+    for i in range(len(context_list) - 1, -1, -1):
+        if len(context_list[i]) > 0 and context_list[i][
+            -1] not in '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~、。，？！；：“”（）【】《》〈〉……':
+            context_list[i] = context_list[i] + "。"
+        context_list[i] = subject + "：" + context_list[i]
+        subject = "你" if subject == "我" else "我"
+    return "".join(context_list)
+
+
+def process_history(history_list):
+    subject = "你"
+    for i in range(len(history_list) - 1, -1, -1):
+        if len(history_list[i]) > 0 and history_list[i][
+            -1] not in '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~、。，？！；：“”（）【】《》〈〉……':
+            history_list[i] = history_list[i] + "。"
+        history_list[i] = subject + "：" + history_list[i]
+        subject = "你" if subject == "我" else "我"
+    return "".join(history_list)
+
+
+context_template = "假设我和你正在进行对话，请你给我得体、准确、友好的回复。以下是我们的对话内容。{context}"
+history_template = "假设我和你正在进行对话，请你给我得体、准确、友好的回复。以下是我们的对话内容。{context}#以下是在此之前我们的对话内容，可作为回复时的参考。{history}"
+knowledge_template = "假设我和你正在进行对话，请你给我得体、准确、友好的回复。以下是我们的对话内容。{context}#以下是和对话相关的知识，请你参考该知识进行回复。{knowledge}"
+user_profile_template = "假设我和你正在进行对话，请你给我得体、准确、友好的回复。以下是我们的对话内容。{context}#假设以下是你对我所了解的信息，请你参考该信息并避免你的回复和该信息矛盾，信息如下：{user_profile}"
+bot_profile_template = "假设我和你正在进行对话，请你给我得体、准确、友好的回复。以下是我们的对话内容。{context}#假设以下是你的人物设定，请你参考该信息并避免你的回复和该信息矛盾，信息如下：{bot_profile}"
+
+
 class CoreChat(object):
     def __init__(self, save_dir,
                  checkpoint=None,
@@ -43,12 +72,14 @@ class CoreChat(object):
                  allspark_gen_cfg=None,
                  max_encoder_length=300,
                  bad_words=None,
-                 no_repeat_session_ngrams=4
+                 no_repeat_session_ngrams=4,
+                 use_instruction=False
                  ):
         self.allspark_gpu_speed_up = allspark_gpu_speed_up
         self.max_encoder_length = max_encoder_length
         self.bad_words = bad_words.split('|') if bad_words else []
         self.no_repeat_session_ngrams = no_repeat_session_ngrams
+        self.use_instruction = use_instruction
 
         if is_onnx:  # onnx t5 model
             from xdpx.utils.thirdparty.onnx_transformers.models.t5.onnx_model import OnnxT5
@@ -118,10 +149,49 @@ class CoreChat(object):
            knowledge_list:
        '''
         if self.is_t5:
-            return self.build_model_input_for_t5(utterance, context, history, user_profile, bot_profile, knowledge_list)
+            if self.use_instruction:
+                return self.build_model_input_for_t5_instruction(utterance, context, history, user_profile, bot_profile,
+                                                                 knowledge_list)
+            else:
+                return self.build_model_input_for_t5(utterance, context, history, user_profile, bot_profile, knowledge_list)
         else:
-            return self.build_model_input_for_plug(utterance, context, history, user_profile, bot_profile,
+            if self.use_instruction:
+                return self.build_model_input_for_plug_instruction(utterance, context, history, user_profile,
+                                                                   bot_profile,
+                                                                   knowledge_list)
+            else:
+                return self.build_model_input_for_plug(utterance, context, history, user_profile, bot_profile,
                                                    knowledge_list)
+
+    def build_model_input_for_t5_instruction(self, utterance: str, context: list, history: list, user_profile: list,
+                                             bot_profile: list,
+                                             knowledge_list: list) -> Tuple[List[str], str]:
+
+        model_input = []
+
+        if context:
+            context = context + [utterance]
+        else:
+            context = [utterance]
+        context = process_context(context)
+
+        if history and len(history) > 0:
+            history = process_history(history)
+            model_input.append(history_template.format(context=context, history=history))
+        if knowledge_list and len(knowledge_list) > 0:
+            for knowledge in knowledge_list:
+                model_input.append(knowledge_template.format(context=context, knowledge=knowledge))
+        if user_profile and len(user_profile) > 0:
+            for profile in user_profile:
+                model_input.append(user_profile_template.format(context=context, user_profile=profile))
+        if bot_profile:
+            for profile in bot_profile:
+                model_input.append(bot_profile_template.format(context=context, bot_profile=profile))
+
+        if not model_input:
+            model_input.append(context_template.format(context=context))
+
+        return model_input, context
 
     def build_model_input_for_t5(self, utterance: str, context: list, history: list, user_profile: list,
                                  bot_profile: list,
@@ -152,6 +222,39 @@ class CoreChat(object):
 
         if not model_input:
             model_input.append(f'{context}')
+
+        return model_input, context
+
+    def build_model_input_for_plug_instruction(self, utterance: str, context: list, history: list, user_profile: list,
+                                               bot_profile: list,
+                                               knowledge_list: list) -> Tuple[List[str], str]:
+
+        model_input = []
+
+        if context:
+            context = context + [utterance]
+        else:
+            context = [utterance]
+        context = process_context(context)
+
+        if history and len(history) > 0:
+            history = process_history(history)
+            model_input.append(history_template.format(context=context, history=history))
+        if knowledge_list and len(knowledge_list) > 0:
+            for knowledge in knowledge_list:
+                model_input.append(knowledge_template.format(context=context, knowledge=knowledge))
+        if user_profile and len(user_profile) > 0:
+            for profile in user_profile:
+                model_input.append(user_profile_template.format(context=context, user_profile=profile))
+        if bot_profile:
+            for profile in bot_profile:
+                model_input.append(bot_profile_template.format(context=context, bot_profile=profile))
+
+        if not model_input:
+            model_input.append(context_template.format(context=context))
+
+        for i in range(len(model_input)):
+            model_input[i] = model_input[i].replace('</s>', "[SEP]")
 
         return model_input, context
 
