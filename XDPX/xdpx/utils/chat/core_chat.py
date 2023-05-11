@@ -12,12 +12,14 @@ from xdpx.loaders import loaders
 from xdpx.options import Options, Argument, Arg
 from xdpx.utils import cache_file
 from xdpx.utils import io
-from xdpx.models.chat import FIDT5Chat
+from xdpx.models.chat import FIDT5Chat,PlugV2FidChat
 from transformers import AutoTokenizer
 
 from icecream import ic
 from . import DEVICE
 import re
+
+from xdpx.utils.chinese_utils import remove_space_between_chinese_chars
 
 
 def convert_to_local_cfg_vocab(args):
@@ -133,6 +135,8 @@ class CoreChat(object):
             self.tokenizer = loaders[args.loader](args).tokenizer.tokenizer
 
         self.is_t5 = isinstance(self.model, FIDT5Chat)
+        self.is_plug = isinstance(self.model, PlugV2FidChat)
+
         from threading import Lock
         self.lock = Lock()
 
@@ -384,10 +388,7 @@ class CoreChat(object):
                                        return_tensors="pt").input_ids.unsqueeze(0).to(DEVICE)  # batch_size= 1
 
         bad_words_ids = self.build_bad_words_ids(no_repeat_session)
-        if not self.is_t5:
-            token_type_ids = self.build_token_type_ids(model_input, context_prefix, input_ids)
-        else:
-            token_type_ids = None
+
         start_generate = time.time()
 
         if self.allspark_gpu_speed_up:
@@ -400,28 +401,35 @@ class CoreChat(object):
                                                       max_length=generate_config['max_length'],
                                                       bad_words_ids=bad_words_ids)
         else:
-            if token_type_ids is None:
-                hypotheses = self.model.generate(input_ids,
-                                                 bad_words_ids=bad_words_ids,
-                                                 eos_token_id=self.tokenizer.sep_token_id,
-                                                 decoder_start_token_id=self.tokenizer.cls_token_id,
-                                                 **generate_config)
-            else:
-                hypotheses = self.model.generate(input_ids,
-                                                 bad_words_ids=bad_words_ids,
-                                                 token_type_ids=token_type_ids,
-                                                 eos_token_id=self.tokenizer.sep_token_id,
-                                                 decoder_start_token_id=self.tokenizer.cls_token_id,
-                                                 **generate_config)
+            hypotheses = self.model.generate(input_ids,
+                                             bad_words_ids=bad_words_ids,
+                                             eos_token_id=self.tokenizer.sep_token_id,
+                                             decoder_start_token_id=self.tokenizer.cls_token_id,
+                                             **generate_config)
 
         if torch.cuda.is_available():
             hypotheses = hypotheses.detach().cpu().tolist()
 
-        results = []
-        for h in hypotheses:
-            decoded_hypo = self.tokenizer.decode(h, skip_special_tokens=True).replace(' ', '')
-            results.append(decoded_hypo)
+        response = self.tokenizer.decode(hypotheses[0], skip_special_tokens=not self.is_plug)
+
+        token_mapping = {
+            '<extra_id_22>': '\n',
+            '<extra_id_33>': '\t',
+            '<extra_id_23>': '  ',
+            '[unused22]': '\n',
+            '[unused33]': '\t',
+            '[unused23]': '  ',
+            '[SEP]': '',
+            '[CLS]': '',
+            '[PAD]': '',
+            '[UNK]': ''
+        }
+        for s, t in token_mapping.items():
+            response = response.replace(s, t)
+
+        if self.is_plug:
+            response = remove_space_between_chinese_chars(response)
 
         generate_time = time.time() - start_generate
 
-        return results, generate_time, model_input
+        return [response], generate_time, model_input
