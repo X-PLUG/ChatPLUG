@@ -121,6 +121,35 @@ def plug_token_process(text):
     text = re.sub('[ \t]+', PLUG_SPACE_TOKEN, text)
     return text
 
+def t5_token_process(func):
+
+    def wrapper(cls, contents: List[str],*args,**kw):
+        for i in range(len(contents)):
+            contents[i] = contents[i].replace('\n', '▁<extra_id_22>')
+            contents[i] = contents[i].replace('\t', '▁<extra_id_33>')
+            contents[i] = contents[i].replace('  ', '▁<extra_id_23>')
+        return func(cls, contents,*args,**kw)
+
+    return wrapper
+
+
+def plug_token_process(func):
+
+    def wrapper(cls, contents: List[str],*args,**kw):
+        for i in range(len(contents)):
+            contents[i] = contents[i].replace('</s>', '[SEP]')
+            # raw data may contain special tokens of t5
+            contents[i] = contents[i].replace('▁<extra_id_22>','\n')
+            contents[i] = contents[i].replace('▁<extra_id_33>','\t')
+            contents[i] = contents[i].replace('▁<extra_id_23>','  ')
+
+            contents[i] = contents[i].replace('\n', '[unused22]')
+            contents[i] = contents[i].replace('\t', '[unused33]')
+            contents[i] = contents[i].replace('  ', '[unused23]')
+        return func(cls, contents,*args,**kw)
+
+    return wrapper
+
 
 @register('t5_chat')
 class T5ChatLoader(ChatLoader):
@@ -206,6 +235,7 @@ class T5ChatInstructionLoader(ChatLoader):
 class T5FidChatInstructionLoader(FIDChatLoader):
 
     @classmethod
+    @t5_token_process
     def parse(cls, contents: List[str], _id=0) -> dict:
 
         SEP = '</s>'
@@ -309,13 +339,11 @@ class PlugV2ChatInstructionLoader(ChatLoader):
 class PlugV2FidChatInstructionLoader(FIDChatLoader):
 
     @classmethod
+    @plug_token_process
     def parse(cls, contents: List[str], _id=0) -> dict:
         CLS = '[CLS]'
         SEP = '[SEP]'
 
-        contents[0] = plug_token_process(contents[0]).strip().strip(SEP)
-        contents[1] = plug_token_process(contents[1]).strip().strip(SEP)
-        contents[2] = plug_token_process(contents[2]).strip().strip(SEP)
 
         context = contents[0]
         response = contents[1]

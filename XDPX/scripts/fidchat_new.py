@@ -66,7 +66,7 @@ def cli_main(argv=sys.argv):
     model = ChatPipeline(pipeline_config)
 
     verbose = False
-    bot_profile = '我是达摩院的语言模型ChatPLUG， 是基于海量数据训练得到。'
+    bot_profile = '我是达摩院的语言模型ChatPLUG， 是基于海量数据训练得到'
     user_profile = ''
     bot_profile, user_profile = bot_profile.replace('；', ';').replace(' ', ''), user_profile.replace('；', ';').replace(
         ' ', '')
