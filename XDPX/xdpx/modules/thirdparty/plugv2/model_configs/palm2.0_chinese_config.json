@@ -1,0 +1,14 @@
+{
+  "encoder": "zh_bert",
+  "encoder_pth": "xdpx/modules/thirdparty/plugv2/model_configs/bert-base-chinese",
+  "max_pos": 512,
+  "share_emb": false,
+  "dec_layers": 12,
+  "dec_hidden_size": 768,
+  "dec_heads": 8,
+  "dec_ff_size": 3072,
+  "dec_dropout": 0.2,
+  "use_bert_emb": true,
+  "label_smoothing": 0.1,
+  "block_trigram": false
+}
