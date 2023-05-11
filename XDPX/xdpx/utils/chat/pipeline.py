@@ -210,7 +210,8 @@ class ChatPipeline(object):
             config.core_chat_allspark_gen_cfg,
             config.core_chat_max_encoder_length,
             config.core_chat_bad_words,
-            config.core_chat_max_no_repeat_session_ngrams
+            config.core_chat_max_no_repeat_session_ngrams,
+            config.use_instruction
         )
 
         if config.utterance_rewriter_save_dir:
