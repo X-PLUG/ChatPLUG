@@ -88,7 +88,4 @@
   safety_detect_model_path: TBD
   safety_detect_mode: relax
 
-  pipeline_always_concat_history : true
-  persona_response_max_legnth : 512
-  
 }
