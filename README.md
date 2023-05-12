@@ -75,6 +75,8 @@ XDPX is an easy-to-use library, that allows researchers and developers to train 
 
 #### One-Click Inference
 
+> When using ChatPLUG-3.7B, you can set `core_chat_half_precision : true` to save memory.
+
 ```bash
 # Requirement
 # in the dir of XDPX
@@ -94,6 +96,8 @@ CUDA_VISIBLE_DEVICES=0 x-script fidchat_new chat_pipeline/chatplug_3.7B_sftv2.6.
 ```
 
 #### One-Click Training
+              
+> If your GPU(e.g.A100、V100、T4) support bf16, set `deepspeed_bf16: true` and `deepspeed_fp16: false`, otherwise set `deepspeed_bf16: false` and `deepspeed_fp16: true` 
 
 ```bash
 # 1. Download dataset from belle
