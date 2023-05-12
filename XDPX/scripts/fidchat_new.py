@@ -76,6 +76,17 @@ def cli_main(argv=sys.argv):
     invoked_command = False
     dialog_state = {}
 
+    desc = \
+        f"""
+    {'-' * 10} chat with ChatPLUG in an interactivate way {'-' * 10}
+    #new : start with a new session
+    #verbose : print the debug info
+    #show : show the generation config
+    #exit : exit
+    #test_file=xxx : inference using a test file 
+    """
+    print(desc)
+
     while True:
         try:
             if invoked_command:

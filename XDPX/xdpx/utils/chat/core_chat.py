@@ -75,7 +75,8 @@ class CoreChat(object):
                  max_encoder_length=300,
                  bad_words=None,
                  no_repeat_session_ngrams=4,
-                 use_instruction=False
+                 use_instruction=False,
+                 core_chat_half_precision=False
                  ):
         self.allspark_gpu_speed_up = allspark_gpu_speed_up
         self.max_encoder_length = max_encoder_length
@@ -124,6 +125,7 @@ class CoreChat(object):
             args.__cmd__ = 'serve'
             args.save_dir = save_dir
             args.strict_size = True
+            args.core_chat_half_precision = core_chat_half_precision
             # build the task
             task = tasks[args.task](args)
             model = task.build_model(args)

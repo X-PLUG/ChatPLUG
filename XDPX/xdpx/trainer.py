@@ -341,7 +341,7 @@ class Trainer:
             self.device = torch.device('cpu')
 
         if self.args.deepspeed_zero_stage>0 and self.args.save_full_checkpoint:
-            assert self.args.deepspeed_save_dir is not None and len(self.args.deepspeed_save_dir)>0
+            assert self.args.deepspeed_save_dir is not None and len(self.args.deepspeed_save_dir)>0, "args.deepspeed_save_dir should not be null"
 
         self._loss = loss
         self._model = model

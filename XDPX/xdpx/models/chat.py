@@ -48,8 +48,7 @@ class ChatBase(Model):
         return response
 
     def forward(self, input_ids, decoder_input_ids, *args, **kwargs):
-        attention_mask = input_ids.ne(0).long()
-        return self.backbone.forward(input_ids=input_ids, attention_mask=attention_mask, labels=decoder_input_ids, *args, **kwargs)
+        return self.backbone.forward(input_ids=input_ids, labels=decoder_input_ids, *args, **kwargs)
 
     def get_param_groups(self, module, **kwargs):
         oridinary = []
@@ -92,6 +91,8 @@ class T5Chat(ChatBase):
             else:
                 self.backbone = T5ForConditionalGeneration(config)
             print(f'| after T5ForConditionalGeneration create..')
+        if hasattr(args,'core_chat_half_precision') and args.core_chat_half_precision:
+            self.backbone.half()
 
     def load(self, pretrained_model_path, from_tf=False):
         with io.open(pretrained_model_path, 'rb') as f:
@@ -130,6 +131,10 @@ class T5Chat(ChatBase):
             if mismatched_keys:
                 print(f'| Mismatched keys:\n|\t' + '\n|\t'.join(mismatched_keys))
             print()
+
+    def forward(self, input_ids, decoder_input_ids, *args, **kwargs):
+        attention_mask = input_ids.ne(0).long()
+        return self.backbone.forward(input_ids=input_ids, attention_mask=attention_mask, labels=decoder_input_ids, *args, **kwargs)
 
 
 @register('fidt5chat')
@@ -279,146 +284,6 @@ class CheckpointWrapper(torch.nn.Module):
         return output
 
 
-@register('plug_chat')
-class PlugChat(ChatBase):
-    @staticmethod
-    def register(options):
-        options.register(
-            Argument('attention_probs_dropout_prob', default=0.1),
-            Argument('directionality', default="bidi"),
-            Argument('hidden_act', default="gelu"),
-            Argument('hidden_dropout_prob', default=0.1),
-            Argument('hidden_size', default=768),
-            Argument('initializer_range', default=0.02),
-            Argument('intermediate_size', default=3072),
-            Argument('max_position_embeddings', default=2048),
-            Argument('num_attention_heads', default=12),
-            Argument('num_hidden_layers', default=12),
-            Argument('type_vocab_size', default=3),
-            Argument('layer_norm_eps', default=1e-12),
-            Argument('dec_hidden_layers', default=12),
-            Argument('decoder_start_token_id', default=101),
-            Argument('decoder_end_token_id', default=102),
-            Argument('pad_token_id', default=0),
-            Argument('is_encoder_decoder', default=True),
-            domain='palm_config'
-        )
-
-    def __init__(self, args, wrapped=False):
-        super().__init__(args)
-
-        config = PalmConfig(
-            vocab_size=21504,
-            # vocab_size=args.vocab_size,
-            hidden_size=args.hidden_size,
-            num_hidden_layers=args.num_hidden_layers,
-            num_attention_heads=args.num_attention_heads,
-            intermediate_size=args.intermediate_size,
-            hidden_act=args.hidden_act,
-            hidden_dropout_prob=args.hidden_dropout_prob,
-            attention_probs_dropout_prob=args.attention_probs_dropout_prob,
-            max_position_embeddings=args.max_position_embeddings,
-            type_vocab_size=args.type_vocab_size,
-            initializer_range=args.initializer_range,
-            layer_norm_eps=args.layer_norm_eps,
-            pad_token_id=0,
-            dec_hidden_layers=args.dec_hidden_layers,
-            decoder_start_token_id=args.decoder_start_token_id,
-            is_encoder_decoder=args.is_encoder_decoder
-        )
-        self.use_checkpoint = self.args.gradient_checkpointing
-        self.wrapped = wrapped
-
-        palm_class = WrapPalmForConditionalGeneration if self.wrapped else PalmForConditionalGeneration
-
-        if self.args.gradient_checkpointing:
-            config.use_cache = False
-            self.backbone = palm_class(config)
-            self.backbone.gradient_checkpointing_enable()
-        else:
-            self.backbone = palm_class(config)
-
-    def load(self, pretrained_model_path, from_tf=False):
-        torch.set_num_threads(1)
-        with io.open(pretrained_model_path, 'rb') as f:
-            state_dict = torch.load(f, map_location='cpu')
-            if 'module' in state_dict:
-                state_dict = state_dict['module']
-            if 'backbone' in list(state_dict.keys())[0]:
-                new_state_dict = {}
-                for key in state_dict:
-                    new_key = key.replace('backbone.', '')
-                    new_state_dict[new_key] = state_dict[key]
-                state_dict = new_state_dict
-
-            model_state_dict = self.backbone.state_dict()
-            model_keys = model_state_dict.keys()
-
-            missing_keys = [key for key in model_keys if key not in state_dict]
-            unexpected_keys = [key for key in state_dict if key not in model_keys]
-            mismatched_keys = [key for key in model_keys if key in state_dict and
-                               state_dict[key].shape != model_state_dict[key].shape]
-            for key in mismatched_keys:
-                del state_dict[key]
-
-            self.backbone.load_state_dict(state_dict, strict=False)
-            print(f'| Weights loaded for {self.backbone.__class__.__name__} from {pretrained_model_path}.')
-            if missing_keys:
-                print(f'| Missing keys:\n|\t' + '\n|\t'.join(missing_keys))
-            if unexpected_keys:
-                print(f'| Unexpected keys:\n|\t' + '\n|\t'.join(unexpected_keys))
-            if mismatched_keys:
-                print(f'| Mismatched keys:\n|\t' + '\n|\t'.join(mismatched_keys))
-            print()
-
-
-@register('plug_fidchat')
-class PlugFidChat(PlugChat):
-    def __init__(self, args, wrapped=True):
-        super().__init__(args, wrapped)
-
-    def generate(self, input_ids, *args, **kwargs):
-        self.backbone.eval()
-        with torch.no_grad():
-            if len(input_ids.shape) == 2:
-                input_ids = input_ids.unsqueeze(0)
-            self.backbone.get_encoder().n_passages = input_ids.size(1)
-            input_ids = input_ids.view(input_ids.size(0), -1)
-            input_ids = input_ids.to(torch.long)
-            response = self.backbone.generate(input_ids, *args, **kwargs)
-        return response
-
-    def load_allspark(self, allspark_gen_cfg):
-        self.as_engine = allspark.Engine()
-        self.as_engine.set_device_type("CUDA")
-        gen_cfg = {
-            'eos_token_id': 102,
-            'fusion_in_decoder': True,
-        }
-        gen_cfg.update(allspark_gen_cfg)
-        self.as_engine.build_model_from_torch(
-            model_name="palm_chat",
-            model_type="PLUG",
-            torch_model=self.backbone.eval(),
-            generate_config=gen_cfg,
-        )
-
-    def generate_allspark(self, torch_input, max_length, bad_words_ids=None):
-        bad_words_ids = [] if bad_words_ids is None else bad_words_ids
-        out = self.as_engine.run_text_generation("palm_chat", {
-            "input_ids": torch.utils.dlpack.to_dlpack(torch_input["input_ids"]),
-            "attention_mask": torch.utils.dlpack.to_dlpack(torch_input["attention_mask"]),
-            "token_type_ids": torch.utils.dlpack.to_dlpack(torch_input["token_type_ids"]),
-        }, max_length=max_length, bad_words_ids=bad_words_ids)
-        return torch.utils.dlpack.from_dlpack(out["generated_ids"])
-
-
-
-@register('palmchat')
-class PalmChat(PlugChat):
-    '''兼容'''
-    pass
-
 
 @register('plugv2_chat')
 class PlugV2Chat(ChatBase):
@@ -433,6 +298,9 @@ class PlugV2Chat(ChatBase):
         super().__init__(args)
         plug_config = PlugConfig.from_json_file(args.plug_config_file)
         self.backbone = PlugForConditionalGeneration(plug_config)
+
+        if hasattr(args,'core_chat_half_precision') and args.core_chat_half_precision:
+            self.backbone.half()
 
     def load(self, pretrained_model_path, from_tf=False):
         with io.open(pretrained_model_path, 'rb') as f:

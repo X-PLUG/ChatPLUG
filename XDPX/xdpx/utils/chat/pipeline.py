@@ -91,6 +91,8 @@ class PipelineConfig:
     use_faq: bool = True
 
     use_instruction: bool = False
+    # whether to use half precision
+    core_chat_half_precision: bool = False
 
 
 # for deploying on public cloud by aquila (can not read objects from different regions)
@@ -211,7 +213,8 @@ class ChatPipeline(object):
             config.core_chat_max_encoder_length,
             config.core_chat_bad_words,
             config.core_chat_max_no_repeat_session_ngrams,
-            config.use_instruction
+            config.use_instruction,
+            config.core_chat_half_precision
         )
 
         if config.utterance_rewriter_save_dir:
