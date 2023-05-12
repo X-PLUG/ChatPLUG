@@ -91,7 +91,7 @@ class T5Chat(ChatBase):
             else:
                 self.backbone = T5ForConditionalGeneration(config)
             print(f'| after T5ForConditionalGeneration create..')
-        if hasattr(args,'core_chat_half_precision') and args.core_chat_half_precision:
+        if hasattr(args,'core_chat_half_precision') and args.core_chat_half_precision and torch.cuda.is_available():
             self.backbone.half()
 
     def load(self, pretrained_model_path, from_tf=False):
