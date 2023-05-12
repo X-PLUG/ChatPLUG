@@ -299,7 +299,7 @@ class PlugV2Chat(ChatBase):
         plug_config = PlugConfig.from_json_file(args.plug_config_file)
         self.backbone = PlugForConditionalGeneration(plug_config)
 
-        if hasattr(args,'core_chat_half_precision') and args.core_chat_half_precision:
+        if hasattr(args,'core_chat_half_precision') and args.core_chat_half_precision and torch.cuda.is_available():
             self.backbone.half()
 
     def load(self, pretrained_model_path, from_tf=False):
