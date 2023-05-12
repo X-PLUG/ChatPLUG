@@ -30,9 +30,6 @@ class ChatLoss(Loss):
         outputs = model(**sample['net_input'])
         loss = outputs.loss
 
-        sample_size = input_ids.shape[0]
-
-
         decoder_input_mask = decoder_input_ids.ne(padding_index).long()
         # consider padding with index -100
         decoder_input_mask_ignore = decoder_input_ids.ne(-100).long()
@@ -47,7 +44,8 @@ class ChatLoss(Loss):
             'token_size': token_size,
         })
 
-        return loss, sample_size, logging_output
+        # loss has already averaged, so 1 is used as the sample_size
+        return loss, 1, logging_output
 
 
     @staticmethod

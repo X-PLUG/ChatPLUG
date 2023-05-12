@@ -89,7 +89,10 @@ class PipelineConfig:
     # for benchmark eval
     use_hit_rule: bool = True
     use_faq: bool = True
-    remove_context_history: bool = True
+
+    use_instruction: bool = False
+    # whether to use half precision
+    core_chat_half_precision: bool = False
 
 
 # for deploying on public cloud by aquila (can not read objects from different regions)
@@ -209,7 +212,9 @@ class ChatPipeline(object):
             config.core_chat_allspark_gen_cfg,
             config.core_chat_max_encoder_length,
             config.core_chat_bad_words,
-            config.core_chat_max_no_repeat_session_ngrams
+            config.core_chat_max_no_repeat_session_ngrams,
+            config.use_instruction,
+            config.core_chat_half_precision
         )
 
         if config.utterance_rewriter_save_dir:
@@ -516,8 +521,6 @@ class ChatPipeline(object):
                                           self.learn2search.query_classifier is None
                                           or
                                           query_label == CHITCHAT_QUERY
-                                          or
-                                          not self.config.remove_context_history
                                   )
             if need_concat_context:
                 utterance = chat_input.query

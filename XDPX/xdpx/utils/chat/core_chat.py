@@ -12,12 +12,14 @@ from xdpx.loaders import loaders
 from xdpx.options import Options, Argument, Arg
 from xdpx.utils import cache_file
 from xdpx.utils import io
-from xdpx.models.chat import FIDT5Chat
+from xdpx.models.chat import FIDT5Chat,PlugV2FidChat
 from transformers import AutoTokenizer
 
 from icecream import ic
 from . import DEVICE
 import re
+
+from xdpx.utils.chinese_utils import remove_space_between_chinese_chars
 
 
 def convert_to_local_cfg_vocab(args):
@@ -32,6 +34,35 @@ def convert_to_local_cfg_vocab(args):
     return args
 
 
+def process_context(context_list):
+    subject = "我"
+    for i in range(len(context_list) - 1, -1, -1):
+        if len(context_list[i]) > 0 and context_list[i][
+            -1] not in '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~、。，？！；：“”（）【】《》〈〉……':
+            context_list[i] = context_list[i] + "。"
+        context_list[i] = subject + "：" + context_list[i]
+        subject = "你" if subject == "我" else "我"
+    return "".join(context_list)
+
+
+def process_history(history_list):
+    subject = "你"
+    for i in range(len(history_list) - 1, -1, -1):
+        if len(history_list[i]) > 0 and history_list[i][
+            -1] not in '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~、。，？！；：“”（）【】《》〈〉……':
+            history_list[i] = history_list[i] + "。"
+        history_list[i] = subject + "：" + history_list[i]
+        subject = "你" if subject == "我" else "我"
+    return "".join(history_list)
+
+
+context_template = "假设我和你正在进行对话，请你给我得体、准确、友好的回复。以下是我们的对话内容。{context}"
+history_template = "假设我和你正在进行对话，请你给我得体、准确、友好的回复。以下是我们的对话内容。{context}#以下是在此之前我们的对话内容，可作为回复时的参考。{history}"
+knowledge_template = "假设我和你正在进行对话，请你给我得体、准确、友好的回复。以下是我们的对话内容。{context}#以下是和对话相关的知识，请你参考该知识进行回复。{knowledge}"
+user_profile_template = "假设我和你正在进行对话，请你给我得体、准确、友好的回复。以下是我们的对话内容。{context}#假设以下是你对我所了解的信息，请你参考该信息并避免你的回复和该信息矛盾，信息如下：{user_profile}"
+bot_profile_template = "假设我和你正在进行对话，请你给我得体、准确、友好的回复。以下是我们的对话内容。{context}#假设以下是你的人物设定，请你参考该信息并避免你的回复和该信息矛盾，信息如下：{bot_profile}"
+
+
 class CoreChat(object):
     def __init__(self, save_dir,
                  checkpoint=None,
@@ -43,12 +74,15 @@ class CoreChat(object):
                  allspark_gen_cfg=None,
                  max_encoder_length=300,
                  bad_words=None,
-                 no_repeat_session_ngrams=4
+                 no_repeat_session_ngrams=4,
+                 use_instruction=False,
+                 core_chat_half_precision=False
                  ):
         self.allspark_gpu_speed_up = allspark_gpu_speed_up
         self.max_encoder_length = max_encoder_length
         self.bad_words = bad_words.split('|') if bad_words else []
         self.no_repeat_session_ngrams = no_repeat_session_ngrams
+        self.use_instruction = use_instruction
 
         if is_onnx:  # onnx t5 model
             from xdpx.utils.thirdparty.onnx_transformers.models.t5.onnx_model import OnnxT5
@@ -91,6 +125,7 @@ class CoreChat(object):
             args.__cmd__ = 'serve'
             args.save_dir = save_dir
             args.strict_size = True
+            args.core_chat_half_precision = core_chat_half_precision
             # build the task
             task = tasks[args.task](args)
             model = task.build_model(args)
@@ -102,6 +137,8 @@ class CoreChat(object):
             self.tokenizer = loaders[args.loader](args).tokenizer.tokenizer
 
         self.is_t5 = isinstance(self.model, FIDT5Chat)
+        self.is_plug = isinstance(self.model, PlugV2FidChat)
+
         from threading import Lock
         self.lock = Lock()
 
@@ -118,10 +155,49 @@ class CoreChat(object):
            knowledge_list:
        '''
         if self.is_t5:
-            return self.build_model_input_for_t5(utterance, context, history, user_profile, bot_profile, knowledge_list)
+            if self.use_instruction:
+                return self.build_model_input_for_t5_instruction(utterance, context, history, user_profile, bot_profile,
+                                                                 knowledge_list)
+            else:
+                return self.build_model_input_for_t5(utterance, context, history, user_profile, bot_profile, knowledge_list)
         else:
-            return self.build_model_input_for_plug(utterance, context, history, user_profile, bot_profile,
+            if self.use_instruction:
+                return self.build_model_input_for_plug_instruction(utterance, context, history, user_profile,
+                                                                   bot_profile,
+                                                                   knowledge_list)
+            else:
+                return self.build_model_input_for_plug(utterance, context, history, user_profile, bot_profile,
                                                    knowledge_list)
+
+    def build_model_input_for_t5_instruction(self, utterance: str, context: list, history: list, user_profile: list,
+                                             bot_profile: list,
+                                             knowledge_list: list) -> Tuple[List[str], str]:
+
+        model_input = []
+
+        if context:
+            context = context + [utterance]
+        else:
+            context = [utterance]
+        context = process_context(context)
+
+        if history and len(history) > 0:
+            history = process_history(history)
+            model_input.append(history_template.format(context=context, history=history))
+        if knowledge_list and len(knowledge_list) > 0:
+            for knowledge in knowledge_list:
+                model_input.append(knowledge_template.format(context=context, knowledge=knowledge))
+        if user_profile and len(user_profile) > 0:
+            for profile in user_profile:
+                model_input.append(user_profile_template.format(context=context, user_profile=profile))
+        if bot_profile:
+            for profile in bot_profile:
+                model_input.append(bot_profile_template.format(context=context, bot_profile=profile))
+
+        if not model_input:
+            model_input.append(context_template.format(context=context))
+
+        return model_input, context
 
     def build_model_input_for_t5(self, utterance: str, context: list, history: list, user_profile: list,
                                  bot_profile: list,
@@ -152,6 +228,39 @@ class CoreChat(object):
 
         if not model_input:
             model_input.append(f'{context}')
+
+        return model_input, context
+
+    def build_model_input_for_plug_instruction(self, utterance: str, context: list, history: list, user_profile: list,
+                                               bot_profile: list,
+                                               knowledge_list: list) -> Tuple[List[str], str]:
+
+        model_input = []
+
+        if context:
+            context = context + [utterance]
+        else:
+            context = [utterance]
+        context = process_context(context)
+
+        if history and len(history) > 0:
+            history = process_history(history)
+            model_input.append(history_template.format(context=context, history=history))
+        if knowledge_list and len(knowledge_list) > 0:
+            for knowledge in knowledge_list:
+                model_input.append(knowledge_template.format(context=context, knowledge=knowledge))
+        if user_profile and len(user_profile) > 0:
+            for profile in user_profile:
+                model_input.append(user_profile_template.format(context=context, user_profile=profile))
+        if bot_profile:
+            for profile in bot_profile:
+                model_input.append(bot_profile_template.format(context=context, bot_profile=profile))
+
+        if not model_input:
+            model_input.append(context_template.format(context=context))
+
+        for i in range(len(model_input)):
+            model_input[i] = model_input[i].replace('</s>', "[SEP]")
 
         return model_input, context
 
@@ -281,10 +390,7 @@ class CoreChat(object):
                                        return_tensors="pt").input_ids.unsqueeze(0).to(DEVICE)  # batch_size= 1
 
         bad_words_ids = self.build_bad_words_ids(no_repeat_session)
-        if not self.is_t5:
-            token_type_ids = self.build_token_type_ids(model_input, context_prefix, input_ids)
-        else:
-            token_type_ids = None
+
         start_generate = time.time()
 
         if self.allspark_gpu_speed_up:
@@ -297,28 +403,35 @@ class CoreChat(object):
                                                       max_length=generate_config['max_length'],
                                                       bad_words_ids=bad_words_ids)
         else:
-            if token_type_ids is None:
-                hypotheses = self.model.generate(input_ids,
-                                                 bad_words_ids=bad_words_ids,
-                                                 eos_token_id=self.tokenizer.sep_token_id,
-                                                 decoder_start_token_id=self.tokenizer.cls_token_id,
-                                                 **generate_config)
-            else:
-                hypotheses = self.model.generate(input_ids,
-                                                 bad_words_ids=bad_words_ids,
-                                                 token_type_ids=token_type_ids,
-                                                 eos_token_id=self.tokenizer.sep_token_id,
-                                                 decoder_start_token_id=self.tokenizer.cls_token_id,
-                                                 **generate_config)
+            hypotheses = self.model.generate(input_ids,
+                                             bad_words_ids=bad_words_ids,
+                                             eos_token_id=self.tokenizer.sep_token_id,
+                                             decoder_start_token_id=self.tokenizer.cls_token_id,
+                                             **generate_config)
 
         if torch.cuda.is_available():
             hypotheses = hypotheses.detach().cpu().tolist()
 
-        results = []
-        for h in hypotheses:
-            decoded_hypo = self.tokenizer.decode(h, skip_special_tokens=True).replace(' ', '')
-            results.append(decoded_hypo)
+        response = self.tokenizer.decode(hypotheses[0], skip_special_tokens=not self.is_plug)
+
+        token_mapping = {
+            '<extra_id_22>': '\n',
+            '<extra_id_33>': '\t',
+            '<extra_id_23>': '  ',
+            '[unused22]': '\n',
+            '[unused33]': '\t',
+            '[unused23]': '  ',
+            '[SEP]': '',
+            '[CLS]': '',
+            '[PAD]': '',
+            '[UNK]': ''
+        }
+        for s, t in token_mapping.items():
+            response = response.replace(s, t)
+
+        if self.is_plug:
+            response = remove_space_between_chinese_chars(response)
 
         generate_time = time.time() - start_generate
 
-        return results, generate_time, model_input
+        return [response], generate_time, model_input

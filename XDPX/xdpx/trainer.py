@@ -32,6 +32,7 @@ from .utils import EMA
 
 import deepspeed
 
+
 class Trainer:
     """
     Reference: https://github.com/pytorch/fairseq/blob/master/fairseq/trainer.py
@@ -46,6 +47,7 @@ class Trainer:
     :class:`~torch.nn.parallel.DistributedDataParallel` to handle
     communication of the gradients across workers.
     """
+
     @staticmethod
     def auto_save_dir(val, args: Arg):
         if hasattr(args, 'auto_suffix') and args.auto_suffix:
@@ -85,7 +87,8 @@ class Trainer:
             }),
             Argument('auto_ga', default=False,
                      doc='automatically turn on gradient accumulation when OOM occurs.'),
-            Argument('max_loss', type=float, default=200., doc='force stop unstable training when loss exceeds max_loss'),
+            Argument('max_loss', type=float, default=200.,
+                     doc='force stop unstable training when loss exceeds max_loss'),
             Argument('min_lr', type=float, default=0.0),
             Argument('seed', default=1, type=int, doc='to disable random seed, use None;'),
 
@@ -164,14 +167,14 @@ class Trainer:
             Argument('lr_scheduler', default='constant',
                      validate=lambda value: (value in lr_schedulers, f'Unknown lr_scheduler {value}'),
                      register=lambda value: lr_schedulers[value].register),
-            domain='optimization/lr_scheduler'    
+            domain='optimization/lr_scheduler'
         )
 
         options.register(
             Argument(
                 'task',
                 validate=lambda value: (value in tasks, f'Unknown task: {value}'),
-                register=lambda value: tasks[value].register, 
+                register=lambda value: tasks[value].register,
                 default='default',
                 type=str,
             ),
@@ -179,13 +182,13 @@ class Trainer:
         )
         options.register(
             Argument(
-                'processor', required=True, 
+                'processor', required=True,
                 validate=lambda value: (value in processors.keys(), f'Unknown processor {value}'),
                 register=lambda value: processors[value].register
             ),
             domain='processor'
         )
-        
+
         def infer_init_method():
             if all(key in os.environ for key in ['MASTER_ADDR', 'MASTER_PORT', 'WORLD_SIZE', 'RANK']) \
                     and (int(os.environ['WORLD_SIZE']) > 1):
@@ -200,14 +203,14 @@ class Trainer:
                 port = random.randint(10000, 20000)
                 return 'tcp://localhost:{port}'.format(port=port)
             return None
-        
+
         def infer_world_size(value, args: Arg):
             if args.cuda and args.distributed_init_method and args.distributed_init_method.startswith('env'):
                 if not torch_ne_13():
                     return int(os.environ['WORLD_SIZE'])  # docker fusion
                 return int(os.environ['WORLD_SIZE']) * value
             return value
-        
+
         def infer_dist_rank(value, args: Arg):
             if args.cuda and args.distributed_init_method and args.distributed_init_method.startswith('env'):
                 return int(os.environ['RANK'])
@@ -215,19 +218,19 @@ class Trainer:
 
         options.register(
             Argument('cuda', default=torch.cuda.is_available(), children=[
-                    Argument('distributed_init_method', default=infer_init_method(), children=[
-                        Argument('distributed_backend', default='nccl'),
-                        Argument('bucket_cap_mb', default=25, doc='bucket size (in MB) for reduction'),
-                        Argument('ddp_backend', default='no_c10d', doc='DistributedDataParallel backend', 
-                                 validate=lambda value: value in 'c10d no_c10d'.split()),
-                        Argument('use_bmuf', default=False,
-                                 doc='specify global optimizer for syncing models on different GPUs/shards',
-                                 register=lambda value: BMUFOptimizer.register if value else lambda x: ...),
-                    ]),
-                    Argument('empty_cache_freq', default=0,
-                             doc='how often to clear the PyTorch CUDA cache (0 to disable)'),
-                ]
-            ),
+                Argument('distributed_init_method', default=infer_init_method(), children=[
+                    Argument('distributed_backend', default='nccl'),
+                    Argument('bucket_cap_mb', default=25, doc='bucket size (in MB) for reduction'),
+                    Argument('ddp_backend', default='no_c10d', doc='DistributedDataParallel backend',
+                             validate=lambda value: value in 'c10d no_c10d'.split()),
+                    Argument('use_bmuf', default=False,
+                             doc='specify global optimizer for syncing models on different GPUs/shards',
+                             register=lambda value: BMUFOptimizer.register if value else lambda x: ...),
+                ]),
+                Argument('empty_cache_freq', default=0,
+                         doc='how often to clear the PyTorch CUDA cache (0 to disable)'),
+            ]
+                     ),
             Argument('distributed_world_size', type=int, default=max(1, torch.cuda.device_count()),
                      post_process=infer_world_size),
             Argument('distributed_rank', type=int, default=0, post_process=infer_dist_rank),
@@ -235,7 +238,7 @@ class Trainer:
             domain='trainer/distributed',
         )
         options.register(
-            # fp16 mixed precision training is only beneficial on GPUs with compute capability >=7, 
+            # fp16 mixed precision training is only beneficial on GPUs with compute capability >=7,
             # all the constant values (Adam betas, masked softmax, etc) should not go beyond
             # the FP16 range: (6e-8, 65504)
             Argument('fp16', default=False, doc='mixed precision training', children=[
@@ -267,7 +270,7 @@ class Trainer:
 
         # deepspeed config
         options.register(
-            Argument('deepspeed_save_dir', required=True),
+            Argument('deepspeed_save_dir', default=None),
             Argument('deepspeed_zero_stage', type=int, default=0),
             Argument('deepspeed_bf16', default=False),
             Argument('deepspeed_fp16', default=False),
@@ -278,7 +281,8 @@ class Trainer:
             if not args.fp16 or not hasattr(args, name):
                 return True
             return not args.fp16 or getattr(args, name) % 8 == 0, \
-                f'argument "{name}" has to be power of 8 in fp16 training'
+                   f'argument "{name}" has to be power of 8 in fp16 training'
+
         # remove check_power_8 global constraint for batch_size, max_len
         # for param in 'batch_size hidden_size max_len'.split():
         for param in 'hidden_size'.split():
@@ -319,6 +323,7 @@ class Trainer:
                 args.min_steps <= total_steps,
                 f'min_steps {args.min_steps} cannot be larger than total steps {total_steps}.'
             )
+
         options.add_global_constraint(check_min_steps)
 
     def __init__(self, args, task, model, loss, state_dict=None):
@@ -334,6 +339,10 @@ class Trainer:
             self.device = torch.device('cuda')
         else:
             self.device = torch.device('cpu')
+
+        if self.args.deepspeed_zero_stage>0 and self.args.save_full_checkpoint:
+            assert self.args.deepspeed_save_dir is not None and len(self.args.deepspeed_save_dir)>0, "args.deepspeed_save_dir should not be null"
+
         self._loss = loss
         self._model = model
         if args.resume:
@@ -350,7 +359,7 @@ class Trainer:
         self._loss = self._loss.to(device=self.device)
         self._model = self._model.to(device=self.device)
         self.ema = EMA(self._model, args.ema_decay)
-        
+
         # build optimizer
         params = self._model.trainable_parameters()
 
@@ -390,7 +399,7 @@ class Trainer:
             if self.cuda and torch.cuda.get_device_capability(0)[0] >= 7:
                 print('| NOTICE: your device may support faster training with fp16: true')
             self._optimizer = optimizers[self.args.optimizer](self.args, params)
-        
+
         if args.distributed_world_size > 1 and args.use_bmuf:
             self._optimizer = BMUFOptimizer(self.args, self._optimizer)
 
@@ -402,13 +411,14 @@ class Trainer:
         if args.resume:
             assert state_dict
             self._loss.load_state_dict(state_dict['loss_state_dict'])
-            # self._optimizer.load_state_dict(state_dict['optimizer_state_dict'])
             self._lr_scheduler.load_state_dict(state_dict['lr_scheduler_state_dict'])
             self._train_start_i = state_dict.get('train_i')
             if args.fp16 and args.fp16_backend == 'apex':
                 from apex import amp
                 amp.load_state_dict(state_dict['amp'])
             state = state_dict['trainer']
+            if args.deepspeed_zero_stage == 0:
+                self._optimizer.load_state_dict(state_dict['optimizer_state_dict'])
         else:
             self._train_start_i = -1
             state = {}
@@ -433,32 +443,34 @@ class Trainer:
             if args.auto_ga:
                 self._oom_buf = torch.cuda.LongTensor(args.distributed_world_size)
 
-        ds_config = {
-            "train_batch_size": self.args.batch_size * self.args.update_freq,
-            "gradient_accumulation_steps": self.args.update_freq,
-            "bfloat16": {
-                "enabled": self.args.deepspeed_bf16
-            },
-            "fp16": {
-                "enabled": self.args.deepspeed_fp16
-            },
-            "zero_optimization": {
-                "stage": self.args.deepspeed_zero_stage,
-                "overlap_comm": False
-            },
-            "zero_allow_untested_optimizer": self.args.deepspeed_zero_stage>0,
-            # consider excuting model parallelism and using torch.utils.checkpoint in nn.modules
-            "activation_checkpointing": {
-                "partition_activations": True
+        if args.deepspeed_zero_stage > 0:
+            ds_config = {
+                # note: self.args.batch_size have already divided by self.args.distributed_world_size
+                "train_micro_batch_size_per_gpu": self.args.batch_size,
+                "gradient_accumulation_steps": self.args.update_freq,
+                "bfloat16": {
+                    "enabled": self.args.deepspeed_bf16
+                },
+                "fp16": {
+                    "enabled": self.args.deepspeed_fp16
+                },
+                "zero_optimization": {
+                    "stage": self.args.deepspeed_zero_stage,
+                    "overlap_comm": False
+                },
+                "zero_allow_untested_optimizer": self.args.deepspeed_zero_stage > 0,
+                # consider excuting model parallelism and using torch.utils.checkpoint in nn.modules
+                "activation_checkpointing": {
+                    "partition_activations": True
+                }
             }
-        }
-        self.p_optimizer = self._optimizer
-        self._optimizer = self.p_optimizer._optimizer
-        self._model, self._optimizer, _, _ = deepspeed.initialize(model=self._model,
-                                                                optimizer=self._optimizer,
-                                                                config=ds_config)
-        if args.resume:
-            _, client_sd = self._model.load_checkpoint(args.deepspeed_save_dir, self._num_updates)
+            self.p_optimizer = self._optimizer
+            self._optimizer = self.p_optimizer._optimizer
+            self._model, self._optimizer, _, _ = deepspeed.initialize(model=self._model,
+                                                                      optimizer=self._optimizer,
+                                                                      config=ds_config)
+            if args.resume:
+                _, client_sd = self._model.load_checkpoint(args.deepspeed_save_dir, self._num_updates)
 
     def state_dict(self):
         return dict(
@@ -469,12 +481,12 @@ class Trainer:
             best_step=self._best_step,
             last_eval_step=self._last_eval_step,
         )
-    
+
     @property
     def train_start_i(self):
         start_i, self._train_start_i = self._train_start_i, -1
         return start_i
-    
+
     def set_epoch(self, epoch):
         self._epoch = epoch
         self.task.set_epoch(epoch)
@@ -483,7 +495,7 @@ class Trainer:
     @property
     def epoch(self):
         return self._epoch
-    
+
     def train_step(self, samples):
         """Do forward, backward and parameter update."""
         self.logger.tik()
@@ -503,16 +515,18 @@ class Trainer:
                 want to accumulate gradients locally and only call
                 all-reduce in the last backwards pass.
                 """
-                return contextlib.ExitStack()
-                # if (
-                #     self.args.distributed_world_size > 1
-                #     and hasattr(self.model, 'no_sync')
-                #     and (not hasattr(self.args, 'force_sync') or not self.args.force_sync)
-                #     and i < len(samples) - 1
-                # ):
-                #     return self.model.no_sync()
-                # else:
-                #     return contextlib.ExitStack()  # dummy contextmanager
+                if self.args.deepspeed_zero_stage > 0:
+                    return contextlib.ExitStack()
+
+                if (
+                        self.args.distributed_world_size > 1
+                        and hasattr(self.model, 'no_sync')
+                        and (not hasattr(self.args, 'force_sync') or not self.args.force_sync)
+                        and i < len(samples) - 1
+                ):
+                    return self.model.no_sync()
+                else:
+                    return contextlib.ExitStack()  # dummy contextmanager
 
             try:
                 with maybe_no_sync():
@@ -553,7 +567,7 @@ class Trainer:
 
         # gather logging outputs from all replicas
         if self._sync_stats():
-            logging_outputs, (sample_size, ) = self._aggregate_logging_outputs(
+            logging_outputs, (sample_size,) = self._aggregate_logging_outputs(
                 logging_outputs, sample_size
             )
         logging_output = self.task.aggregate_logging_outputs(
@@ -565,7 +579,10 @@ class Trainer:
             if sample_size > 0:
                 if self.args.distributed_world_size == 1 or not self.args.use_bmuf:
                     # default behavior is simply averaging gradients between nodes, we need to recompute the average using sample_size
-                    self.p_optimizer.multiply_grads(self.args.distributed_world_size / float(sample_size))
+                    if self.args.deepspeed_zero_stage > 0:
+                        self.p_optimizer.multiply_grads(self.args.distributed_world_size / float(sample_size))
+                    else:
+                        self.optimizer.multiply_grads(self.args.distributed_world_size / float(sample_size))
                 else:  # BMUF needs to check sample size
                     num = self.args.distributed_world_size if self._sync_stats() else 1
                     self.optimizer.multiply_grads(num / sample_size)
@@ -575,7 +592,10 @@ class Trainer:
             self.set_num_updates(self.get_num_updates() + 1)
 
             # clip grads
-            grad_norm = self.p_optimizer.clip_grad_norm(self.args.clip_norm)
+            if self.args.deepspeed_zero_stage > 0:
+                grad_norm = self.p_optimizer.clip_grad_norm(self.args.clip_norm)
+            else:
+                grad_norm = self.optimizer.clip_grad_norm(self.args.clip_norm)
             if self.should_check_nan(grad_norm):
                 with NanDetector(self.model, self.loss, forward=False):
                     self.task.train_step(
@@ -587,8 +607,8 @@ class Trainer:
 
             # check that grad norms are consistent across workers
             consistent = True
-            # if self.args.distributed_world_size > 1 and not self.args.use_bmuf:
-            #     consistent = self._check_grad_norms(grad_norm)
+            if self.args.distributed_world_size > 1 and not self.args.use_bmuf and self.args.deepspeed_zero_stage == 0:
+                consistent = self._check_grad_norms(grad_norm)
 
             logging_output['grad_norm'] = float(grad_norm)
             logging_output['lr'] = self.get_lr()
@@ -610,12 +630,12 @@ class Trainer:
 
             # clear CUDA cache to reduce memory fragmentation
             if (
-                self.args.cuda and
-                self.args.empty_cache_freq > 0
-                and (
+                    self.args.cuda and
+                    self.args.empty_cache_freq > 0
+                    and (
                     (self.get_num_updates() + self.args.empty_cache_freq - 1)
                     % self.args.empty_cache_freq
-                ) == 0
+            ) == 0
             ):
                 torch.cuda.empty_cache()
         except FloatingPointError:
@@ -684,12 +704,12 @@ class Trainer:
                             torch.cuda.empty_cache()
                         return self.valid_step(sample, raise_oom=True)
                 raise e
-                
+
             logging_outputs = [logging_output]
 
         # gather logging outputs from all replicas
         if self.args.distributed_world_size > 1:
-            logging_outputs, (sample_size, ) = self._aggregate_logging_outputs(
+            logging_outputs, (sample_size,) = self._aggregate_logging_outputs(
                 logging_outputs, sample_size,
             )
 
@@ -705,7 +725,7 @@ class Trainer:
             logging_outputs.extend(logging_output)
             sample_size += sample_size_i
         logging_output = self.task.aggregate_logging_outputs(
-            logging_outputs, int(sample_size), self.get_loss(), 
+            logging_outputs, int(sample_size), self.get_loss(),
             max_count=self.args.data_size[self.args.valid_subset]
         )
         summary, score = self.logger.summarize(self.get_num_updates(), logging_output)
@@ -713,7 +733,7 @@ class Trainer:
         if (score > self.best_score) == self.args.ascending_metric:
             self.best_score = score
         return summary, score
-    
+
     save_prefix = 'checkpoint'
 
     def reach_train_steps(self) -> bool:
@@ -794,7 +814,7 @@ class Trainer:
                 else:
                     major_params, second_params = params
                     params = self._optimizer.combine_param_groups(major_params) + \
-                        self._optimizer.combine_param_groups(second_params)
+                             self._optimizer.combine_param_groups(second_params)
                 assert len(params) == len(self._optimizer.fp32_params)
                 for p, p32 in zip(params, self._optimizer.fp32_params):
                     p.data.copy_(p32.data)
@@ -811,9 +831,15 @@ class Trainer:
                         'train_i': i,
                         'trainer': self.state_dict(),
                         'loss_state_dict': self.get_loss().state_dict(),
-                        # 'optimizer_state_dict': self.optimizer.state_dict(),  # this item will be large for optims like Adam
                         'lr_scheduler_state_dict': self.lr_scheduler.state_dict(),
                     }
+                    if self.args.deepspeed_zero_stage == 0:
+                        train_states.update(
+                            {
+                                'optimizer_state_dict': self.optimizer.state_dict()
+                                # this item will be large for optims like Adam
+                            }
+                        )
                     if self.args.fp16 and self.args.fp16_backend == 'apex':
                         from apex import amp
                         train_states['amp'] = amp.state_dict()
@@ -841,12 +867,12 @@ class Trainer:
                 self.remove_checkpoint(self._last_save)
             self._last_save = num_updates
 
-        # save deepspeed model and optimizer
-        if self.args.save_full_checkpoint:
-            deepspeed_save_dir = self.args.deepspeed_save_dir
-            if not io.exists(deepspeed_save_dir):
-                io.makedirs(deepspeed_save_dir)
-            self._model.save_checkpoint(deepspeed_save_dir,num_updates)
+            # save deepspeed model and optimizer
+            if self.args.save_full_checkpoint and self.args.deepspeed_zero_stage > 0:
+                deepspeed_save_dir = self.args.deepspeed_save_dir
+                if not io.exists(deepspeed_save_dir):
+                    io.makedirs(deepspeed_save_dir)
+                self._model.save_checkpoint(deepspeed_save_dir, num_updates)
 
     def remove_checkpoint(self, num_updates):
         filename = os.path.join(self.args.save_dir, self.save_pattern(num_updates))
@@ -860,7 +886,7 @@ class Trainer:
         _remove_checkpoint(filename, num_updates)
         # remove full states as well
         _remove_checkpoint(filename + 's', -num_updates)
-    
+
     def cleanup(self, interrupted):
         for job in self.save_jobs.values():
             if job.is_alive():
@@ -881,17 +907,17 @@ class Trainer:
         distributed_utils.restore_output()
         if distributed_utils.is_master(self.args):
             if self.args.save and not interrupted and (
-                self.args.save_above_score is None or
-                (self.best_score > self.args.save_above_score) == self.args.ascending_metric
+                    self.args.save_above_score is None or
+                    (self.best_score > self.args.save_above_score) == self.args.ascending_metric
             ):
                 if not io.listdir(self.args.save_dir, contains=self.save_prefix):
                     raise RuntimeError('Fail to save checkpoint.')
-    
+
     def _aggregate_logging_outputs(
-        self,
-        logging_outputs: List[Dict[str, Any]],
-        *extra_stats_to_sum,
-        ignore=False,
+            self,
+            logging_outputs: List[Dict[str, Any]],
+            *extra_stats_to_sum,
+            ignore=False,
     ):
         if self.get_loss().logging_outputs_can_be_summed():
             logging_outputs, extra_stats_to_sum = self._fast_stat_sync_sum(
@@ -902,24 +928,24 @@ class Trainer:
                 logging_outputs, *extra_stats_to_sum, ignore=ignore
             )
         return convert_to_native(logging_outputs), convert_to_native(extra_stats_to_sum)
-    
+
     def _sync_stats(self):
         # Return True if it's using multiple GPUs and DDP or multiple GPUs with
         # BMUF and it's a bmuf sync with warmup iterations completed before.
         return self.args.distributed_world_size > 1 and (
-            (not self.args.use_bmuf)
-            or (
-                self.args.use_bmuf
-                and (self.get_num_updates() + 1) % self.args.global_sync_iter == 0
-                and (self.get_num_updates() + 1) > self.args.warmup_iterations
-            )
+                (not self.args.use_bmuf)
+                or (
+                        self.args.use_bmuf
+                        and (self.get_num_updates() + 1) % self.args.global_sync_iter == 0
+                        and (self.get_num_updates() + 1) > self.args.warmup_iterations
+                )
         )
-    
+
     def _all_gather_list_sync(
-        self,
-        logging_outputs: List[Dict[str, Any]],
-        *extra_stats_to_sum,
-        ignore=False,
+            self,
+            logging_outputs: List[Dict[str, Any]],
+            *extra_stats_to_sum,
+            ignore=False,
     ):
         """
         Sync logging outputs across workers. all_gather_list_sync is
@@ -940,10 +966,10 @@ class Trainer:
         return logging_outputs, extra_stats_to_sum
 
     def _fast_stat_sync_sum(
-        self,
-        logging_outputs: List[Dict[str, Any]],
-        *extra_stats_to_sum,
-        ignore=False,
+            self,
+            logging_outputs: List[Dict[str, Any]],
+            *extra_stats_to_sum,
+            ignore=False,
     ):
         """
         Sync logging outputs across workers. fast_stat_sync_sum is
@@ -980,7 +1006,7 @@ class Trainer:
         else:
             logging_outputs = []
         return logging_outputs, extra_stats_to_sum
-    
+
     def _check_grad_norms(self, grad_norm):
         """Check that grad norms are consistent across workers."""
         if self._grad_norm_buf is not None and not self.args.use_bmuf:
@@ -988,7 +1014,8 @@ class Trainer:
             self._grad_norm_buf[self.args.distributed_rank] = grad_norm
             distributed_utils.all_reduce(self._grad_norm_buf, group=self.data_parallel_process_group)
             if not (self._grad_norm_buf == self._grad_norm_buf[0]).all():
-                if self.args.fp16 and (torch.isnan(self._grad_norm_buf).any() or torch.isinf(self._grad_norm_buf).any()):
+                if self.args.fp16 and (
+                        torch.isnan(self._grad_norm_buf).any() or torch.isinf(self._grad_norm_buf).any()):
                     return True
                 print(
                     'Fatal error: gradients are inconsistent between workers. '
@@ -998,7 +1025,7 @@ class Trainer:
                 torch.cuda.empty_cache()
                 return False
         return True
-    
+
     def sync_oom(self, oom=False):
         if self._oom_buf is None:
             return
@@ -1008,8 +1035,9 @@ class Trainer:
         distributed_utils.all_reduce(self._oom_buf, group=self.data_parallel_process_group)
         if self._oom_buf.max().item():
             return True
-        
-    class HandleOOM(Exception): ...
+
+    class HandleOOM(Exception):
+        ...
 
     def _log_oom(self, exc):
         print(f"| OOM: Ran out of memory with exception: {exc}")
@@ -1024,15 +1052,15 @@ class Trainer:
     @property
     def best_score(self):
         return self._best_score
-    
+
     @property
     def best_step(self):
         return self._best_step
-    
+
     @property
     def last_eval_step(self):
         return self._last_eval_step
-    
+
     @best_score.setter
     def best_score(self, value):
         self._best_score = value
@@ -1046,7 +1074,7 @@ class Trainer:
             torch.manual_seed(seed)
             if self.cuda:
                 torch.cuda.manual_seed(seed)
-    
+
     def _prepare_sample(self, sample):
         if self.cuda:
             sample = utils.move_to_cuda(sample)
@@ -1055,7 +1083,7 @@ class Trainer:
                 sample = utils.cast_to_half(sample)
 
         return sample
-    
+
     def get_model(self):
         """Get the (non-wrapped) model instance."""
         return self._model
@@ -1069,7 +1097,7 @@ class Trainer:
         if name not in self.meters:
             return None
         return self.meters[name]
-    
+
     def get_num_updates(self):
         """Get the number of parameters updates."""
         return self._num_updates
@@ -1083,9 +1111,9 @@ class Trainer:
     def loss(self):
         if self._wrapped_loss is None:
             if (
-                utils.has_parameters(self._loss)
-                and self.args.distributed_world_size > 1
-                and not self.args.use_bmuf
+                    utils.has_parameters(self._loss)
+                    and self.args.distributed_world_size > 1
+                    and not self.args.use_bmuf
             ):
                 if self.args.fp16 and self.args.fp16_backend == 'apex':
                     from apex.parallel import DistributedDataParallel
@@ -1097,7 +1125,7 @@ class Trainer:
                     self._wrapped_loss = DistributedDataParallel(
                         self.args, self._loss,
                         process_group=self.data_parallel_process_group,
-                )
+                    )
             else:
                 self._wrapped_loss = self._loss
         return self._wrapped_loss
@@ -1105,24 +1133,40 @@ class Trainer:
     @property
     def model(self):
         if self._wrapped_model is None:
-            self._wrapped_model = self._model
+            if self.args.distributed_world_size > 1 and not self.args.use_bmuf and self.args.deepspeed_zero_stage == 0:
+                if self.args.fp16 and self.args.fp16_backend == 'apex':
+                    from apex.parallel import DistributedDataParallel
+                    self._wrapped_model = DistributedDataParallel(
+                        self._model, delay_allreduce=True
+                    )
+                else:
+                    from .models import DistributedDataParallel
+                    self._wrapped_model = DistributedDataParallel(
+                        self.args, self._model,
+                        process_group=self.data_parallel_process_group,
+                    )
+            else:
+                self._wrapped_model = self._model
         return self._wrapped_model
 
     @property
     def optimizer(self):
         return self._optimizer
-    
+
     def zero_grad(self):
         self.optimizer.zero_grad()
-    
+
     @property
     def lr_scheduler(self):
         return self._lr_scheduler
-    
+
     def get_lr(self):
         """Get the current learning rate."""
-        return self.p_optimizer.get_lr()
-    
+        if self.args.deepspeed_zero_stage > 0:
+            return self.p_optimizer.get_lr()
+
+        return self.optimizer.get_lr()
+
     def lr_step_update(self):
         """Update the learning rate after each update."""
         return self.lr_scheduler.step_update(self.get_num_updates())

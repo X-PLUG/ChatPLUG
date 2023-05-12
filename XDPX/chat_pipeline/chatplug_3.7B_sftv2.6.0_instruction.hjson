@@ -1,6 +1,9 @@
 {
   rule_control_path: chat_pipeline/dummy_rule_control.json
+
   use_instruction: true
+  # whether to use half precision
+  core_chat_half_precision : true
 
   # TODO: make args.py into modelscope
   core_chat_save_dir: chat_pipeline/save_dir
@@ -88,7 +91,4 @@
   safety_detect_model_path: TBD
   safety_detect_mode: relax
 
-  pipeline_always_concat_history : true
-  persona_response_max_legnth : 512
-  
 }

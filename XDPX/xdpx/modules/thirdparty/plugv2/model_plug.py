@@ -13,6 +13,7 @@ from typing import Optional, Union, List, Dict, Any
 
 import numpy as np
 import torch
+from icecream import ic
 import torch.nn.functional as F
 from torch import nn, Tensor
 from torch.nn.init import xavier_uniform_
@@ -646,13 +647,14 @@ class NMTLossCompute(nn.Module):
 
     def forward(self, tgt, output):
         target = tgt[:, 1:]
+        batch_size, decoder_length = target.size(0), target.size(1)
         normalization = target.ne(self.padding_idx).sum()
         bottled_output = self._bottle(output)
         scores = self.generator(bottled_output)
         gtruth = target.contiguous().view(-1)
         loss = self.criterion(scores, gtruth)
         loss = loss.div(float(normalization))
-        return loss
+        return loss, scores.view(batch_size, decoder_length, -1)
 
 
 class PlugForConditionalGeneration(PlugPreTrainedModel):
@@ -767,6 +769,10 @@ class PlugForConditionalGeneration(PlugPreTrainedModel):
                               length_penalty=1.0,
                               repetition_penalty=1.0,
                               no_repeat_ngram_size=4,
+                              do_sample=False,
+                              temperature=1.0,
+                              top_k=0,
+                              top_p=1.0,
                               *args, **kwargs):
         # TODO: faster code path for beam_size == 1.
         # TODO: support these blacklisted features.
@@ -873,11 +879,10 @@ class PlugForConditionalGeneration(PlugPreTrainedModel):
 
             curr_length_penalty = (step + 1) ** length_penalty
             # '''
-            if self.config.sample_topk:
-                temperature = self.config.temperature
+            if do_sample:
                 _scores = log_probs / temperature
                 _scores = self._top_k_top_p_filtering(
-                    _scores, top_k=self.config.top_k, top_p=self.config.top_p, min_tokens_to_keep=1
+                    _scores, top_k=top_k, top_p=top_p, min_tokens_to_keep=1
                 )  # (batch_size * num_beams, vocab_size)
                 # Sample 2 next words for each beam (so we have some spare tokens and match output of greedy beam search)
                 topk_ids = torch.multinomial(F.softmax(_scores, dim=-1), num_samples=1)  # (batch_size * num_beams, 2)

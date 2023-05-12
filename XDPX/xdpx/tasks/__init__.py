@@ -190,9 +190,12 @@ class Task:
                 loss, sample_size, logging_output = loss(model, sample)
         else:
             loss, sample_size, logging_output = loss(model, sample)
-        # optimizer.backward(loss)
-        # loss.backward()
-        model.backward(loss)
+
+        if self.args.deepspeed_zero_stage>0:
+            model.backward(loss)
+        else:
+            optimizer.backward(loss)
+
         logging_output['ntokens'] = sample['ntokens']
 
         if self.args.inspect_gradient and num_updates % self.args.eval_interval == 0:
