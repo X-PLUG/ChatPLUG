@@ -17,7 +17,6 @@
     ]
 
     __def__: {
-        # TODO: relative path does not work well
         data_root: ../data/dialogue/sft/chatplug/belle_instruction
         save_root: ../checkpoints/sft/chatplug/3.7B/v2.6.0_epoch20_lr1e-4_bs512
     }
