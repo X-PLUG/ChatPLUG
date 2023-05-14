@@ -546,7 +546,7 @@ class Options:
                         # must use a name different from the one in the outer loop,
                         # otherwise the latter will be overwritten
                         parent = Options.apply_var(unparsed_parent, orig_config)
-                        parent = Options.parse_relative_path(parent, root)
+                        # parent = Options.parse_relative_path(parent, root)
                         parent_configs = Options.load_hjson(parent)
                         new_root = os.path.dirname(parent)
                     else:
@@ -711,8 +711,8 @@ class Options:
     @staticmethod
     def load_hjson(file: str, root='') -> dict:
         from .utils import io
-
-        file = Options.parse_relative_path(file, root)
+                
+        # file = Options.parse_relative_path(file, root)
 
         if not file.endswith('.hjson') and not file.endswith('.json'):
             file += '.hjson'
