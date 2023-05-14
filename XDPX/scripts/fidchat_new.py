@@ -12,6 +12,7 @@ import numpy as np
 from icecream import ic
 from xdpx.utils import distributed_utils
 import time
+from datetime import datetime
 import dacite
 from dataclasses import asdict
 import random
@@ -21,9 +22,8 @@ from xdpx.utils.chat.openweb_search import Snippet
 from xdpx.utils.chat.pipeline import PipelineConfig, ChatPipeline
 
 SEARCH_CACHE_JSON_PATH = 'search_cache.json'
-DEFAULT_TEST_FILE_DIR = 'benchmark/'
+DEFAULT_TEST_FILE_DIR = '../benchmark/'
 DEFAULT_TEST_FILE = 'pangu.test.json'
-
 
 def get_new_bot_profile(bot_profile):
     
@@ -128,7 +128,7 @@ def cli_main(argv=sys.argv):
                 test_file = ts[1] if len(ts) == 2 else ''
                 command = utterance.lower()
 
-                save_path = f'{DEFAULT_TEST_FILE_DIR}results/test_file.logs.{time.time()}.json'
+                save_path = f'{DEFAULT_TEST_FILE_DIR}results/test_file.logs.{str(datetime.now())}.json'
                 with io.open(save_path, 'w') as nf:
                     nf.write(json.dumps(asdict(pipeline_config), ensure_ascii=False) + '\n')
                     results = []
@@ -179,7 +179,7 @@ def cli_main(argv=sys.argv):
                 continue
             if utterance.lower() == '#test_self_chat=':
                 test_file = utterance.lower().strip().split('=')[1]
-                with io.open(f'{DEFAULT_TEST_FILE_DIR}/results/test_self_chat.logs.{time.time()}', 'w') as nf:
+                with io.open(f'{DEFAULT_TEST_FILE_DIR}/results/test_self_chat.logs.{str(datetime.now())}', 'w') as nf:
                     for d in get_test_data(test_file):
                         q = d.get('utterance')
                         history = [HistoryItem(role='human', utterance=q)]
@@ -218,7 +218,7 @@ def cli_main(argv=sys.argv):
                 with_history = utterance.lower() == '#test_entity_knowledge_with_history'
                 history = []
                 debug_infos = []
-                save_path = f'{DEFAULT_TEST_FILE_DIR}/results/test_entity_knowledge.{time.time()}.jsonl'
+                save_path = f'{DEFAULT_TEST_FILE_DIR}/results/test_entity_knowledge.{str(datetime.now())}.jsonl'
                 print(f'save path:{save_path}')
                 with io.open(save_path, 'w') as nf:
                     nf.write(json.dumps(asdict(pipeline_config), ensure_ascii=False) + '\n')
@@ -268,7 +268,7 @@ def cli_main(argv=sys.argv):
             if utterance.lower().startswith('#singleturn_test_file'):
                 test_file = utterance.lower().strip().split('=')[1]
                 data = json.loads(io.open(test_file).read())
-                save_path = f'{DEFAULT_TEST_FILE_DIR}/results/singleturn_test_file.{time.time()}.jsonl'
+                save_path = f'{DEFAULT_TEST_FILE_DIR}/results/singleturn_test_file.{str(datetime.now())}.jsonl'
                 print(f'save path:{save_path}')
                 for item in data:
                     question = item['question']
@@ -295,7 +295,7 @@ def cli_main(argv=sys.argv):
                 print(f'open_safty_filter = {open_safty_filter}')
 
                 input_file = utterance.lower().strip().split('=')[1]
-                output_file = input_file.replace('.json', '') + '.test_safety.' + str(time.time()) + '.jsonl'
+                output_file = input_file.replace('.json', '') + '.test_safety.' + str(str(datetime.now())) + '.jsonl'
                 print(f'input_file = {input_file}, output_file = {output_file}')
 
                 benchmark_file = input_file
@@ -353,7 +353,7 @@ def cli_main(argv=sys.argv):
                 with_history = utterance.lower() == '#test_persona_with_history'
                 only_bot_profile = utterance.lower() == '#test_persona_only_bot_profile'
                 debug_infos = []
-                save_path = f'{DEFAULT_TEST_FILE_DIR}/results/test_persona.{time.time()}.jsonl'
+                save_path = f'{DEFAULT_TEST_FILE_DIR}/results/test_persona.{str(datetime.now())}.jsonl'
                 print(f'save path:{save_path}')
                 with io.open(save_path, 'w') as nf:
                     nf.write(json.dumps(asdict(pipeline_config), ensure_ascii=False) + '\n')
@@ -408,7 +408,7 @@ def cli_main(argv=sys.argv):
                 model.safty_filter = None
                 history = []
                 debug_infos = []
-                with io.open(f'{DEFAULT_TEST_FILE_DIR}/results/test_multiturn.{time.time()}.jsonl', 'w') as nf:
+                with io.open(f'{DEFAULT_TEST_FILE_DIR}/results/test_multiturn.{str(datetime.now())}.jsonl', 'w') as nf:
                     for _id, d in enumerate(test_data_items):
                         question = d.get('question')
                         ground_truth = d.get('answer')

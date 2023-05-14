@@ -32,7 +32,10 @@ CUDA_VISIBLE_DEVICES=0 x-script fidchat_new chat_pipeline/chatplug_3.7B_sftv2.6.
 | `#new`  | create a new session |
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9d2f5709288d9633d6ced6c45c2d78cc5a80db6d
 ## Training
 
 ### 1. Downloading Dataset from Belle
@@ -96,8 +99,12 @@ Here: `global_batch_size = batch_size * update_freq`, and `batch_size = GPUs * b
 
 The training curve plots are in `{save_dir}/plots`.
 
-3.3 Eval with Cli inference
+3.3 Eval using the training checkpoint
 
-Copy config from `chatplug_3.7B_sftv2.6.0_instruction.hjson` to `chatplug_3.7B_sftvbelle.hjson`.
-Then, edit `core_chat_save_dir` and `core_chat_checkpoint` to the corresponding path.
+- create a new  config file `chatplug_3.7B_sft_belle.hjson` from `chatplug_3.7B_sftv2.6.0_instruction.hjson`:
+- edit `core_chat_save_dir` and `core_chat_checkpoint` to the corresponding path.
 
+```hjson
+core_chat_save_dir: ../checkpoints/sft/chatplug/3.7B/v2.6.0_epoch20_lr1e-4_bs512/
+core_chat_checkpoint: ../checkpoints/sft/chatplug/3.7B/v2.6.0_epoch20_lr1e-4_bs512/checkpoint-6000.pt
+```

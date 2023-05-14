@@ -1,9 +1,5 @@
 import json
 
-def text_norm(text):
-    return text.replace("\n", "<extra_id_22>").replace("\t", "<extra_id_22>").replace(" ", "<extra_id_23>")
-
-
 def cli_main():
     in_file = 'train_0.5M_CN/Belle_open_source_0.5M.json'
 
@@ -14,7 +10,7 @@ def cli_main():
             item = json.loads(line)
             row = {
                 "context": f"{item['instruction']}\n\n{item['input']}",
-                "response": text_norm(item['output']),
+                "response": item['output'],
                 "passages": ""
             }
             data.append(row)
