@@ -32,10 +32,6 @@ CUDA_VISIBLE_DEVICES=0 x-script fidchat_new chat_pipeline/chatplug_3.7B_sftv2.6.
 | `#new`  | create a new session |
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 9d2f5709288d9633d6ced6c45c2d78cc5a80db6d
 ## Training
 
 ### 1. Downloading Dataset from Belle
