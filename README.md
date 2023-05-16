@@ -52,8 +52,8 @@ We offer three methods to use or continue developing ChatPLUG as follows:
 |  | Getting Started | Inference | Train | Deploy |
 |---|---|---|---|---|
 | ModelScope | Easy | :heavy_check_mark: Cli | :x:  Not Ready | :x:  Not Ready |
-| HuggingFace | Medium | :heavy_check_mark:Cli  (Coming soon) | :x: Not Ready | :x:  Not Ready |
-| XDPX | Hard | :heavy_check_mark: Cli | :heavy_check_mark:    Support (Coming soon) | :heavy_check_mark: Serving |
+| HuggingFace | Medium | :heavy_check_mark:Cli | :x: Not Ready | :x:  Not Ready |
+| XDPX | Hard | :heavy_check_mark: Cli | :heavy_check_mark:    Support | :heavy_check_mark: Serving |
 
 ### ModelScope
 You can download and use ChatPLUG models from ModelScope.
