@@ -17,9 +17,10 @@ This is the repo for the [ChatPLUG](./ChatPLUG.md) project, which aims to build 
 <img src="assets/xiaowan.gif"  width="80%" /> | <img src="assets/gaoseng.gif"  width="90%" /> | <img src="assets/guanyu.gif"   width="80%" /> 
 
 ## News
+- 🔥 ChatPLUG-13B will soon be released on ModelScope for research.
 - [2023/05/10] 👏👏👏 Add training code.
 - [2023/04/26] Try our [Role-Play-Chat Online Demo](https://modelscope.cn/studios/damo/role_play_chat/summary) in ModelScope Now!
-- [2023/04/19] Add content including spotlights, results and limitations. Upload models to [modelscope](https://modelscope.cn/my/overview). 
+- [2023/04/19] Add content including spotlights, results and limitations. Upload models to [ModelScope](https://modelscope.cn/my/overview). 
 - [2023/04/16] Initialize project.
 
 
