@@ -17,6 +17,12 @@ Please read our paper for more detains about ChatPLUG.
 
 ## Evaluation and Examples
 
+### Evaluation Framework
+
+We evaluate ChatPLUG through three aspects: basic conversational ability, personalized ability, and multitasking generalization ability. Before deployment, we ensure system stability through comprehensive user experience and performance testing.\
+
+<img src="assets/eval_framework.png" width="50%" alt="evaluation framework"/>
+
 ### 1. Knowledge Augmentation
 
 With external knowledge from a search engine, the problem of knowledge hallucinations is alleviated. Besides, it enables ChatPLUG to generate informative responses and can answer correctly when encountering real-time questions.
