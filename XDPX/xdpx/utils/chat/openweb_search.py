@@ -1,12 +1,12 @@
 import traceback
 from typing import List, Optional
-
 import functools
-from googlesearch import quote_plus
+from functools import lru_cache
 import requests
 import json
 from dataclasses import dataclass, field
 
+from googlesearch import quote_plus
 
 @dataclass
 class Snippet:
@@ -21,24 +21,24 @@ class Snippet:
 
 class OpenWeb(object):
  
-    def __init__(self, search_engine):
-        self.cache = {}
+    def __init__(self, search_engine=None):
+        if search_engine is None:
+            search_engine = BingSearch()
         self.search_engine = search_engine
-
+    
+    @lru_cache
     def search(self, query) -> (List[Snippet], bool):
         """
+        search with cache.
+
         Args:
             query: search_query
 
         Returns:
-            list of snippets
-
+            snippets: list of snippets
+            is_special_card: True/False
         """
-        if self.cache and query in self.cache:
-            return self.cache[query], False
-        snippets, is_special_card = self.search_engine.search(query)
-        self.cache[query] = snippets
-        return snippets, is_special_card
+        return self.search_engine.search(query)
 
 
 class BingSearch(object):
@@ -50,10 +50,10 @@ class BingSearch(object):
             import requests
             # bing subscription key
             subscription_key = os.environ.get("BING_SEARCH_API", None)
-            assert subscription_key
+            assert subscription_key is not None, 'subscription_key is None'
 
             headers = {"Ocp-Apim-Subscription-Key": subscription_key}
-            params = {"q": search_term, "textDecorations": False, "textFormat": "Raw", "mkl":"zh-CN", "setLang": "zh-hans", "count": 10}
+            params = {"q": search_term, "textDecorations": False, "textFormat": "Raw", "mkl":"zh-CN", "setLang": "zh-hans", "count": 5}
             # "responseFilter": "News"}
             response = requests.get(search_url, headers=headers, params=params)
             response.raise_for_status()

@@ -68,11 +68,15 @@ class QueryClassifier:
 
 class BaseLearn2Search(object):
     def __init__(self):
-        print(f'| skip query_classifier.')
+        print(f'| skip query_classifier.')    
         self.query_classifier = None
 
     def need_search(self, query: str) -> Tuple[bool, str]:
-        return False, CHITCHAT_QUERY
+        return text_is_question(query) and not is_persona_question(query), CHITCHAT_QUERY
+    
+    def get_search_query(self, query: str, history: List[HistoryItem]):
+        # only use the last query
+        return query
 
 
 class Learn2Search(object):

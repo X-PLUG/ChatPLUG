@@ -257,7 +257,7 @@ class ChatPipeline(object):
 
         if config.openweb_use:
             print(f'| initialize openweb client..')
-            self.openweb = OpenWeb(config.openweb_is_test)
+            self.openweb = OpenWeb()
         else:
             print(f'| skip openweb .')
             self.openweb = None

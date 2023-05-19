@@ -132,7 +132,11 @@ Please refer to [Installation](https://chatplug.readthedocs.io/zh_CN/latest/quic
 For detailed user guides, please refer to our [documentation](https://chatplug.readthedocs.io/zh_CN/latest):
 
 - User Guides
+  - [Quick Start](https://chatplug.readthedocs.io/zh_CN/latest/quick_start.html)
+  - [Retrieval](https://chatplug.readthedocs.io/zh_CN/latest/retrieval.html)
+  - Role-Play(TBD)
 
+- Advanced Guides
   - [Intro](https://chatplug.readthedocs.io/zh_CN/latest/get_started.html)
   - [Training](https://chatplug.readthedocs.io/zh_CN/latest/nlu_training.html#)
   - [Develop](https://chatplug.readthedocs.io/zh_CN/latest/develop.html)

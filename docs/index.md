@@ -9,6 +9,8 @@ Welcome to ChatPLUG's documentation!
    :caption: ChatPLUG
 
    quick_start
+   retrieval
+   roleplay
 
 
 .. toctree::
