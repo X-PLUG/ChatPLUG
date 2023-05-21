@@ -13,8 +13,8 @@
 - 提交到PAI之前自动检查参数配置错误，包括路径是否存在、不同参数之间的冲突等，避免浪费提交和排队的时间；
 - 单元测试全覆盖，方便debug。
 
-常见的问题见下方“[FAQ](#NtOc7)”章节。
-单独使用oss/本地文件混合操作能力参考[IO能力](#D2vQN)章节。
+常见的问题见下方“[FAQ](faq)”章节。
+单独使用oss/本地文件混合操作能力参考[IO能力](oss)章节。
 
 
 
@@ -47,7 +47,7 @@ io.set_io(oss)
 填上access_key_id、access_key_secret，并添加所有你需要访问的oss bucket的名字以及它们所在的地区名到region_bucket。比如链接为[http://pretrain-lm.oss-cn-hangzhou.aliyuncs.com/](http://pretrain-lm.oss-cn-hangzhou.aliyuncs.com/) 的话，bucket就是“pretrain-lm”，地区名就是“oss-”后面的那部分，即“cn-hangzhou”，传入的值为['cn-hangzhou','pretrain-lm']。之后程序运行便会自动加载这个配置并且支持访问oss路径。
 
 ## 使用
-这一部分介绍XDPX的基本使用方法。已经实现的模型、训练方法等使用案例参见[内置的模型和训练方法](#74G7s)。想了解如何提交到PAI执行请直达[提交到PAI执行](#Giyl2)。想要了解参数配置的用法可以参考[参数配置指南](#4AlHW)。
+这一部分介绍XDPX的基本使用方法。已经实现的模型、训练方法等使用案例参见[内置的模型和训练方法](nlu_training)。想了解如何提交到PAI执行请直达[提交到PAI执行](#Giyl2)。想要了解参数配置的用法可以参考[参数配置指南](nlu_training)。
 
 XDPX命令的基本组成为`<命令> <配置文件>`，如`x-train config.hjson`。下面的部分主要介绍如何完成配置文件。
 ## 数据预处理
@@ -78,7 +78,7 @@ XDPX命令的基本组成为`<命令> <配置文件>`，如`x-train config.hjson
 | skip_bad_lines | bool | FALSE | 遇见格式错误的行是否跳过，否则报错 |
 | start_line | int | 0 | 数据文件从第几行开始 |
 
-适配新的数据格式可以参考下文[开发指南](#pCsbd)。
+适配新的数据格式可以参考下文[开发指南](develop)。
 
 当vocab_file没有指定时，将从数据中动态构建，有如下参数：
 
@@ -107,8 +107,8 @@ index: 标签位置上是序号0, 1, ….target_map按数字从小到大排序 |
 | **文件名** | **含义** |
 | --- | --- |
 | args.py | 分组的完整预处理参数，带*表示和默认值不同 |
-| [train.pt](http://train.pt) | 预处理后的数据文件 |
-| [dev.pt](http://dev.pt) |  |
+| train.pt | 预处理后的数据文件 |
+| dev.pt |  |
 | log.txt | 日志文件 |
 | meta.hjson | 供训练时继承的预处理阶段的配置 |
 | target_map.txt | 标签名称列表 |

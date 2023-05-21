@@ -67,7 +67,7 @@ class BaseLearn2Search(object):
 
 To configure ChatPLUG to use Bing search, we need to enable the use of the `OpenWeb` class in the `chatplug_3.7B_sftv2.6.0_instruction.hjson` file. We also need to specify the directory and provider for the utterance rewriter and provide the path for the learn2search query classifier.
 
-```hjson
+```yaml
 openweb_use: true
 
 # rewrite

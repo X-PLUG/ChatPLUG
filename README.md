@@ -134,7 +134,7 @@ For detailed user guides, please refer to our [documentation](https://chatplug.r
 - User Guides
   - [Quick Start](https://chatplug.readthedocs.io/zh_CN/latest/quick_start.html)
   - [Retrieval](https://chatplug.readthedocs.io/zh_CN/latest/retrieval.html)
-  - Role-Play(TBD)
+  - [Role-Play](https://chatplug.readthedocs.io/zh_CN/latest/roleplay.html)
 
 - Advanced Guides
   - [Intro](https://chatplug.readthedocs.io/zh_CN/latest/get_started.html)

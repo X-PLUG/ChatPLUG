@@ -1,58 +1,69 @@
 # Quick Start
 
+ChatPLUG is a library that helps researchers and developers train custom models and build chatbots quickly and easily. To get started, you need to install XDPX in development mode, download the necessary checkpoints, and run the command-line interface (CLI). You can then specify the model configuration file and launch it in a pipeline manner to generate a response.
+
 ## Requirement
+First, install `XDPX` in development mode:
+
 ```bash
-# in the dir of XDPX
+# navigate to the XDPX directory
 cd XDPX
+# install the XDPX package
 pip install -e .
 ```
 
-## Download checkpoints
+## Download Checkpoints
+Next, download the necessary checkpoints:
+
 ```bash
-# in the same dir as the download.sh
+# navigate to the folder where download.sh is located
 cd ..
 sh download.sh
 ```
 
+## Running the Command Line Interface (CLI)
+Launch the CLI in a pipeline manner (see `ChatPipeline`) and specify the model configuration file:
 
-## Run cli
 ```bash
-# in the dir of XDPX
+# navigate to the XDPX directory
 cd XDPX
+# launch the CLI and specify the model configuration file
 CUDA_VISIBLE_DEVICES=0 x-script fidchat_new chat_pipeline/chatplug_3.7B_sftv2.6.0_instruction.hjson
 ```
 
-
-### Cli Usage
-| command | action               |
+### CLI Usage
+| Command | Action               |
 |---------|----------------------|
-| query   | response             |
-| `#exit` | terminate            |
-| `#show` | show reponse details |
+| query   | generate a response             |
+| `#exit` | terminate the session            |
+| `#show` | show response details |
 | `#new`  | create a new session |
 
 
 ## Training
+To train and tune your own model, you can follow a few simple steps. First, download the dataset you wish to use and preprocess the data by converting it from strings to token IDs. You can then run the training script and visualize the training curve. Finally, you can evaluate your model by creating a new configuration file and editing the appropriate fields to reflect the correct paths to your checkpoints and save directory.
 
-### 1. Downloading Dataset from Belle
+Follow these steps to train your own model:
+
+### Step 1: Downloading the Dataset from Belle
 
 ```
-# in the root dir
+# navigate to the data directory
 cd data/belle
-
+# install git-lfs
 git lfs install
+# clone the dataset from Hugging Face
 git clone https://huggingface.co/datasets/BelleGroup/train_0.5M_CN
-
+# preprocess the dataset
 python process_belle_0.5M.py 
+# verify that the processed dataset is available
 # $ls data/belle 
 # train_0.jsonl dev.jsonl ...
 ```
 
 ### 2. Preprocessing Data
 
-Convert data from str to ids.
-
-
+Convert the data from strings to token IDs.
 
 Input data format
 
@@ -67,40 +78,37 @@ Input data format
         "from": "emotion", 
         "from_file": "empathy.jsonl", 
         "line_num": 1496}
-    }
+}
 ```
-
 
 Process tokens into ids
 
-```
+```bash
+# preprocess the data using the specified model configuration file
 x-prepro chat_pipeline/chatplug_prepro_sft_instruction.hjson
+# verify that the processed data is available
 # $ls data/dialogue/sft/chatplug/belle_instruction 
 # train_0.pt dev.pt
 ```
 
 
 ### 3. Training
-
 3.1 Runing training script.
-
-```
+```bash
+# start the training process using the specified model configuration file
 x-train chat_pipeline/chatplug_3.7B_train_sftv2.6.0_instruction.hjson
 ```
-
 Here: `global_batch_size = batch_size * update_freq`, and `batch_size = GPUs * batch_per_GPU`. 
 
-
 3.2 Visualize the training curve
-
 The training curve plots are in `{save_dir}/plots`.
 
-3.3 Eval using the training checkpoint
-
-- create a new  config file `chatplug_3.7B_sft_belle.hjson` from `chatplug_3.7B_sftv2.6.0_instruction.hjson`:
-- edit `core_chat_save_dir` and `core_chat_checkpoint` to the corresponding path.
-
-```hjson
+3.3 Evaluate using the training checkpoint
+- create a new configuration file `chatplug_3.7B_sft_belle.hjson`, from `chatplug_3.7B_sftv2.6.0_instruction.hjson`:
+- edit `core_chat_save_dir` and `core_chat_checkpoint` fields to reflect the appropriate paths.
+```yaml
 core_chat_save_dir: ../checkpoints/sft/chatplug/3.7B/v2.6.0_epoch20_lr1e-4_bs512/
 core_chat_checkpoint: ../checkpoints/sft/chatplug/3.7B/v2.6.0_epoch20_lr1e-4_bs512/checkpoint-6000.pt
 ```
+
+ChatPLUG provides an easy-to-use library that allows users to build and train custom chatbots quickly and efficiently.

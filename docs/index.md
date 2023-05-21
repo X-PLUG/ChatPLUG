@@ -6,7 +6,7 @@ Welcome to ChatPLUG's documentation!
 
 .. toctree::
    :maxdepth: 1
-   :caption: ChatPLUG
+   :caption: Basic Usage
 
    quick_start
    retrieval
@@ -15,11 +15,12 @@ Welcome to ChatPLUG's documentation!
 
 .. toctree::
    :maxdepth: 1
-   :caption: XDPX
+   :caption: Advanced Usage
 
    get_started
    nlu_training
    develop
+   oss
    faq
    about_us
 
