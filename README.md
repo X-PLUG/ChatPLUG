@@ -6,8 +6,6 @@
 [![docs](https://img.shields.io/badge/docs-latest-blue)](https://chatplug.readthedocs.io/zh_CN/latest/)
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FX-PLUG%2FChatP&count_bg=%23E97EBA&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=visitors&edge_flat=false)](https://hits.seeyoufarm.com)
 
-
-
 This is the repo for the [ChatPLUG](./ChatPLUG.md) project, which aims to build and share a Chinese open-domain dialogue system.
 
 <hr>
@@ -18,7 +16,8 @@ This is the repo for the [ChatPLUG](./ChatPLUG.md) project, which aims to build 
 
 ## News
 - 🔥 ChatPLUG-13B will soon be released on ModelScope for research.
-- [2023/05/10] 👏👏👏 Add training code.
+- [2023/05/23] Add guides about [retrieval](https://chatplug.readthedocs.io/zh_CN/latest/retrieval.html) and [role-play](https://chatplug.readthedocs.io/zh_CN/latest/roleplay.html)
+- [2023/05/10] Add training code, which helps train custom models and build chatbots quickly and easily.
 - [2023/04/26] Try our [Role-Play-Chat Online Demo](https://modelscope.cn/studios/damo/role_play_chat/summary) in ModelScope Now!
 - [2023/04/19] Add content including spotlights, results and limitations. Upload models to [ModelScope](https://modelscope.cn/my/overview). 
 - [2023/04/16] Initialize project.
