@@ -867,12 +867,12 @@ class Trainer:
                 self.remove_checkpoint(self._last_save)
             self._last_save = num_updates
 
-            # save deepspeed model and optimizer
-            if self.args.save_full_checkpoint and self.args.deepspeed_zero_stage > 0:
-                deepspeed_save_dir = self.args.deepspeed_save_dir
-                if not io.exists(deepspeed_save_dir):
-                    io.makedirs(deepspeed_save_dir)
-                self._model.save_checkpoint(deepspeed_save_dir, num_updates)
+        # save deepspeed model and optimizer
+        if self.args.save_full_checkpoint and self.args.deepspeed_zero_stage > 0:
+            deepspeed_save_dir = self.args.deepspeed_save_dir
+            if not io.exists(deepspeed_save_dir):
+                io.makedirs(deepspeed_save_dir)
+            self._model.save_checkpoint(deepspeed_save_dir, num_updates)
 
     def remove_checkpoint(self, num_updates):
         filename = os.path.join(self.args.save_dir, self.save_pattern(num_updates))
