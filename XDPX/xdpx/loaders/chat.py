@@ -258,7 +258,6 @@ class T5FidChatInstructionLoader(FIDChatLoader):
             p = p.strip(SEP)
             if p.startswith("history"):
                 p = p[len("history:"):]
-                p = p.replace(' \t ', SEP).replace('\t', SEP)
                 p = process_history(p, SEP)
                 p = history_template[random.randint(0, len(history_template) - 1)].format(context=context, history=p)
             elif p.startswith("user_profile"):
