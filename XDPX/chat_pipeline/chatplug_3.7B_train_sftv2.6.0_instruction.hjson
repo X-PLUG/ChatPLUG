@@ -49,7 +49,7 @@
     deepspeed_save_dir: ${save_root}/ds_states
     # deepspeed_zero_stage==0 means we don't use deepspeed
     deepspeed_zero_stage: 2
-    # if your GPU(e.g.A100、V100、T4) support bf16, set deepspeed_bf16: true and deepspeed_fp16: false
+    # if your GPU(e.g.A100、A10、T4) support bf16, set deepspeed_bf16: true and deepspeed_fp16: false
     # else set deepspeed_bf16: false and deepspeed_fp16: true
     deepspeed_bf16: true
     deepspeed_fp16: false
